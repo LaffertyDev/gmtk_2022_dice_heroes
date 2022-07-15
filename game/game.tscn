@@ -1,3 +1,182 @@
-[gd_scene format=2]
+[gd_scene load_steps=11 format=2]
 
-[node name="Node2D" type="Node2D"]
+[ext_resource path="res://game/assets/board_tilemap.tres" type="TileSet" id=1]
+[ext_resource path="res://game/heroes/hero.tscn" type="PackedScene" id=2]
+[ext_resource path="res://game/enemies/enemy.tscn" type="PackedScene" id=3]
+[ext_resource path="res://game/dice/dice.tscn" type="PackedScene" id=4]
+[ext_resource path="res://game/assets/damage_indicator..png" type="Texture" id=5]
+[ext_resource path="res://game/game.gd" type="Script" id=6]
+[ext_resource path="res://game/assets/user_interface/battle_speed_pause.png" type="Texture" id=7]
+[ext_resource path="res://game/assets/user_interface/battle_speed_1x.png" type="Texture" id=8]
+[ext_resource path="res://game/assets/user_interface/battle_speed_slow.png" type="Texture" id=9]
+[ext_resource path="res://game/assets/user_interface/battle_speed_2x.png" type="Texture" id=10]
+
+[node name="game" type="Node2D"]
+script = ExtResource( 6 )
+
+[node name="board" type="TileMap" parent="."]
+position = Vector2( 32, 40 )
+tile_set = ExtResource( 1 )
+cell_size = Vector2( 16, 16 )
+format = 1
+tile_data = PoolIntArray( 0, 0, 0, 1, 0, 0, 3, 0, 0, 4, 0, 0, 6, 0, 0, 7, 0, 0, 9, 0, 0, 10, 0, 0, 12, 0, 0, 13, 0, 0, 15, 0, 0, 16, 0, 0, 18, 0, 0, 19, 0, 0, 21, 0, 0, 22, 0, 0, 24, 0, 0, 25, 0, 0, 65536, 0, 0, 65537, 0, 0, 65539, 0, 0, 65540, 0, 0, 65542, 0, 0, 65543, 0, 0, 65545, 0, 0, 65546, 0, 0, 65548, 0, 0, 65549, 0, 0, 65551, 0, 0, 65552, 0, 0, 65554, 0, 0, 65555, 0, 0, 65557, 0, 0, 65558, 0, 0, 65560, 0, 0, 65561, 0, 0, 196608, 0, 0, 196609, 0, 0, 196632, 0, 0, 196633, 0, 0, 262144, 0, 0, 262145, 0, 0, 262168, 0, 0, 262169, 0, 0, 393216, 0, 0, 393217, 0, 0, 393240, 0, 0, 393241, 0, 0, 458752, 0, 0, 458753, 0, 0, 458776, 0, 0, 458777, 0, 0, 589824, 0, 0, 589825, 0, 0, 589827, 0, 0, 589828, 0, 0, 589830, 0, 0, 589831, 0, 0, 589833, 0, 0, 589834, 0, 0, 589836, 0, 0, 589837, 0, 0, 589839, 0, 0, 589840, 0, 0, 589842, 0, 0, 589843, 0, 0, 589845, 0, 0, 589846, 0, 0, 589848, 0, 0, 589849, 0, 0, 655360, 0, 0, 655361, 0, 0, 655363, 0, 0, 655364, 0, 0, 655366, 0, 0, 655367, 0, 0, 655369, 0, 0, 655370, 0, 0, 655372, 0, 0, 655373, 0, 0, 655375, 0, 0, 655376, 0, 0, 655378, 0, 0, 655379, 0, 0, 655381, 0, 0, 655382, 0, 0, 655384, 0, 0, 655385, 0, 0 )
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="hero_on_the_board" parent="." instance=ExtResource( 2 )]
+position = Vector2( 193, 55 )
+
+[node name="hero_board_life" type="Label" parent="."]
+margin_left = 174.0
+margin_top = 25.0
+margin_right = 214.0
+margin_bottom = 39.0
+text = "3 HP"
+
+[node name="hero1" parent="." instance=ExtResource( 2 )]
+position = Vector2( 143, 103 )
+
+[node name="hero2" parent="." instance=ExtResource( 2 )]
+position = Vector2( 144, 153 )
+
+[node name="hero3" parent="." instance=ExtResource( 2 )]
+position = Vector2( 96, 103 )
+
+[node name="hero4" parent="." instance=ExtResource( 2 )]
+position = Vector2( 94, 151 )
+
+[node name="gold_amount" type="Label" parent="."]
+margin_left = 8.0
+margin_top = 10.0
+margin_right = 62.0
+margin_bottom = 24.0
+text = "Gold: 16"
+
+[node name="enemy1" parent="." instance=ExtResource( 3 )]
+position = Vector2( 336, 102 )
+
+[node name="enemy3" parent="." instance=ExtResource( 3 )]
+position = Vector2( 385, 102 )
+
+[node name="enemy4" parent="." instance=ExtResource( 3 )]
+position = Vector2( 384, 152 )
+
+[node name="enemy2" parent="." instance=ExtResource( 3 )]
+position = Vector2( 337, 151 )
+
+[node name="dice" parent="." instance=ExtResource( 4 )]
+position = Vector2( 121, 104 )
+
+[node name="dice2" parent="." instance=ExtResource( 4 )]
+position = Vector2( 120, 152 )
+
+[node name="dice3" parent="." instance=ExtResource( 4 )]
+position = Vector2( 166, 104 )
+
+[node name="dice4" parent="." instance=ExtResource( 4 )]
+position = Vector2( 165, 154 )
+
+[node name="dice5" parent="." instance=ExtResource( 4 )]
+position = Vector2( 316, 103 )
+
+[node name="dice6" parent="." instance=ExtResource( 4 )]
+position = Vector2( 315, 151 )
+
+[node name="dice7" parent="." instance=ExtResource( 4 )]
+position = Vector2( 361, 103 )
+
+[node name="dice8" parent="." instance=ExtResource( 4 )]
+position = Vector2( 360, 153 )
+
+[node name="button_start_adventure" type="Button" parent="."]
+margin_left = 398.0
+margin_top = 233.0
+margin_right = 462.0
+margin_bottom = 253.0
+text = "Start"
+
+[node name="button_rig_dice" type="Button" parent="."]
+margin_left = 15.0
+margin_top = 233.0
+margin_right = 79.0
+margin_bottom = 253.0
+text = "Rig Dice"
+
+[node name="button_shop" type="Button" parent="."]
+margin_left = 96.0
+margin_top = 233.0
+margin_right = 160.0
+margin_bottom = 253.0
+text = "Shop"
+
+[node name="damage_indicator" type="Sprite" parent="."]
+position = Vector2( 236, 127 )
+texture = ExtResource( 5 )
+
+[node name="hero_damage_sum" type="Label" parent="."]
+margin_left = 197.0
+margin_top = 120.0
+margin_right = 237.0
+margin_bottom = 134.0
+text = "32	"
+
+[node name="hero_life" type="Label" parent="."]
+margin_left = 113.0
+margin_top = 120.0
+margin_right = 153.0
+margin_bottom = 134.0
+text = "3 HP"
+
+[node name="enemy_life" type="Label" parent="."]
+margin_left = 328.0
+margin_top = 120.0
+margin_right = 368.0
+margin_bottom = 134.0
+text = "1 HP"
+
+[node name="enemy_damage_sum" type="Label" parent="."]
+margin_left = 253.0
+margin_top = 120.0
+margin_right = 293.0
+margin_bottom = 134.0
+text = "32	"
+
+[node name="timer_battle_tick" type="Timer" parent="."]
+
+[node name="battle_speed_pause" type="TextureButton" parent="."]
+margin_left = 420.0
+margin_top = 8.0
+margin_right = 436.0
+margin_bottom = 24.0
+texture_normal = ExtResource( 7 )
+
+[node name="battle_speed_slow" type="TextureButton" parent="."]
+margin_left = 401.0
+margin_top = 8.0
+margin_right = 417.0
+margin_bottom = 24.0
+texture_normal = ExtResource( 9 )
+
+[node name="battle_speed_normal" type="TextureButton" parent="."]
+margin_left = 436.0
+margin_top = 8.0
+margin_right = 452.0
+margin_bottom = 24.0
+texture_normal = ExtResource( 8 )
+
+[node name="battle_speed_fast" type="TextureButton" parent="."]
+margin_left = 455.0
+margin_top = 8.0
+margin_right = 471.0
+margin_bottom = 24.0
+texture_normal = ExtResource( 10 )
+
+[connection signal="pressed" from="button_start_adventure" to="." method="_on_button_start_adventure_pressed"]
+[connection signal="pressed" from="button_rig_dice" to="." method="_on_button_rig_dice_pressed"]
+[connection signal="pressed" from="button_shop" to="." method="_on_button_shop_pressed"]
+[connection signal="timeout" from="timer_battle_tick" to="." method="_on_timer_battle_tick_timeout"]
+[connection signal="pressed" from="battle_speed_pause" to="." method="_on_battle_speed_pause_pressed"]
+[connection signal="pressed" from="battle_speed_slow" to="." method="_on_battle_speed_slow_pressed"]
+[connection signal="pressed" from="battle_speed_normal" to="." method="_on_battle_speed_normal_pressed"]
+[connection signal="pressed" from="battle_speed_fast" to="." method="_on_battle_speed_fast_pressed"]

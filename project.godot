@@ -11,14 +11,18 @@ config_version=4
 [application]
 
 config/name="Dice Heroes"
+run/main_scene="res://game/game.tscn"
 config/icon="res://icon.png"
 
 [display]
 
-window/size/width=320
-window/size/height=180
-window/size/test_width=640
-window/size/test_height=360
+window/size/width=480
+window/size/height=270
+window/size/resizable=false
+window/size/test_width=960
+window/size/test_height=540
+window/stretch/mode="viewport"
+window/stretch/aspect="keep"
 
 [importer_defaults]
 
