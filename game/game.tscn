@@ -3,19 +3,22 @@
 [ext_resource path="res://game/assets/board_tilemap.tres" type="TileSet" id=1]
 [ext_resource path="res://game/heroes/hero.tscn" type="PackedScene" id=2]
 [ext_resource path="res://game/enemies/enemy.tscn" type="PackedScene" id=3]
-[ext_resource path="res://game/dice/dice.tscn" type="PackedScene" id=4]
 [ext_resource path="res://game/assets/damage_indicator..png" type="Texture" id=5]
 [ext_resource path="res://game/game.gd" type="Script" id=6]
 [ext_resource path="res://game/assets/user_interface/battle_speed_pause.png" type="Texture" id=7]
 [ext_resource path="res://game/assets/user_interface/battle_speed_1x.png" type="Texture" id=8]
 [ext_resource path="res://game/assets/user_interface/battle_speed_slow.png" type="Texture" id=9]
 [ext_resource path="res://game/assets/user_interface/battle_speed_2x.png" type="Texture" id=10]
+[ext_resource path="res://game/assets/hero_wizard.png" type="Texture" id=11]
 
 [node name="game" type="Node2D"]
 script = ExtResource( 6 )
+__meta__ = {
+"_edit_lock_": true
+}
 
 [node name="board" type="TileMap" parent="."]
-position = Vector2( 32, 40 )
+position = Vector2( 32, 48 )
 tile_set = ExtResource( 1 )
 cell_size = Vector2( 16, 16 )
 format = 1
@@ -24,27 +27,17 @@ __meta__ = {
 "_edit_lock_": true
 }
 
-[node name="hero_on_the_board" parent="." instance=ExtResource( 2 )]
-position = Vector2( 193, 55 )
-
-[node name="hero_board_life" type="Label" parent="."]
-margin_left = 174.0
-margin_top = 25.0
-margin_right = 214.0
-margin_bottom = 39.0
-text = "3 HP"
-
 [node name="hero1" parent="." instance=ExtResource( 2 )]
-position = Vector2( 143, 103 )
+position = Vector2( 141, 113 )
 
 [node name="hero2" parent="." instance=ExtResource( 2 )]
-position = Vector2( 144, 153 )
+position = Vector2( 142, 163 )
 
 [node name="hero3" parent="." instance=ExtResource( 2 )]
-position = Vector2( 96, 103 )
+position = Vector2( 94, 113 )
 
 [node name="hero4" parent="." instance=ExtResource( 2 )]
-position = Vector2( 94, 151 )
+position = Vector2( 92, 161 )
 
 [node name="gold_amount" type="Label" parent="."]
 margin_left = 8.0
@@ -54,40 +47,16 @@ margin_bottom = 24.0
 text = "Gold: 16"
 
 [node name="enemy1" parent="." instance=ExtResource( 3 )]
-position = Vector2( 336, 102 )
+position = Vector2( 340, 112 )
 
 [node name="enemy3" parent="." instance=ExtResource( 3 )]
-position = Vector2( 385, 102 )
+position = Vector2( 389, 112 )
 
 [node name="enemy4" parent="." instance=ExtResource( 3 )]
-position = Vector2( 384, 152 )
+position = Vector2( 388, 162 )
 
 [node name="enemy2" parent="." instance=ExtResource( 3 )]
-position = Vector2( 337, 151 )
-
-[node name="dice" parent="." instance=ExtResource( 4 )]
-position = Vector2( 121, 104 )
-
-[node name="dice2" parent="." instance=ExtResource( 4 )]
-position = Vector2( 120, 152 )
-
-[node name="dice3" parent="." instance=ExtResource( 4 )]
-position = Vector2( 166, 104 )
-
-[node name="dice4" parent="." instance=ExtResource( 4 )]
-position = Vector2( 165, 154 )
-
-[node name="dice5" parent="." instance=ExtResource( 4 )]
-position = Vector2( 316, 103 )
-
-[node name="dice6" parent="." instance=ExtResource( 4 )]
-position = Vector2( 315, 151 )
-
-[node name="dice7" parent="." instance=ExtResource( 4 )]
-position = Vector2( 361, 103 )
-
-[node name="dice8" parent="." instance=ExtResource( 4 )]
-position = Vector2( 360, 153 )
+position = Vector2( 341, 161 )
 
 [node name="button_start_adventure" type="Button" parent="."]
 margin_left = 398.0
@@ -111,35 +80,35 @@ margin_bottom = 253.0
 text = "Shop"
 
 [node name="damage_indicator" type="Sprite" parent="."]
-position = Vector2( 236, 127 )
+position = Vector2( 240, 137 )
 texture = ExtResource( 5 )
 
 [node name="hero_damage_sum" type="Label" parent="."]
-margin_left = 197.0
-margin_top = 120.0
-margin_right = 237.0
-margin_bottom = 134.0
+margin_left = 201.0
+margin_top = 130.0
+margin_right = 241.0
+margin_bottom = 144.0
 text = "32	"
 
-[node name="hero_life" type="Label" parent="."]
-margin_left = 113.0
-margin_top = 120.0
-margin_right = 153.0
-margin_bottom = 134.0
+[node name="hero_life_total" type="Label" parent="."]
+margin_left = 111.0
+margin_top = 130.0
+margin_right = 151.0
+margin_bottom = 144.0
 text = "3 HP"
 
-[node name="enemy_life" type="Label" parent="."]
-margin_left = 328.0
-margin_top = 120.0
-margin_right = 368.0
-margin_bottom = 134.0
+[node name="enemy_life_total" type="Label" parent="."]
+margin_left = 332.0
+margin_top = 130.0
+margin_right = 372.0
+margin_bottom = 144.0
 text = "1 HP"
 
 [node name="enemy_damage_sum" type="Label" parent="."]
-margin_left = 253.0
-margin_top = 120.0
-margin_right = 293.0
-margin_bottom = 134.0
+margin_left = 257.0
+margin_top = 130.0
+margin_right = 297.0
+margin_bottom = 144.0
 text = "32	"
 
 [node name="timer_battle_tick" type="Timer" parent="."]
@@ -171,6 +140,17 @@ margin_top = 8.0
 margin_right = 471.0
 margin_bottom = 24.0
 texture_normal = ExtResource( 10 )
+
+[node name="hero_on_the_board" type="Sprite" parent="."]
+position = Vector2( 47, 57 )
+texture = ExtResource( 11 )
+
+[node name="hero_board_life" type="Label" parent="hero_on_the_board"]
+margin_left = -15.0
+margin_top = -25.0
+margin_right = 25.0
+margin_bottom = -11.0
+text = "3 HP"
 
 [connection signal="pressed" from="button_start_adventure" to="." method="_on_button_start_adventure_pressed"]
 [connection signal="pressed" from="button_rig_dice" to="." method="_on_button_rig_dice_pressed"]
