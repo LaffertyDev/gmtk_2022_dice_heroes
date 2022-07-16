@@ -151,6 +151,13 @@ position = Vector2( 383, 161 )
 [node name="enemy_spawner2" parent="." instance=ExtResource( 3 )]
 position = Vector2( 332, 161 )
 
+[node name="victory_dialog" type="AcceptDialog" parent="."]
+margin_right = 83.0
+margin_bottom = 58.0
+window_title = "You Won!"
+
+[connection signal="final_zone_completed" from="board" to="." method="_on_board_final_zone_completed"]
+[connection signal="new_zone_entered" from="board" to="." method="_on_board_new_zone_entered"]
 [connection signal="pressed" from="button_start_adventure" to="." method="_on_button_start_adventure_pressed"]
 [connection signal="pressed" from="button_rig_dice" to="." method="_on_button_rig_dice_pressed"]
 [connection signal="pressed" from="button_shop" to="." method="_on_button_shop_pressed"]

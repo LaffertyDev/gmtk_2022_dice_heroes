@@ -78,7 +78,7 @@ func _on_battle_speed_pause_pressed():
 func _on_battle_speed_slow_pressed():
 	print("Battle Speed - Slow")
 	$timer_battle_tick.paused = false
-	$timer_battle_tick.wait_time = 2
+	$timer_battle_tick.wait_time = 4
 	pass
 
 func _on_battle_speed_normal_pressed():
@@ -90,7 +90,7 @@ func _on_battle_speed_normal_pressed():
 func _on_battle_speed_fast_pressed():
 	print("Battle Speed - Fast")
 	$timer_battle_tick.paused = false
-	$timer_battle_tick.wait_time = 0.5
+	$timer_battle_tick.wait_time = 0.25
 	pass
 
 func _set_hero_damage(damage):
@@ -191,3 +191,8 @@ func _on_board_new_zone_entered(enemies):
 			index += 1
 	_set_enemy_life_total(index * 2)
 	$timer_battle_tick.start()
+
+func _on_board_final_zone_completed():
+	print("Final Board Completed")
+	_hide_battle_state()
+	$victory_dialog.popup_centered_ratio(0.5)
