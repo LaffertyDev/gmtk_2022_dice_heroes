@@ -21,12 +21,38 @@ var can_crit = false
 var minimum = 1
 var maximum = 6
 var rng = RandomNumberGenerator.new()
+export var dice_type = "D6"
 
 func _ready():
 	rng.randomize()
 	self.input_pickable = IsHeroDice
 	if (IsHeroDice):
 		add_to_group("heroes_dice")
+	if (dice_type == "D2"):
+		$Sprite.texture = load("res://game/assets/dice/dice_d2.png")
+		minimum = 1
+		maximum = 2
+	elif (dice_type == "D4"):
+		$Sprite.texture = load("res://game/assets/dice/dice_d4.png")
+		minimum = 1
+		maximum = 4
+	elif (dice_type == "D6"):
+		$Sprite.texture = load("res://game/assets/dice/dice_d6.png")
+		minimum = 1
+		maximum = 6
+	elif (dice_type == "D8"):
+		$Sprite.texture = load("res://game/assets/dice/dice_d8.png")
+		minimum = 1
+		maximum = 8
+	elif (dice_type == "D12"):
+		$Sprite.texture = load("res://game/assets/dice/dice_d12.png")
+		minimum = 1
+		maximum = 12
+	elif (dice_type == "D20"):
+		$Sprite.texture = load("res://game/assets/dice/dice_d20.png")
+		minimum = 1
+		maximum = 20
+
 
 func _on_dice_mouse_entered():
 	is_mouse_over = true

@@ -2,7 +2,7 @@ extends Node2D
 
 var hero_life_total = 0
 var enemy_life_total = 0
-var available_gold = 600
+var available_gold = 15
 var is_adventure_started = false
 
 var available_characters = []
@@ -131,6 +131,7 @@ func _handle_enemies_died():
 	for enemy in enemies:
 		enemy.get_parent().remove_child(enemy)
 		enemy.queue_free()
+	_set_available_gold(available_gold + enemies.size())
 	$timer_battle_tick.stop()
 	emit_signal("battle_finished", true)
 
@@ -159,6 +160,7 @@ func _on_character_shop_purchased_dice(purchased_dice):
 	_set_available_gold(available_gold - purchased_dice.cost)
 	var dice = load("res://game/dice/dice.tscn").instance()
 	dice.IsHeroDice = true
+	dice.dice_type = purchased_dice.dice_type
 	dice.position = _get_next_dice_spawn_location()
 	add_child(dice)
 

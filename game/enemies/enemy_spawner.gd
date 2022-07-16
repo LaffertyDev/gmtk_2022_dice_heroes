@@ -6,6 +6,6 @@ func _ready():
 func has_enemy():
 	return get_children().size() > 0
 
-func spawn_enemy(enemy):
+func spawn_enemy(_enemy):
 	var enemy_res = load("res://game/enemies/enemy.tscn")
 	add_child(enemy_res.instance())
