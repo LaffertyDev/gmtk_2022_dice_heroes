@@ -7,21 +7,27 @@ var is_adventure_started = false
 
 var available_characters = []
 
+signal battle_finished(did_heroes_win)
+signal heroes_health_change(health)
+
 func _ready():
 	randomize()
 	available_characters.append({"name": "Jane Doe", "sprite_name": "hero_oldlady.png", "cost": 20, "is_purchased": false})
 	available_characters.append({"name": "Jane Doe", "sprite_name": "hero_oldlady.png", "cost": 25, "is_purchased": false})
+	var _ig = self.connect("battle_finished", $board, "_on_battle_finished")
+	var _ig2 = self.connect("heroes_health_change", $board, "_on_heroes_health_changed")
 	_hide_battle_state()
 	_set_available_gold(available_gold)
 	_set_hero_life_total(10)
-	_set_enemy_life_total(0)
+	_set_enemy_life_total(1)
 
 func _on_button_start_adventure_pressed():
 	$timer_battle_tick.start()
 	is_adventure_started = true
 	_set_hero_life_total(10)
-	_set_enemy_life_total(10)
+	_set_enemy_life_total(3)
 	_show_battle_state()
+	emit_signal("battle_finished", true)
 
 func _on_button_shop_pressed():
 	$character_shop.popup_centered_ratio(1.0)
@@ -96,7 +102,7 @@ func _set_enemy_damage(damage):
 func _set_hero_life_total(health):
 	hero_life_total = health
 	$hero_life_total.text = str(hero_life_total)
-	$hero_on_the_board/hero_board_life.text = str(hero_life_total)
+	emit_signal("heroes_health_change", hero_life_total)
 
 func _set_enemy_life_total(health):
 	enemy_life_total = health
@@ -115,18 +121,20 @@ func _set_available_gold(amount):
 	$gold_amount.text = "Gold: " + str(amount)
 
 func _handle_heroes_died():
-	print("heroes died, reset board and reset round")
+	emit_signal("battle_finished", false)
 	$timer_battle_tick.stop()
 	is_adventure_started = false
 	_hide_battle_state()
 
 func _handle_enemies_died():
-	print("enemies died, advance heroes to next battle")
-
-func _show_battle_state():
 	var enemies = get_tree().get_nodes_in_group("enemies")
 	for enemy in enemies:
-		enemy.show()
+		enemy.get_parent().remove_child(enemy)
+		enemy.queue_free()
+	$timer_battle_tick.stop()
+	emit_signal("battle_finished", true)
+
+func _show_battle_state():
 	$enemy_life_total.show()
 	$button_start_adventure.hide()
 	$damage_indicator.show()
@@ -136,14 +144,15 @@ func _show_battle_state():
 func _hide_battle_state():
 	var enemies = get_tree().get_nodes_in_group("enemies")
 	for enemy in enemies:
-		enemy.hide()
+		enemy.get_parent().remove_child(enemy)
+		enemy.queue_free()
 	$enemy_life_total.hide()
 	$damage_indicator.hide()
 	$hero_damage_sum.hide()
 	$enemy_damage_sum.hide()
 	$button_start_adventure.show()
 
-func _on_dice_shop_upgraded_dice(upgraded_dice, cost):
+func _on_dice_shop_upgraded_dice(_upgraded_dice, cost):
 	_set_available_gold(available_gold - cost)
 
 func _on_character_shop_purchased_dice(purchased_dice):
@@ -172,3 +181,13 @@ func _get_next_hero_spawn_location():
 	for spawn_location in spawn_locations:
 		if (!spawn_location.has_hero):
 			return spawn_location.node
+
+func _on_board_new_zone_entered(enemies):
+	var index = 0
+	var spawners = get_tree().get_nodes_in_group("enemy_spawners")
+	for spawner in spawners:
+		if (index < enemies.size()):
+			spawner.spawn_enemy(enemies[index])
+			index += 1
+	_set_enemy_life_total(index * 2)
+	$timer_battle_tick.start()
