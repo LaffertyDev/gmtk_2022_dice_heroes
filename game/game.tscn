@@ -3,13 +3,13 @@
 [ext_resource path="res://game/board/board.tscn" type="PackedScene" id=1]
 [ext_resource path="res://game/heroes/hero.tscn" type="PackedScene" id=2]
 [ext_resource path="res://game/enemies/enemy_spawner.tscn" type="PackedScene" id=3]
-[ext_resource path="res://game/dice/dice.tscn" type="PackedScene" id=4]
 [ext_resource path="res://game/assets/damage_indicator..png" type="Texture" id=5]
 [ext_resource path="res://game/game.gd" type="Script" id=6]
 [ext_resource path="res://game/assets/user_interface/battle_speed_pause.png" type="Texture" id=7]
 [ext_resource path="res://game/assets/user_interface/battle_speed_1x.png" type="Texture" id=8]
 [ext_resource path="res://game/assets/user_interface/battle_speed_slow.png" type="Texture" id=9]
 [ext_resource path="res://game/assets/user_interface/battle_speed_2x.png" type="Texture" id=10]
+[ext_resource path="res://game/dice/dice_tray.tscn" type="PackedScene" id=11]
 [ext_resource path="res://game/character_shop/character_shop.tscn" type="PackedScene" id=12]
 [ext_resource path="res://game/dice_shop/dice_shop.tscn" type="PackedScene" id=13]
 
@@ -131,14 +131,6 @@ texture_normal = ExtResource( 10 )
 
 [node name="dice_shop" parent="." instance=ExtResource( 13 )]
 
-[node name="dice" parent="." instance=ExtResource( 4 )]
-position = Vector2( 149, 24 )
-IsHeroDice = true
-
-[node name="dice2" parent="." instance=ExtResource( 4 )]
-position = Vector2( 111, 24 )
-IsHeroDice = true
-
 [node name="enemy_spawner" parent="." instance=ExtResource( 3 )]
 position = Vector2( 332, 112 )
 
@@ -155,6 +147,10 @@ position = Vector2( 332, 161 )
 margin_right = 83.0
 margin_bottom = 58.0
 window_title = "You Won!"
+
+[node name="dice_tray" parent="." instance=ExtResource( 11 )]
+position = Vector2( 224, 97 )
+z_index = -1
 
 [connection signal="final_zone_completed" from="board" to="." method="_on_board_final_zone_completed"]
 [connection signal="new_zone_entered" from="board" to="." method="_on_board_new_zone_entered"]

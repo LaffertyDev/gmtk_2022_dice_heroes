@@ -4,6 +4,7 @@
 [ext_resource path="res://game/dice/dice.gd" type="Script" id=2]
 
 [sub_resource type="RectangleShape2D" id=1]
+extents = Vector2( 8, 8 )
 
 [node name="dice" type="KinematicBody2D"]
 input_pickable = true
@@ -11,8 +12,10 @@ script = ExtResource( 2 )
 
 [node name="Sprite" type="Sprite" parent="."]
 texture = ExtResource( 1 )
+centered = false
 
 [node name="mouse_collision_shape" type="CollisionShape2D" parent="."]
+position = Vector2( 8, 8 )
 shape = SubResource( 1 )
 
 [connection signal="input_event" from="." to="." method="_on_dice_input_event"]

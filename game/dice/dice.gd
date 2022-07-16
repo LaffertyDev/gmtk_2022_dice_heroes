@@ -70,6 +70,8 @@ func _on_dice_input_event(_viewport, event, _shape_idx):
 			is_grabbing = event.pressed
 			grabbed_offset = position - get_global_mouse_position()
 			cancel_position = position
+			if current_slot != null:
+				current_slot._on_picked_up(self)
 		elif is_grabbing:
 			# verify that we are in bounds, otherwise reset
 			if (next_drop_target != null):
@@ -121,3 +123,6 @@ func raise_maximum():
 
 func give_critical():
 	can_crit = true
+
+func set_collision_disabled(is_disabled):
+	$mouse_collision_shape.disabled = is_disabled

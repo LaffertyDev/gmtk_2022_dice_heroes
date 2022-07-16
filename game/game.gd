@@ -16,6 +16,7 @@ func _ready():
 	available_characters.append({"name": "Jane Doe", "sprite_name": "hero_oldlady.png", "cost": 25, "is_purchased": false})
 	var _ig = self.connect("battle_finished", $board, "_on_battle_finished")
 	var _ig2 = self.connect("heroes_health_change", $board, "_on_heroes_health_changed")
+	var _ig3 = $character_shop.connect("purchased_dice", $dice_tray, "_on_new_dice_purchased")
 	_hide_battle_state()
 	_set_available_gold(available_gold)
 	_set_hero_life_total(10)
@@ -141,6 +142,7 @@ func _show_battle_state():
 	$damage_indicator.show()
 	$hero_damage_sum.show()
 	$enemy_damage_sum.show()
+	$dice_tray.hide()
 
 func _hide_battle_state():
 	var enemies = get_tree().get_nodes_in_group("enemies")
@@ -152,17 +154,13 @@ func _hide_battle_state():
 	$hero_damage_sum.hide()
 	$enemy_damage_sum.hide()
 	$button_start_adventure.show()
+	$dice_tray.show()
 
 func _on_dice_shop_upgraded_dice(_upgraded_dice, cost):
 	_set_available_gold(available_gold - cost)
 
 func _on_character_shop_purchased_dice(purchased_dice):
 	_set_available_gold(available_gold - purchased_dice.cost)
-	var dice = load("res://game/dice/dice.tscn").instance()
-	dice.IsHeroDice = true
-	dice.dice_type = purchased_dice.dice_type
-	dice.position = _get_next_dice_spawn_location()
-	add_child(dice)
 
 func _on_character_shop_purchased_hero(characterObj):
 	_set_available_gold(available_gold - characterObj.cost)
