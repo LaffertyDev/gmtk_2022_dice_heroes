@@ -7,4 +7,5 @@ func roll_dice():
 	if $dice_hero_drop_target.has_dice:
 		return $dice_hero_drop_target.slotted_dice.roll_dice()
 	else:
+		# coin flip
 		return randi()%2 + 1

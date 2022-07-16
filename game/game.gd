@@ -2,7 +2,7 @@ extends Node2D
 
 var hero_life_total = 0
 var enemy_life_total = 0
-var available_gold = 30
+var available_gold = 600
 var is_adventure_started = false
 
 var available_characters = []
@@ -27,6 +27,9 @@ func _on_button_shop_pressed():
 	$character_shop.popup_centered_ratio(1.0)
 	print("Open up the shop to upgrade dice if the battle has not started yet")
 	pass
+
+func show_dice_shop(dice):
+	$dice_shop.reveal_with_dice(dice)
 
 func _on_button_rig_dice_pressed():
 	print("Rig the next battle tick")
@@ -140,12 +143,25 @@ func _hide_battle_state():
 	$enemy_damage_sum.hide()
 	$button_start_adventure.show()
 
+func _on_dice_shop_upgraded_dice(upgraded_dice, cost):
+	_set_available_gold(available_gold - cost)
+
+func _on_character_shop_purchased_dice(purchased_dice):
+	_set_available_gold(available_gold - purchased_dice.cost)
+	var dice = load("res://game/dice/dice.tscn").instance()
+	dice.IsHeroDice = true
+	dice.position = _get_next_dice_spawn_location()
+	add_child(dice)
+
 func _on_character_shop_purchased_hero(characterObj):
 	_set_available_gold(available_gold - characterObj.cost)
 	var hero = load("res://game/heroes/hero.tscn")
 	var next_spawn_location = _get_next_hero_spawn_location()
 	if (next_spawn_location != null):
 		next_spawn_location.add_child(hero.instance())
+
+func _get_next_dice_spawn_location():
+	return Vector2(64, 24)
 
 func _get_next_hero_spawn_location():
 	var spawn_locations = []

@@ -16,8 +16,17 @@ var screen_boundary_drag_drop = 16
 var next_drop_target = null
 var current_slot = null
 
+var can_crit = false
+
+var minimum = 1
+var maximum = 6
+var rng = RandomNumberGenerator.new()
+
 func _ready():
+	rng.randomize()
 	self.input_pickable = IsHeroDice
+	if (IsHeroDice):
+		add_to_group("heroes_dice")
 
 func _on_dice_mouse_entered():
 	is_mouse_over = true
@@ -73,4 +82,16 @@ func clear_drop_target(_target_to_forget):
 	next_drop_target = null
 
 func roll_dice():
-	return randi()%6 + 1
+	var number_rolled = rng.randi_range(minimum, maximum)
+	if can_crit && number_rolled == maximum:
+		return number_rolled * 2 # crit
+	return number_rolled
+
+func raise_minimum():
+	minimum += 1
+
+func raise_maximum():
+	maximum += 1
+
+func give_critical():
+	can_crit = true

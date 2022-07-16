@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=2]
+[gd_scene load_steps=14 format=2]
 
 [ext_resource path="res://game/assets/board_tilemap.tres" type="TileSet" id=1]
 [ext_resource path="res://game/heroes/hero.tscn" type="PackedScene" id=2]
@@ -12,6 +12,7 @@
 [ext_resource path="res://game/assets/user_interface/battle_speed_2x.png" type="Texture" id=10]
 [ext_resource path="res://game/assets/hero_wizard.png" type="Texture" id=11]
 [ext_resource path="res://game/character_shop/character_shop.tscn" type="PackedScene" id=12]
+[ext_resource path="res://game/dice_shop/dice_shop.tscn" type="PackedScene" id=13]
 
 [node name="game" type="Node2D"]
 script = ExtResource( 6 )
@@ -160,6 +161,8 @@ text = "3 HP"
 
 [node name="character_shop" parent="." instance=ExtResource( 12 )]
 
+[node name="dice_shop" parent="." instance=ExtResource( 13 )]
+
 [node name="dice" parent="." instance=ExtResource( 4 )]
 position = Vector2( 149, 24 )
 IsHeroDice = true
@@ -176,4 +179,6 @@ IsHeroDice = true
 [connection signal="pressed" from="battle_speed_slow" to="." method="_on_battle_speed_slow_pressed"]
 [connection signal="pressed" from="battle_speed_normal" to="." method="_on_battle_speed_normal_pressed"]
 [connection signal="pressed" from="battle_speed_fast" to="." method="_on_battle_speed_fast_pressed"]
+[connection signal="purchased_dice" from="character_shop" to="." method="_on_character_shop_purchased_dice"]
 [connection signal="purchased_hero" from="character_shop" to="." method="_on_character_shop_purchased_hero"]
+[connection signal="upgraded_dice" from="dice_shop" to="." method="_on_dice_shop_upgraded_dice"]
