@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/hero_knight_helm.png-8f8567ea208741687d4460469fea56ec.stex"
+path="res://.import/hero_lilly.png-25f759ca1be7e93dc04b06793a1525d0.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://game/assets/hero_knight_helm.png"
-dest_files=[ "res://.import/hero_knight_helm.png-8f8567ea208741687d4460469fea56ec.stex" ]
+source_file="res://game/assets/heroes/hero_lilly.png"
+dest_files=[ "res://.import/hero_lilly.png-25f759ca1be7e93dc04b06793a1525d0.stex" ]
 
 [params]
 

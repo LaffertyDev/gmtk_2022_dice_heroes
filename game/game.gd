@@ -12,8 +12,9 @@ signal heroes_health_change(health)
 
 func _ready():
 	randomize()
-	available_characters.append({"name": "Jane Doe", "sprite_name": "hero_oldlady.png", "cost": 20, "is_purchased": false})
-	available_characters.append({"name": "Jane Doe", "sprite_name": "hero_oldlady.png", "cost": 25, "is_purchased": false})
+	available_characters.append({"name": "Jackson", "hero_type": "jackson", "sprite_name": "hero_jackson.png", "cost": 10, "is_purchased": false})
+	available_characters.append({"name": "Lilly", "hero_type": "lilly","sprite_name": "hero_lilly.png", "cost": 10, "is_purchased": false})
+	available_characters.append({"name": "Leah", "hero_type": "leah","sprite_name": "hero_leah.png", "cost": 10, "is_purchased": false})
 	var _ig = self.connect("battle_finished", $board, "_on_battle_finished")
 	var _ig2 = self.connect("heroes_health_change", $board, "_on_heroes_health_changed")
 	var _ig3 = $character_shop.connect("purchased_dice", $dice_tray, "_on_new_dice_purchased")
@@ -165,9 +166,11 @@ func _on_character_shop_purchased_dice(purchased_dice):
 func _on_character_shop_purchased_hero(characterObj):
 	_set_available_gold(available_gold - characterObj.cost)
 	var hero = load("res://game/heroes/hero.tscn")
+	var hero_ins = hero.instance()
+	hero_ins.hero_type = characterObj.hero_type
 	var next_spawn_location = _get_next_hero_spawn_location()
 	if (next_spawn_location != null):
-		next_spawn_location.add_child(hero.instance())
+		next_spawn_location.add_child(hero_ins)
 
 func _get_next_dice_spawn_location():
 	return Vector2(64, 24)
@@ -182,14 +185,14 @@ func _get_next_hero_spawn_location():
 		if (!spawn_location.has_hero):
 			return spawn_location.node
 
-func _on_board_new_zone_entered(enemies):
+func _on_board_new_zone_entered(battle):
 	var index = 0
 	var spawners = get_tree().get_nodes_in_group("enemy_spawners")
 	for spawner in spawners:
-		if (index < enemies.size()):
-			spawner.spawn_enemy(enemies[index])
+		if (index < battle.enemies.size()):
+			spawner.spawn_enemy(battle.enemies[index])
 			index += 1
-	_set_enemy_life_total(index * 2)
+	_set_enemy_life_total(battle.enemy_group_health)
 	$timer_battle_tick.start()
 
 func _on_board_final_zone_completed():

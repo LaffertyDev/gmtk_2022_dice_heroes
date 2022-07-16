@@ -10,7 +10,9 @@ var grid_border_spacing_width = 4
 var grid_border_spacing_height = 4
 
 func _ready():
-	pass
+	# start with two coins
+	call_deferred("_on_new_dice_purchased", {"dice_type": "D2"})
+	call_deferred("_on_new_dice_purchased", {"dice_type": "D2"})
 
 func _on_picked_up(dice):
 	_on_dice_drop_target_body_entered(dice)

@@ -26,7 +26,7 @@ func _on_about_to_show():
 
 	var charactersEligibleForPurchase = get_eligible_characters()
 	for character in charactersEligibleForPurchase:
-		var sprite_res = load("res://game/assets/" + character.sprite_name)
+		var sprite_res = load("res://game/assets/heroes/" + character.sprite_name)
 
 		var vbox_container = VBoxContainer.new()
 		var char_label = Label.new()
