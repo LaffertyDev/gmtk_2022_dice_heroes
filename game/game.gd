@@ -2,10 +2,14 @@ extends Node2D
 
 var hero_life_total = 0
 var enemy_life_total = 0
+var available_gold = 10
 
 func _ready():
 	randomize()
 	_hide_battle_state()
+	_set_available_gold(available_gold)
+	_set_hero_life_total(10)
+	_set_enemy_life_total(0)
 
 func _on_button_start_adventure_pressed():
 	$timer_battle_tick.start()
@@ -14,6 +18,7 @@ func _on_button_start_adventure_pressed():
 	_show_battle_state()
 
 func _on_button_shop_pressed():
+	$character_shop.popup_centered_ratio(1.0)
 	print("Open up the shop to upgrade dice if the battle has not started yet")
 	pass
 
@@ -82,7 +87,7 @@ func _set_enemy_damage(damage):
 func _set_hero_life_total(health):
 	hero_life_total = health
 	$hero_life_total.text = str(hero_life_total)
-	$hero_board_life.text = str(hero_life_total)
+	$hero_on_the_board/hero_board_life.text = str(hero_life_total)
 
 func _set_enemy_life_total(health):
 	enemy_life_total = health
@@ -96,6 +101,9 @@ func _set_battle_indicator_direction(direction):
 	elif (direction == 'draw'):
 		$damage_indicator.rotation_degrees = 90
 
+func _set_available_gold(amount):
+	available_gold = amount
+	$gold_amount.text = "Gold: " + str(amount)
 
 func _handle_heroes_died():
 	print("heroes died, reset board and reset round")
@@ -124,3 +132,21 @@ func _hide_battle_state():
 	$hero_damage_sum.hide()
 	$enemy_damage_sum.hide()
 	$button_start_adventure.show()
+
+func _on_character_shop_purchased_hero(characterObj):
+	print(characterObj.name)
+	_set_available_gold(available_gold - characterObj.cost)
+	var hero = load("res://game/heroes/hero.tscn")
+	var next_spawn_location = _get_next_hero_spawn_location()
+	if (next_spawn_location != null):
+		next_spawn_location.add_child(hero.instance())
+
+func _get_next_hero_spawn_location():
+	var spawn_locations = []
+	for child in self.get_children():
+		if child.name.begins_with("hero_spawn_"):
+			spawn_locations.append({"index": child.name.substr(child.name.length() - 1), "has_hero": child.get_children().size() > 0, "node": child})
+
+	for spawn_location in spawn_locations:
+		if (!spawn_location.has_hero):
+			return spawn_location.node

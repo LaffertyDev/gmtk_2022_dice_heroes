@@ -1,8 +1,9 @@
-[gd_scene load_steps=11 format=2]
+[gd_scene load_steps=12 format=2]
 
 [ext_resource path="res://game/assets/board_tilemap.tres" type="TileSet" id=1]
 [ext_resource path="res://game/heroes/hero.tscn" type="PackedScene" id=2]
 [ext_resource path="res://game/enemies/enemy.tscn" type="PackedScene" id=3]
+[ext_resource path="res://game/character_shop/character_shop.tscn" type="PackedScene" id=4]
 [ext_resource path="res://game/assets/damage_indicator..png" type="Texture" id=5]
 [ext_resource path="res://game/game.gd" type="Script" id=6]
 [ext_resource path="res://game/assets/user_interface/battle_speed_pause.png" type="Texture" id=7]
@@ -27,23 +28,25 @@ __meta__ = {
 "_edit_lock_": true
 }
 
-[node name="hero1" parent="." instance=ExtResource( 2 )]
-position = Vector2( 141, 113 )
+[node name="hero_spawn_1" type="Node2D" parent="."]
+position = Vector2( 146, 112 )
 
-[node name="hero2" parent="." instance=ExtResource( 2 )]
-position = Vector2( 142, 163 )
+[node name="hero1" parent="hero_spawn_1" instance=ExtResource( 2 )]
 
-[node name="hero3" parent="." instance=ExtResource( 2 )]
-position = Vector2( 94, 113 )
+[node name="hero_spawn_2" type="Node2D" parent="."]
+position = Vector2( 146, 161 )
 
-[node name="hero4" parent="." instance=ExtResource( 2 )]
-position = Vector2( 92, 161 )
+[node name="hero_spawn_3" type="Node2D" parent="."]
+position = Vector2( 86, 112 )
+
+[node name="hero_spawn_4" type="Node2D" parent="."]
+position = Vector2( 86, 161 )
 
 [node name="gold_amount" type="Label" parent="."]
-margin_left = 8.0
-margin_top = 10.0
-margin_right = 62.0
-margin_bottom = 24.0
+margin_left = 216.0
+margin_top = 8.0
+margin_right = 270.0
+margin_bottom = 22.0
 text = "Gold: 16"
 
 [node name="enemy1" parent="." instance=ExtResource( 3 )]
@@ -59,24 +62,24 @@ position = Vector2( 388, 162 )
 position = Vector2( 341, 161 )
 
 [node name="button_start_adventure" type="Button" parent="."]
-margin_left = 398.0
-margin_top = 233.0
-margin_right = 462.0
-margin_bottom = 253.0
+margin_left = 401.0
+margin_top = 239.0
+margin_right = 465.0
+margin_bottom = 259.0
 text = "Start"
 
 [node name="button_rig_dice" type="Button" parent="."]
-margin_left = 15.0
-margin_top = 233.0
-margin_right = 79.0
-margin_bottom = 253.0
+margin_left = 14.0
+margin_top = 236.0
+margin_right = 78.0
+margin_bottom = 256.0
 text = "Rig Dice"
 
 [node name="button_shop" type="Button" parent="."]
-margin_left = 96.0
-margin_top = 233.0
-margin_right = 160.0
-margin_bottom = 253.0
+margin_left = 94.0
+margin_top = 236.0
+margin_right = 158.0
+margin_bottom = 256.0
 text = "Shop"
 
 [node name="damage_indicator" type="Sprite" parent="."]
@@ -152,6 +155,8 @@ margin_right = 25.0
 margin_bottom = -11.0
 text = "3 HP"
 
+[node name="character_shop" parent="." instance=ExtResource( 4 )]
+
 [connection signal="pressed" from="button_start_adventure" to="." method="_on_button_start_adventure_pressed"]
 [connection signal="pressed" from="button_rig_dice" to="." method="_on_button_rig_dice_pressed"]
 [connection signal="pressed" from="button_shop" to="." method="_on_button_shop_pressed"]
@@ -160,3 +165,4 @@ text = "3 HP"
 [connection signal="pressed" from="battle_speed_slow" to="." method="_on_battle_speed_slow_pressed"]
 [connection signal="pressed" from="battle_speed_normal" to="." method="_on_battle_speed_normal_pressed"]
 [connection signal="pressed" from="battle_speed_fast" to="." method="_on_battle_speed_fast_pressed"]
+[connection signal="purchased_hero" from="character_shop" to="." method="_on_character_shop_purchased_hero"]
