@@ -2,10 +2,15 @@ extends Node2D
 
 var hero_life_total = 0
 var enemy_life_total = 0
-var available_gold = 10
+var available_gold = 30
+var is_adventure_started = false
+
+var available_characters = []
 
 func _ready():
 	randomize()
+	available_characters.append({"name": "Jane Doe", "sprite_name": "hero_oldlady.png", "cost": 20, "is_purchased": false})
+	available_characters.append({"name": "Jane Doe", "sprite_name": "hero_oldlady.png", "cost": 25, "is_purchased": false})
 	_hide_battle_state()
 	_set_available_gold(available_gold)
 	_set_hero_life_total(10)
@@ -13,6 +18,7 @@ func _ready():
 
 func _on_button_start_adventure_pressed():
 	$timer_battle_tick.start()
+	is_adventure_started = true
 	_set_hero_life_total(10)
 	_set_enemy_life_total(10)
 	_show_battle_state()
@@ -108,6 +114,7 @@ func _set_available_gold(amount):
 func _handle_heroes_died():
 	print("heroes died, reset board and reset round")
 	$timer_battle_tick.stop()
+	is_adventure_started = false
 	_hide_battle_state()
 
 func _handle_enemies_died():
@@ -134,7 +141,6 @@ func _hide_battle_state():
 	$button_start_adventure.show()
 
 func _on_character_shop_purchased_hero(characterObj):
-	print(characterObj.name)
 	_set_available_gold(available_gold - characterObj.cost)
 	var hero = load("res://game/heroes/hero.tscn")
 	var next_spawn_location = _get_next_hero_spawn_location()

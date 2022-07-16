@@ -1,9 +1,9 @@
-[gd_scene load_steps=12 format=2]
+[gd_scene load_steps=13 format=2]
 
 [ext_resource path="res://game/assets/board_tilemap.tres" type="TileSet" id=1]
 [ext_resource path="res://game/heroes/hero.tscn" type="PackedScene" id=2]
 [ext_resource path="res://game/enemies/enemy.tscn" type="PackedScene" id=3]
-[ext_resource path="res://game/character_shop/character_shop.tscn" type="PackedScene" id=4]
+[ext_resource path="res://game/dice/dice.tscn" type="PackedScene" id=4]
 [ext_resource path="res://game/assets/damage_indicator..png" type="Texture" id=5]
 [ext_resource path="res://game/game.gd" type="Script" id=6]
 [ext_resource path="res://game/assets/user_interface/battle_speed_pause.png" type="Texture" id=7]
@@ -11,6 +11,7 @@
 [ext_resource path="res://game/assets/user_interface/battle_speed_slow.png" type="Texture" id=9]
 [ext_resource path="res://game/assets/user_interface/battle_speed_2x.png" type="Texture" id=10]
 [ext_resource path="res://game/assets/hero_wizard.png" type="Texture" id=11]
+[ext_resource path="res://game/character_shop/character_shop.tscn" type="PackedScene" id=12]
 
 [node name="game" type="Node2D"]
 script = ExtResource( 6 )
@@ -35,6 +36,8 @@ position = Vector2( 146, 112 )
 
 [node name="hero_spawn_2" type="Node2D" parent="."]
 position = Vector2( 146, 161 )
+
+[node name="hero2" parent="hero_spawn_2" instance=ExtResource( 2 )]
 
 [node name="hero_spawn_3" type="Node2D" parent="."]
 position = Vector2( 86, 112 )
@@ -155,7 +158,15 @@ margin_right = 25.0
 margin_bottom = -11.0
 text = "3 HP"
 
-[node name="character_shop" parent="." instance=ExtResource( 4 )]
+[node name="character_shop" parent="." instance=ExtResource( 12 )]
+
+[node name="dice" parent="." instance=ExtResource( 4 )]
+position = Vector2( 149, 24 )
+IsHeroDice = true
+
+[node name="dice2" parent="." instance=ExtResource( 4 )]
+position = Vector2( 111, 24 )
+IsHeroDice = true
 
 [connection signal="pressed" from="button_start_adventure" to="." method="_on_button_start_adventure_pressed"]
 [connection signal="pressed" from="button_rig_dice" to="." method="_on_button_rig_dice_pressed"]
