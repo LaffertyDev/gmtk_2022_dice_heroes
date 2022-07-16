@@ -48,6 +48,98 @@ func _on_hero_battle_tweener_tween_all_completed():
 		hero_current_position -= 1
 		_move_heroes_to_position()
 	elif heroes_won_last_match:
-		var enemies = []
-		enemies.append({})
-		emit_signal("new_zone_entered", enemies)
+		emit_signal("new_zone_entered", _get_next_enemies())
+
+func _get_next_battle():
+	var enemies = []
+	match hero_current_position:
+		0:
+			pass
+		1:
+			enemies.append({"enemy_type": "slime"}) # 1.5
+		2:
+			enemies.append({"enemy_type": "bandit"}) # 2.5
+		3:
+			enemies.append({"enemy_type": "slime"}) # 3
+			enemies.append({"enemy_type": "slime"})
+		4:
+			enemies.append({"enemy_type": "mimic"}) # 3.5
+		5:
+			enemies.append({"enemy_type": "bandit"}) # 4
+			enemies.append({"enemy_type": "slime"})
+		6:
+			enemies.append({"enemy_type": "slime"}) # 4.5
+			enemies.append({"enemy_type": "slime"})
+			enemies.append({"enemy_type": "slime"})
+		7:
+			enemies.append({"enemy_type": "mimic"}) # 5
+			enemies.append({"enemy_type": "mimic"})
+		8:
+			enemies.append({"enemy_type": "bandit"}) # 6
+			enemies.append({"enemy_type": "mimic"})
+		9:
+			enemies.append({"enemy_type": "bandit"}) # 7
+			enemies.append({"enemy_type": "bandit"})
+		10:
+			enemies.append({"enemy_type": "necromancer"}) # 10.5
+			enemies.append({"enemy_type": "bandit"})
+			enemies.append({"enemy_type": "bandit"})
+		11:
+			enemies.append({"enemy_type": "bandit"}) # 10
+			enemies.append({"enemy_type": "bandit"})
+			enemies.append({"enemy_type": "bandit"})
+			enemies.append({"enemy_type": "bandit"})
+		12:
+			enemies.append({"enemy_type": "mimic"}) # 12
+			enemies.append({"enemy_type": "mimic"})
+			enemies.append({"enemy_type": "mimic"})
+			enemies.append({"enemy_type": "slime"})
+		13:
+			enemies.append({"enemy_type": "necromancer"}) # 14
+			enemies.append({"enemy_type": "necromancer"})
+			enemies.append({"enemy_type": "bandit"})
+			enemies.append({"enemy_type": "bandit"})
+		14:
+			enemies.append({"enemy_type": "necromancer"}) # 16
+			enemies.append({"enemy_type": "necromancer"})
+			enemies.append({"enemy_type": "mimic"})
+			enemies.append({"enemy_type": "mimic"})
+		15:
+			enemies.append({"enemy_type": "dragon"}) # 17
+			enemies.append({"enemy_type": "mimic"})
+			enemies.append({"enemy_type": "mimic"})
+			enemies.append({"enemy_type": "mimic"})
+		16:
+			enemies.append({"enemy_type": "dragon"})  # 19
+			enemies.append({"enemy_type": "necromancer"})
+			enemies.append({"enemy_type": "necromancer"})
+			enemies.append({"enemy_type": "mimic"})
+		17:
+			enemies.append({"enemy_type": "dragon"}) # 20
+			enemies.append({"enemy_type": "necromancer"})
+			enemies.append({"enemy_type": "necromancer"})
+			enemies.append({"enemy_type": "necromancer"})
+		18:
+			enemies.append({"enemy_type": "dragon"}) # 21
+			enemies.append({"enemy_type": "dragon"})
+			enemies.append({"enemy_type": "necromancer"})
+			enemies.append({"enemy_type": "necromancer"})
+		19:
+			enemies.append({"enemy_type": "dragon"}) # 23
+			enemies.append({"enemy_type": "dragon"})
+			enemies.append({"enemy_type": "dragon"})
+			enemies.append({"enemy_type": "mimic"})
+		20:
+			enemies.append({"enemy_type": "dragon"}) # 26
+			enemies.append({"enemy_type": "dragon"})
+			enemies.append({"enemy_type": "dragon"})
+			enemies.append({"enemy_type": "dragon"})
+		21:
+			enemies.append({"enemy_type": "boss"}) # 30
+			enemies.append({"enemy_type": "dragon"}) 
+			enemies.append({"enemy_type": "dragon"})
+			enemies.append({"enemy_type": "dragon"})
+		_:
+			pass
+
+	return enemies

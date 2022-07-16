@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/enemy_cyclops.png-9aa2b23c5d49443b79af8f7a4f0a2411.stex"
+path="res://.import/enemy_necromancer.png-5996a360e2faef06776bd30c8a103d5b.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://game/assets/enemy_cyclops.png"
-dest_files=[ "res://.import/enemy_cyclops.png-9aa2b23c5d49443b79af8f7a4f0a2411.stex" ]
+source_file="res://game/assets/enemies/enemy_necromancer.png"
+dest_files=[ "res://.import/enemy_necromancer.png-5996a360e2faef06776bd30c8a103d5b.stex" ]
 
 [params]
 

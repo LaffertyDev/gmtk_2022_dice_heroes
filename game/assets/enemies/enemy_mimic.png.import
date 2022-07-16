@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/enemy_evilwizard.png-f230d68a0dbac9502e8766135c64c192.stex"
+path="res://.import/enemy_mimic.png-849a5e23cea29f7d4054c2a484656822.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://game/assets/enemy_evilwizard.png"
-dest_files=[ "res://.import/enemy_evilwizard.png-f230d68a0dbac9502e8766135c64c192.stex" ]
+source_file="res://game/assets/enemies/enemy_mimic.png"
+dest_files=[ "res://.import/enemy_mimic.png-849a5e23cea29f7d4054c2a484656822.stex" ]
 
 [params]
 

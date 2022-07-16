@@ -29,8 +29,6 @@ position = Vector2( 146, 112 )
 [node name="hero_spawn_2" type="Node2D" parent="."]
 position = Vector2( 146, 161 )
 
-[node name="hero2" parent="hero_spawn_2" instance=ExtResource( 2 )]
-
 [node name="hero_spawn_3" type="Node2D" parent="."]
 position = Vector2( 86, 112 )
 

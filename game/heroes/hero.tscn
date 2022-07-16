@@ -12,4 +12,3 @@ texture = ExtResource( 1 )
 centered = false
 
 [node name="dice_hero_drop_target" parent="." instance=ExtResource( 3 )]
-position = Vector2( 8, 8 )

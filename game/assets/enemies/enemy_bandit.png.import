@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/enemy_spider.png-e684a2a38921f887c008bc40b59317ae.stex"
+path="res://.import/enemy_bandit.png-5a9e0a7c85912b718302ca660f7153d1.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://game/assets/enemy_spider.png"
-dest_files=[ "res://.import/enemy_spider.png-e684a2a38921f887c008bc40b59317ae.stex" ]
+source_file="res://game/assets/enemies/enemy_bandit.png"
+dest_files=[ "res://.import/enemy_bandit.png-5a9e0a7c85912b718302ca660f7153d1.stex" ]
 
 [params]
 

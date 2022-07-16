@@ -8,4 +8,6 @@ func has_enemy():
 
 func spawn_enemy(_enemy):
 	var enemy_res = load("res://game/enemies/enemy.tscn")
-	add_child(enemy_res.instance())
+	var ins = enemy_res.instance()
+	ins.enemy_type = _enemy.enemy_type
+	add_child(ins)
