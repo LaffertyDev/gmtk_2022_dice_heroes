@@ -24,49 +24,55 @@ alignment = 1
 
 [node name="Label" type="Label" parent="MarginContainer/vbox_menu"]
 margin_right = 450.0
-margin_bottom = 14.0
+margin_bottom = 13.0
 text = "Upgrade Your Dice!"
 
 [node name="dice_sprite" type="TextureRect" parent="MarginContainer/vbox_menu"]
-margin_top = 18.0
+margin_top = 17.0
 margin_right = 450.0
-margin_bottom = 34.0
+margin_bottom = 33.0
 texture = ExtResource( 2 )
 
 [node name="button_raise_minimum" type="Button" parent="MarginContainer/vbox_menu"]
-margin_top = 38.0
+margin_top = 37.0
 margin_right = 450.0
-margin_bottom = 58.0
+margin_bottom = 56.0
 text = "Raise Minimum 10 Gold"
 
 [node name="button_raise_maximum" type="Button" parent="MarginContainer/vbox_menu"]
-margin_top = 62.0
+margin_top = 60.0
 margin_right = 450.0
-margin_bottom = 82.0
+margin_bottom = 79.0
 text = "Raise Maximum 40 Gold"
 
 [node name="button_give_critical" type="Button" parent="MarginContainer/vbox_menu"]
-margin_top = 86.0
+margin_top = 83.0
 margin_right = 450.0
-margin_bottom = 106.0
+margin_bottom = 102.0
 text = "Empower with Critical 100 Gold"
 
+[node name="Label2" type="Label" parent="MarginContainer/vbox_menu"]
+margin_top = 106.0
+margin_right = 450.0
+margin_bottom = 119.0
+text = "Criticals double the value rolled, and happen when the dice rolls its highest value."
+
 [node name="button_row" type="HSplitContainer" parent="MarginContainer/vbox_menu"]
-margin_top = 220.0
+margin_top = 221.0
 margin_right = 450.0
 margin_bottom = 240.0
 size_flags_vertical = 10
 
 [node name="gold_label" type="Label" parent="MarginContainer/vbox_menu/button_row"]
 margin_top = 3.0
-margin_right = 78.0
-margin_bottom = 17.0
+margin_right = 58.0
+margin_bottom = 16.0
 text = "Gold: 99999"
 
 [node name="close_button" type="Button" parent="MarginContainer/vbox_menu/button_row"]
-margin_left = 403.0
+margin_left = 411.0
 margin_right = 450.0
-margin_bottom = 20.0
+margin_bottom = 19.0
 size_flags_horizontal = 8
 text = "Close"
 
