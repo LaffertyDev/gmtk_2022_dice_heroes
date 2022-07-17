@@ -140,9 +140,17 @@ func clear_drop_target(_target_to_forget):
 	next_drop_target = null
 
 func roll_dice():
+	$dice_tween.remove_all()
+	$dice_roll_amount_label.rect_position = Vector2(5,0)
+	$dice_roll_amount_label.show()
+	$dice_tween.interpolate_property($dice_roll_amount_label, "rect_position", $dice_roll_amount_label.rect_position, $dice_roll_amount_label.rect_position + Vector2(0, -10), 1.0, Tween.TRANS_LINEAR, Tween.EASE_IN_OUT)
+	$dice_tween.interpolate_property($dice_roll_amount_label, "modulate:a", 1.0, 0.0, 1.0, Tween.TRANS_LINEAR, Tween.EASE_IN_OUT)
+	$dice_tween.start()
 	var number_rolled = rng.randi_range(minimum, maximum)
 	if can_crit && number_rolled == maximum:
+		$dice_roll_amount_label.text = str(number_rolled * 2)
 		return number_rolled * 2 # crit
+	$dice_roll_amount_label.text = str(number_rolled)
 	return number_rolled
 
 func raise_minimum():
@@ -161,3 +169,6 @@ func set_collision_disabled(is_disabled):
 
 func get_dice_modulation():
 	return $Sprite.modulate
+
+func _on_dice_tween_tween_all_completed():
+	$dice_roll_amount_label.hide()
