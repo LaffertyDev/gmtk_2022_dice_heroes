@@ -50,8 +50,6 @@ func _on_about_to_show():
 
 	var dice_eligible_to_upgrade = get_dice_to_upgrade()
 	for dice_eligible_for_upgrade in dice_eligible_to_upgrade:
-		var dice_sprite_res = load("res://game/assets/dice/dice_d6.png")
-
 		var vbox_container = VBoxContainer.new()
 		var dice_label = Label.new()
 		dice_label.text = dice_eligible_for_upgrade.dice_type + " m: " + str(dice_eligible_for_upgrade.minimum) + " m: " + str(dice_eligible_for_upgrade.maximum) + " c: " + str(dice_eligible_for_upgrade.can_crit)
