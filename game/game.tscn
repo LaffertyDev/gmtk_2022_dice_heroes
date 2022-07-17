@@ -89,9 +89,9 @@ texture_hover = ExtResource( 15 )
 
 [node name="button_ability_hurry" type="TextureButton" parent="."]
 visible = false
-margin_left = 32.0
+margin_left = 400.0
 margin_top = 226.0
-margin_right = 80.0
+margin_right = 448.0
 margin_bottom = 250.0
 toggle_mode = true
 texture_normal = ExtResource( 18 )
@@ -198,9 +198,9 @@ autostart = true
 
 [node name="button_give_up_adventure" type="TextureButton" parent="."]
 visible = false
-margin_left = 400.0
+margin_left = 32.0
 margin_top = 226.0
-margin_right = 450.0
+margin_right = 82.0
 margin_bottom = 250.0
 texture_normal = ExtResource( 22 )
 texture_pressed = ExtResource( 21 )
@@ -212,6 +212,14 @@ margin_top = 4.0
 margin_right = 45.0
 margin_bottom = 17.0
 text = "Give Up"
+
+[node name="entangle_warning" type="Label" parent="."]
+visible = false
+margin_left = 82.0
+margin_top = 95.0
+margin_right = 179.0
+margin_bottom = 108.0
+text = "Entangled! Click to roll!"
 
 [connection signal="entered_start_zone" from="board" to="." method="_on_board_entered_start_zone"]
 [connection signal="final_zone_completed" from="board" to="." method="_on_board_final_zone_completed"]

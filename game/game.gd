@@ -58,6 +58,7 @@ func _on_help_text_timer_scanner_timeout():
 			$help_label.text = "Your hero is entangled! Free them by clicking on them."
 		else:
 			$help_label.text = ""
+			$entangle_warning.hide()
 
 
 func _on_button_start_adventure_pressed():
@@ -123,6 +124,7 @@ func _on_timer_battle_tick_timeout():
 				print("Critical Error -- no valid enemy ability type")
 
 	for _x in range(enemy_entangled_count):
+		$entangle_warning.show()
 		heroes[randi()%heroes.size()].set_entangled()
 
 	hero_damage_sum = max(0, hero_damage_sum - enemy_shield_sum)
