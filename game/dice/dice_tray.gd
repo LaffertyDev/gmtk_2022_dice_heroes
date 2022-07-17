@@ -69,6 +69,16 @@ func _get_open_slot():
 			if !is_occupied:
 				return Vector2(x,y)
 
+func has_dice_in_tray():
+	var heroes_dice = get_tree().get_nodes_in_group("heroes_dice")
+	for x in range(6):
+		for y in range(3):
+			var grid_position = _get_local_coordinates_from_grid_position(x,y)
+			for dice in heroes_dice:
+				if (dice.position == to_global(grid_position)):
+					return true
+	return false
+
 func _get_local_coordinates_from_grid_position(x, y):
 	return Vector2(grid_border_spacing_width + (x * grid_unit_width) + grid_unit_width_spacing, grid_border_spacing_height + (y * grid_unit_height) + grid_unit_height_spacing)
 

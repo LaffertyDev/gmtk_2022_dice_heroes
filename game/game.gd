@@ -25,6 +25,38 @@ func _ready():
 	_set_enemy_life_current(enemy_life_max)
 	_set_enemy_life_max(enemy_life_max)
 
+func _on_help_text_delay_timer_timeout():
+	$help_text_timer_scanner.start()
+
+func _on_help_text_timer_scanner_timeout():
+	var heroes = get_tree().get_nodes_in_group("heroes")
+	if !is_adventure_started:
+		var all_heroes_no_dice = true
+		var some_heroes_have_dice = false
+		var some_heroes_have_no_dice = false
+		for hero in heroes:
+			if hero.has_dice():
+				all_heroes_no_dice = false
+				some_heroes_have_dice = true
+			else:
+				some_heroes_have_no_dice = true
+
+		if all_heroes_no_dice:
+			$help_label.text = "Assign dice to your heroes by dragging them."
+		elif !$dice_tray.has_dice_in_tray() && some_heroes_have_dice && some_heroes_have_no_dice:
+			$help_label.text = "Be sure to check your shop"
+		else:
+			$help_label.text = ""
+	else:
+		var hero_is_entangled = false
+		for hero in heroes:
+			hero_is_entangled = hero_is_entangled || hero.is_entangled
+		if hero_is_entangled:
+			$help_label.text = "Your hero is entangled! Free them by clicking on them."
+		else:
+			$help_label.text = ""
+
+
 func _on_button_start_adventure_pressed():
 	is_adventure_started = true
 	_set_hero_life_current(hero_life_max)

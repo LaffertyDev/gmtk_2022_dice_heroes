@@ -16,7 +16,7 @@ script = ExtResource( 6 )
 __meta__ = {
 "_edit_horizontal_guides_": [ 184.0, 88.0 ],
 "_edit_lock_": true,
-"_edit_vertical_guides_": [ 72.0, 408.0 ]
+"_edit_vertical_guides_": [ 32.0, 448.0 ]
 }
 
 [node name="board" parent="." instance=ExtResource( 1 )]
@@ -35,6 +35,14 @@ position = Vector2( 88, 128 )
 [node name="hero_spawn_4" type="Node2D" parent="."]
 position = Vector2( 88, 152 )
 
+[node name="help_label" type="Label" parent="."]
+margin_left = 8.0
+margin_top = 8.0
+margin_right = 208.0
+margin_bottom = 38.0
+autowrap = true
+clip_text = true
+
 [node name="gold_amount" type="Label" parent="."]
 margin_left = 214.0
 margin_top = 15.0
@@ -44,10 +52,10 @@ text = "Gold: 16"
 align = 1
 
 [node name="button_start_adventure" type="Button" parent="."]
-margin_left = 401.0
-margin_top = 239.0
-margin_right = 465.0
-margin_bottom = 259.0
+margin_left = 384.0
+margin_top = 238.0
+margin_right = 448.0
+margin_bottom = 258.0
 text = "Start"
 
 [node name="button_ability_hurry" type="Button" parent="."]
@@ -68,7 +76,6 @@ text = "Shop"
 [node name="timer_battle_tick" type="Timer" parent="."]
 
 [node name="character_shop" parent="." instance=ExtResource( 12 )]
-visible = false
 
 [node name="dice_shop" parent="." instance=ExtResource( 13 )]
 visible = false
@@ -148,6 +155,14 @@ margin_top = -13.0
 margin_right = 129.0
 text = "Monsters Health"
 
+[node name="help_text_timer_scanner" type="Timer" parent="."]
+wait_time = 0.5
+
+[node name="help_text_delay_timer" type="Timer" parent="help_text_timer_scanner"]
+wait_time = 10.0
+one_shot = true
+autostart = true
+
 [connection signal="entered_start_zone" from="board" to="." method="_on_board_entered_start_zone"]
 [connection signal="final_zone_completed" from="board" to="." method="_on_board_final_zone_completed"]
 [connection signal="new_zone_entered" from="board" to="." method="_on_board_new_zone_entered"]
@@ -158,3 +173,5 @@ text = "Monsters Health"
 [connection signal="purchased_dice" from="character_shop" to="." method="_on_character_shop_purchased_dice"]
 [connection signal="purchased_hero" from="character_shop" to="." method="_on_character_shop_purchased_hero"]
 [connection signal="upgraded_dice" from="dice_shop" to="." method="_on_dice_shop_upgraded_dice"]
+[connection signal="timeout" from="help_text_timer_scanner" to="." method="_on_help_text_timer_scanner_timeout"]
+[connection signal="timeout" from="help_text_timer_scanner/help_text_delay_timer" to="." method="_on_help_text_delay_timer_timeout"]

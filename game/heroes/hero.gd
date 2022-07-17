@@ -25,6 +25,9 @@ func roll_dice():
 	else:
 		return 0 # no dice, no attack
 
+func has_dice():
+	return $dice_hero_drop_target.has_dice
+
 func set_entangled():
 	is_entangled = true
 	$entangled_sprite.show()
