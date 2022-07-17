@@ -75,7 +75,7 @@ func _on_about_to_show():
 
 		var vbox_container = VBoxContainer.new()
 		var dice_label = Label.new()
-		dice_label.text = dice_to_purchase.dice_type
+		dice_label.text = dice_to_purchase.dice_type + " - " + str(dice_to_purchase.cost) + " Gold"
 		var sprite_center_container = CenterContainer.new()
 		var dice_sprite = TextureRect.new()
 		dice_sprite.texture = dice_sprite_res
@@ -85,7 +85,7 @@ func _on_about_to_show():
 		vbox_container.add_child(sprite_center_container)
 		var dice_upgrade_button = Button.new()
 		dice_upgrade_button.connect("pressed", self, "_on_purchase_dice_button_pressed", [dice_to_purchase, vbox_container])
-		dice_upgrade_button.text = "Purchase Dice - " + str(dice_to_purchase.cost) + " Gold"
+		dice_upgrade_button.text = "Buy Now!"
 		vbox_container.add_child(dice_upgrade_button)
 
 		purchase_dice_container.add_child(vbox_container)
@@ -141,10 +141,10 @@ func _get_character_ui_container():
 	return $MarginContainer/vbox_menu/hbox_char_container
 
 func _get_upgrade_dice_ui_container():
-	return $MarginContainer/vbox_menu/hbox_upgrade_dice_container
+	return $MarginContainer/vbox_menu/scroll_dice_upgrade/hbox_upgrade_dice_container
 
 func _get_purchase_dice_ui_container():
-	return $MarginContainer/vbox_menu/hbox_buy_dice_container
+	return $MarginContainer/vbox_menu/scroll_dice_buy/hbox_buy_dice_container
 
 func _set_available_gold(amount):
 	_get_gold_label_node().text = "Gold: " + str(amount)

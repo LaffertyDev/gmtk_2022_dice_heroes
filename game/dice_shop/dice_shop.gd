@@ -26,7 +26,7 @@ func reveal_with_dice(dice):
 	popup_centered_ratio(1.0)
 
 func _on_button_raise_minimum_pressed():
-	if (get_available_gold() > raise_minimum_cost):
+	if (get_available_gold() > raise_minimum_cost && dice_being_upgraded.minimum < dice_being_upgraded.maximum):
 		dice_being_upgraded.raise_minimum()
 		emit_signal("upgraded_dice", dice_being_upgraded, raise_minimum_cost)
 		_on_about_to_show()
@@ -38,7 +38,7 @@ func _on_button_raise_maximum_pressed():
 		_on_about_to_show()
 
 func _on_button_give_critical_pressed():
-	if (get_available_gold() > empower_critical_cost):
+	if (get_available_gold() > empower_critical_cost && !dice_being_upgraded.can_crit):
 		dice_being_upgraded.give_critical()
 		emit_signal("upgraded_dice", dice_being_upgraded, empower_critical_cost)
 		_on_about_to_show()

@@ -4,6 +4,7 @@
 [ext_resource path="res://game/assets/dice/dice_d6.png" type="Texture" id=3]
 
 [node name="character_shop" type="PopupDialog"]
+visible = true
 anchor_right = 1.0
 anchor_bottom = 1.0
 script = ExtResource( 1 )
@@ -21,20 +22,19 @@ size_flags_vertical = 3
 [node name="vbox_menu" type="VBoxContainer" parent="MarginContainer"]
 margin_right = 450.0
 margin_bottom = 240.0
+custom_constants/separation = 10
 alignment = 1
 
 [node name="hbox_char_container" type="HBoxContainer" parent="MarginContainer/vbox_menu"]
 margin_right = 450.0
-margin_bottom = 69.0
+margin_bottom = 82.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 custom_constants/separation = 20
-alignment = 1
 
 [node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/vbox_menu/hbox_char_container"]
-margin_left = 197.0
-margin_right = 253.0
-margin_bottom = 69.0
+margin_right = 56.0
+margin_bottom = 82.0
 
 [node name="Label" type="Label" parent="MarginContainer/vbox_menu/hbox_char_container/VBoxContainer"]
 margin_right = 56.0
@@ -44,71 +44,83 @@ text = "Jane Doe"
 [node name="CenterContainer" type="CenterContainer" parent="MarginContainer/vbox_menu/hbox_char_container/VBoxContainer"]
 margin_top = 18.0
 margin_right = 56.0
-margin_bottom = 34.0
+margin_bottom = 18.0
 
 [node name="Sprite2" type="TextureRect" parent="MarginContainer/vbox_menu/hbox_char_container/VBoxContainer/CenterContainer"]
-margin_left = 20.0
-margin_right = 36.0
-margin_bottom = 16.0
+margin_left = 28.0
+margin_right = 28.0
 
 [node name="Button" type="Button" parent="MarginContainer/vbox_menu/hbox_char_container/VBoxContainer"]
-margin_top = 38.0
+margin_top = 22.0
 margin_right = 56.0
-margin_bottom = 58.0
+margin_bottom = 42.0
 text = "Buy!"
 
-[node name="hbox_upgrade_dice_container" type="HBoxContainer" parent="MarginContainer/vbox_menu"]
-margin_top = 73.0
+[node name="scroll_dice_upgrade" type="ScrollContainer" parent="MarginContainer/vbox_menu"]
+margin_top = 92.0
 margin_right = 450.0
-margin_bottom = 142.0
-size_flags_vertical = 3
+margin_bottom = 150.0
+scroll_vertical_enabled = false
 
-[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/vbox_menu/hbox_upgrade_dice_container"]
+[node name="hbox_upgrade_dice_container" type="HBoxContainer" parent="MarginContainer/vbox_menu/scroll_dice_upgrade"]
 margin_right = 98.0
-margin_bottom = 69.0
+margin_bottom = 58.0
+size_flags_vertical = 3
+custom_constants/separation = 20
 
-[node name="Label" type="Label" parent="MarginContainer/vbox_menu/hbox_upgrade_dice_container/VBoxContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/vbox_menu/scroll_dice_upgrade/hbox_upgrade_dice_container"]
+margin_right = 98.0
+margin_bottom = 58.0
+
+[node name="Label" type="Label" parent="MarginContainer/vbox_menu/scroll_dice_upgrade/hbox_upgrade_dice_container/VBoxContainer"]
 margin_right = 98.0
 margin_bottom = 14.0
 text = "1D6"
 
-[node name="TextureRect" type="TextureRect" parent="MarginContainer/vbox_menu/hbox_upgrade_dice_container/VBoxContainer"]
+[node name="TextureRect" type="TextureRect" parent="MarginContainer/vbox_menu/scroll_dice_upgrade/hbox_upgrade_dice_container/VBoxContainer"]
 margin_top = 18.0
 margin_right = 98.0
 margin_bottom = 34.0
 texture = ExtResource( 3 )
 
-[node name="Button" type="Button" parent="MarginContainer/vbox_menu/hbox_upgrade_dice_container/VBoxContainer"]
+[node name="Button" type="Button" parent="MarginContainer/vbox_menu/scroll_dice_upgrade/hbox_upgrade_dice_container/VBoxContainer"]
 margin_top = 38.0
 margin_right = 98.0
 margin_bottom = 58.0
 text = "Upgrade Dice"
 
-[node name="hbox_buy_dice_container" type="HBoxContainer" parent="MarginContainer/vbox_menu"]
-margin_top = 146.0
+[node name="scroll_dice_buy" type="ScrollContainer" parent="MarginContainer/vbox_menu"]
+margin_top = 160.0
 margin_right = 450.0
-margin_bottom = 216.0
-size_flags_vertical = 3
+margin_bottom = 210.0
+scroll_vertical_enabled = false
 
-[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/vbox_menu/hbox_buy_dice_container"]
+[node name="hbox_buy_dice_container" type="HBoxContainer" parent="MarginContainer/vbox_menu/scroll_dice_buy"]
 margin_right = 103.0
-margin_bottom = 70.0
+margin_bottom = 50.0
+size_flags_vertical = 3
+custom_constants/separation = 20
 
-[node name="Label" type="Label" parent="MarginContainer/vbox_menu/hbox_buy_dice_container/VBoxContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/vbox_menu/scroll_dice_buy/hbox_buy_dice_container"]
+margin_right = 103.0
+margin_bottom = 50.0
+custom_constants/separation = 0
+
+[node name="Label" type="Label" parent="MarginContainer/vbox_menu/scroll_dice_buy/hbox_buy_dice_container/VBoxContainer"]
 margin_right = 103.0
 margin_bottom = 14.0
 text = "1D6"
 
-[node name="TextureRect" type="TextureRect" parent="MarginContainer/vbox_menu/hbox_buy_dice_container/VBoxContainer"]
-margin_top = 18.0
+[node name="TextureRect" type="TextureRect" parent="MarginContainer/vbox_menu/scroll_dice_buy/hbox_buy_dice_container/VBoxContainer"]
+margin_top = 14.0
 margin_right = 103.0
-margin_bottom = 34.0
+margin_bottom = 30.0
 texture = ExtResource( 3 )
 
-[node name="Button" type="Button" parent="MarginContainer/vbox_menu/hbox_buy_dice_container/VBoxContainer"]
-margin_top = 38.0
+[node name="Button" type="Button" parent="MarginContainer/vbox_menu/scroll_dice_buy/hbox_buy_dice_container/VBoxContainer"]
+margin_top = 30.0
 margin_right = 103.0
-margin_bottom = 58.0
+margin_bottom = 50.0
 text = "Purchase Dice"
 
 [node name="HBoxContainer" type="HSplitContainer" parent="MarginContainer/vbox_menu"]
