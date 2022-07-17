@@ -1,11 +1,13 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=5 format=2]
 
 [ext_resource path="res://game/assets/heroes/player_character.png" type="Texture" id=1]
 [ext_resource path="res://game/assets/board_tile_sheet.png" type="Texture" id=2]
 [ext_resource path="res://game/board/board.gd" type="Script" id=3]
+[ext_resource path="res://game/assets/current_zone_indicator.png" type="Texture" id=4]
 
 [node name="board" type="Node2D"]
 position = Vector2( 32, 48 )
+z_index = -1
 script = ExtResource( 3 )
 __meta__ = {
 "_edit_lock_": true
@@ -15,11 +17,16 @@ __meta__ = {
 texture = ExtResource( 2 )
 centered = false
 
+[node name="sprite_tile_indicator" type="Sprite" parent="."]
+texture = ExtResource( 4 )
+centered = false
+
 [node name="hero_battle_tweener" type="Tween" parent="."]
 
 [node name="hero_on_the_board" type="Sprite" parent="."]
-position = Vector2( 16, 16 )
+position = Vector2( 8, 8 )
 texture = ExtResource( 1 )
+centered = false
 
 [node name="zone_entered_delay" type="Timer" parent="."]
 wait_time = 0.3

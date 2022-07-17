@@ -1,77 +1,94 @@
-[gd_scene load_steps=11 format=2]
+[gd_scene load_steps=20 format=2]
 
 [ext_resource path="res://game/board/board.tscn" type="PackedScene" id=1]
 [ext_resource path="res://game/heroes/hero.tscn" type="PackedScene" id=2]
 [ext_resource path="res://game/enemies/enemy_spawner.tscn" type="PackedScene" id=3]
 [ext_resource path="res://game/assets/user_interface/hero_health_bar.png" type="Texture" id=4]
+[ext_resource path="res://game/assets/user_interface/shop_button_normal.png" type="Texture" id=5]
 [ext_resource path="res://game/game.gd" type="Script" id=6]
 [ext_resource path="res://game/assets/user_interface/hero_health_bar_overlay.png" type="Texture" id=7]
 [ext_resource path="res://game/assets/user_interface/hero_health_bar_underlay.png" type="Texture" id=8]
+[ext_resource path="res://game/assets/user_interface/shop_button_pressed.png" type="Texture" id=9]
+[ext_resource path="res://game/assets/user_interface/shop_button_hover.png" type="Texture" id=10]
 [ext_resource path="res://game/dice/dice_tray.tscn" type="PackedScene" id=11]
 [ext_resource path="res://game/character_shop/character_shop.tscn" type="PackedScene" id=12]
 [ext_resource path="res://game/dice_shop/dice_shop.tscn" type="PackedScene" id=13]
+[ext_resource path="res://game/assets/user_interface/start_button_normal.png" type="Texture" id=14]
+[ext_resource path="res://game/assets/user_interface/start_button_hover.png" type="Texture" id=15]
+[ext_resource path="res://game/assets/user_interface/start_button_pressed.png" type="Texture" id=16]
+[ext_resource path="res://game/assets/user_interface/hurry_button_pressed.png" type="Texture" id=17]
+[ext_resource path="res://game/assets/user_interface/hurry_button_normal.png" type="Texture" id=18]
+[ext_resource path="res://game/assets/user_interface/hurry_button_hover.png" type="Texture" id=19]
 
 [node name="game" type="Node2D"]
 script = ExtResource( 6 )
 __meta__ = {
-"_edit_horizontal_guides_": [ 184.0, 88.0 ],
+"_edit_horizontal_guides_": [ 184.0, 88.0, 238.0 ],
 "_edit_lock_": true,
 "_edit_vertical_guides_": [ 32.0, 448.0 ]
 }
 
 [node name="board" parent="." instance=ExtResource( 1 )]
+position = Vector2( 32, 32 )
 
 [node name="hero_spawn_1" type="Node2D" parent="."]
-position = Vector2( 168, 128 )
+position = Vector2( 168, 112 )
 
 [node name="hero1" parent="hero_spawn_1" instance=ExtResource( 2 )]
 
 [node name="hero_spawn_2" type="Node2D" parent="."]
-position = Vector2( 168, 152 )
+position = Vector2( 168, 136 )
 
 [node name="hero_spawn_3" type="Node2D" parent="."]
-position = Vector2( 88, 128 )
+position = Vector2( 88, 112 )
 
 [node name="hero_spawn_4" type="Node2D" parent="."]
-position = Vector2( 88, 152 )
+position = Vector2( 88, 136 )
 
 [node name="help_label" type="Label" parent="."]
-margin_left = 8.0
-margin_top = 8.0
-margin_right = 208.0
-margin_bottom = 38.0
+margin_left = 32.0
+margin_right = 448.0
+margin_bottom = 30.0
+valign = 1
 autowrap = true
 clip_text = true
 
 [node name="gold_amount" type="Label" parent="."]
-margin_left = 214.0
-margin_top = 15.0
-margin_right = 268.0
-margin_bottom = 29.0
+margin_left = 88.0
+margin_top = 230.0
+margin_right = 142.0
+margin_bottom = 244.0
 text = "Gold: 16"
 align = 1
 
-[node name="button_start_adventure" type="Button" parent="."]
-margin_left = 384.0
-margin_top = 238.0
+[node name="button_start_adventure" type="TextureButton" parent="."]
+margin_left = 400.0
+margin_top = 226.0
 margin_right = 448.0
-margin_bottom = 258.0
-text = "Start"
+margin_bottom = 250.0
+texture_normal = ExtResource( 14 )
+texture_pressed = ExtResource( 16 )
+texture_hover = ExtResource( 15 )
 
-[node name="button_ability_hurry" type="Button" parent="."]
+[node name="button_ability_hurry" type="TextureButton" parent="."]
+visible = false
 margin_left = 32.0
-margin_top = 236.0
-margin_right = 140.0
-margin_bottom = 256.0
+margin_top = 226.0
+margin_right = 80.0
+margin_bottom = 250.0
 toggle_mode = true
-text = "Hurry the Fuck Up!"
+texture_normal = ExtResource( 18 )
+texture_pressed = ExtResource( 17 )
+texture_hover = ExtResource( 19 )
 
-[node name="button_shop" type="Button" parent="."]
+[node name="button_shop" type="TextureButton" parent="."]
 margin_left = 32.0
-margin_top = 236.0
-margin_right = 96.0
-margin_bottom = 256.0
-text = "Shop"
+margin_top = 226.0
+margin_right = 80.0
+margin_bottom = 250.0
+texture_normal = ExtResource( 5 )
+texture_pressed = ExtResource( 9 )
+texture_hover = ExtResource( 10 )
 
 [node name="timer_battle_tick" type="Timer" parent="."]
 
@@ -81,16 +98,16 @@ text = "Shop"
 visible = false
 
 [node name="enemy_spawner" parent="." instance=ExtResource( 3 )]
-position = Vector2( 296, 128 )
+position = Vector2( 296, 112 )
 
 [node name="enemy_spawner3" parent="." instance=ExtResource( 3 )]
-position = Vector2( 376, 128 )
+position = Vector2( 376, 112 )
 
 [node name="enemy_spawner4" parent="." instance=ExtResource( 3 )]
-position = Vector2( 376, 152 )
+position = Vector2( 376, 136 )
 
 [node name="enemy_spawner2" parent="." instance=ExtResource( 3 )]
-position = Vector2( 296, 152 )
+position = Vector2( 296, 136 )
 
 [node name="victory_dialog" type="AcceptDialog" parent="."]
 margin_right = 83.0
@@ -98,15 +115,14 @@ margin_bottom = 58.0
 window_title = "You Won!"
 
 [node name="dice_tray" parent="." instance=ExtResource( 11 )]
-visible = false
-position = Vector2( 224, 96 )
+position = Vector2( 224, 80 )
 z_index = -1
 
 [node name="hero_health_bar" type="TextureProgress" parent="."]
 margin_left = 80.0
-margin_top = 96.0
+margin_top = 80.0
 margin_right = 208.0
-margin_bottom = 112.0
+margin_bottom = 96.0
 value = 100.0
 texture_under = ExtResource( 8 )
 texture_over = ExtResource( 7 )
@@ -130,9 +146,9 @@ text = "Heroes Health"
 
 [node name="enemy_health_bar" type="TextureProgress" parent="."]
 margin_left = 272.0
-margin_top = 96.0
+margin_top = 80.0
 margin_right = 400.0
-margin_bottom = 112.0
+margin_bottom = 96.0
 value = 100.0
 texture_under = ExtResource( 8 )
 texture_over = ExtResource( 7 )

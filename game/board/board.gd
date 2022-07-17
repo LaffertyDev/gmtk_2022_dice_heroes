@@ -20,19 +20,20 @@ func _on_battle_finished(did_heroes_win):
 		heroes_won_last_match = false
 
 func _get_next_board_position():
+	var sprite_origin = Vector2(8,8)
 	if (hero_current_position == 0):
-		return Vector2(16,16) # board start
+		return sprite_origin # board start
 	elif (hero_current_position <= 8):
-		return Vector2(16,16) + Vector2(hero_current_position * 48, 0)
+		return sprite_origin + Vector2(hero_current_position * 48, 0)
 	elif (hero_current_position <= 11):
 		# move down
-		return Vector2(16,16) + Vector2(384, 0) + Vector2(0, (hero_current_position - 8) * 48)
+		return sprite_origin + Vector2(384, 0) + Vector2(0, (hero_current_position - 8) * 48)
 	elif (hero_current_position <= 19):
 		# move left
-		return Vector2(16,16) + Vector2(384, 144) - Vector2((hero_current_position - 11) * 48, 0)
+		return sprite_origin + Vector2(384, 144) - Vector2((hero_current_position - 11) * 48, 0)
 	else:
 		# move up
-		return Vector2(16,16) + Vector2(0, 144) - Vector2(0, (hero_current_position - 19) * 48)
+		return sprite_origin + Vector2(0, 144) - Vector2(0, (hero_current_position - 19) * 48)
 
 func _move_heroes_to_position():
 	var speed = 0.5
@@ -42,6 +43,7 @@ func _move_heroes_to_position():
 	$hero_battle_tweener.start()
 
 func _on_hero_battle_tweener_tween_all_completed():
+	$sprite_tile_indicator.position = _get_next_board_position() - Vector2(8,8)
 	if !heroes_won_last_match && hero_current_position > 0:
 		hero_current_position -= 1
 		_move_heroes_to_position()
