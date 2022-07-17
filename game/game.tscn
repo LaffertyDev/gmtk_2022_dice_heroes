@@ -222,6 +222,15 @@ margin_right = 179.0
 margin_bottom = 108.0
 text = "Entangled! Click to roll!"
 
+[node name="Label" type="Label" parent="."]
+margin_left = -199.0
+margin_top = -125.0
+margin_right = 73.0
+margin_bottom = -29.0
+text = "Dice Heroes!
+
+"
+
 [connection signal="entered_start_zone" from="board" to="." method="_on_board_entered_start_zone"]
 [connection signal="final_zone_completed" from="board" to="." method="_on_board_final_zone_completed"]
 [connection signal="new_zone_entered" from="board" to="." method="_on_board_new_zone_entered"]

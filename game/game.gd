@@ -22,7 +22,7 @@ func _ready():
 	var _ig = self.connect("battle_finished", $board, "_on_battle_finished")
 	var _ig3 = $character_shop.connect("purchased_dice", $dice_tray, "_on_new_dice_purchased")
 	_hide_battle_state()
-	_set_available_gold(0)
+	_set_available_gold(450)
 	_set_hero_life_current(hero_life_max)
 	_set_hero_life_max(hero_life_max)
 	_set_enemy_life_current(enemy_life_max)

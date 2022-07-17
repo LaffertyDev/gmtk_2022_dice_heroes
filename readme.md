@@ -1,0 +1,22 @@
+# Dice Heroes
+
+This is my submission for the GMTK 2022 Game Jam. The theme was "Roll of the Dice".
+
+## Downloading and Running
+
+Play in your browser on Itch, or download for most operating systems: https://lafferty.itch.io/dice-heroes
+
+## Tutorial
+
+You are a merchent delving deep into the depths of a dungeon in search of a monstrous Treasure Hoard.
+
+* Hire adventurers to do your fighting!
+* Equip them with powerful weapons (Dice)!
+
+## Assets and Credits
+
+Most visual assets were created by myself during the Game Jam. Exceptions are below.
+
+* Font: m5x7 from Managore (https://managore.itch.io/m5x7)
+* Sounds and Audio: Primarily from Kenney (https://www.kenney.nl)
+* Victory Sound: jfkite01 (https://opengameart.org/content/victory-2)
