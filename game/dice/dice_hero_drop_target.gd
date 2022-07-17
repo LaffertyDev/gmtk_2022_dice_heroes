@@ -35,6 +35,7 @@ func handle_dice_drop(dice):
 	dice.position = drop_position
 	is_dice_hovering = false
 	has_dice = true
+	dice.is_in_play = true
 	update()
 
 func handle_dice_pickup():

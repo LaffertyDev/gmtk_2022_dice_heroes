@@ -126,8 +126,10 @@ margin_bottom = 24.0
 texture_normal = ExtResource( 10 )
 
 [node name="character_shop" parent="." instance=ExtResource( 12 )]
+visible = false
 
 [node name="dice_shop" parent="." instance=ExtResource( 13 )]
+visible = false
 
 [node name="enemy_spawner" parent="." instance=ExtResource( 3 )]
 position = Vector2( 332, 112 )

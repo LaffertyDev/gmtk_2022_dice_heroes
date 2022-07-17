@@ -18,6 +18,8 @@ var current_slot = null
 
 var can_crit = false
 
+var is_in_play = false
+
 var minimum = 1
 var maximum = 6
 var rng = RandomNumberGenerator.new()
@@ -47,6 +49,16 @@ func _ready():
 		minimum = 1
 		maximum = 20
 	$Sprite.texture = get_dice_texture_resource()
+	$range_label.text = str(minimum) + "-" + str(maximum)
+	if (!IsHeroDice):
+		# for enemy dice, they need to be on the left
+		if (minimum < 10 && maximum < 10):
+			$range_label.rect_position.x = -19
+		else:
+			$range_label.rect_position.x = -32
+	if !is_in_play:
+		$range_label.show()
+
 
 func get_dice_texture_resource():
 	if (dice_type == "D2"):
@@ -66,9 +78,13 @@ func get_dice_texture_resource():
 
 func _on_dice_mouse_entered():
 	is_mouse_over = true
+	$range_label.show()
 
 func _on_dice_mouse_exited():
 	is_mouse_over = false
+	if is_in_play:
+		# dice in inventory do not hide
+		$range_label.hide()
 
 func _on_dice_input_event(_viewport, event, _shape_idx):
 	if !IsHeroDice || get_parent().is_adventure_started:
@@ -85,6 +101,7 @@ func _on_dice_input_event(_viewport, event, _shape_idx):
 		elif is_grabbing:
 			# verify that we are in bounds, otherwise reset
 			if (next_drop_target != null):
+				self.is_in_play = false
 				next_drop_target.handle_dice_drop(self)
 				if current_slot != null:
 					current_slot.handle_dice_pickup()
@@ -127,9 +144,11 @@ func roll_dice():
 
 func raise_minimum():
 	minimum += 1
+	$range_label.text = str(minimum) + "-" + str(maximum)
 
 func raise_maximum():
 	maximum += 1
+	$range_label.text = str(minimum) + "-" + str(maximum)
 
 func give_critical():
 	can_crit = true

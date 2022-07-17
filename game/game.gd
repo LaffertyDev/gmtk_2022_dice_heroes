@@ -144,6 +144,10 @@ func _show_battle_state():
 	$hero_damage_sum.show()
 	$enemy_damage_sum.show()
 	$dice_tray.hide()
+	var heroes_dices = get_tree().get_nodes_in_group("heroes_dice")
+	for heroes_dice in heroes_dices:
+		if !heroes_dice.is_in_play:
+			heroes_dice.hide()
 
 func _hide_battle_state():
 	var enemies = get_tree().get_nodes_in_group("enemies")
@@ -156,6 +160,10 @@ func _hide_battle_state():
 	$enemy_damage_sum.hide()
 	$button_start_adventure.show()
 	$dice_tray.show()
+	var heroes_dices = get_tree().get_nodes_in_group("heroes_dice")
+	for heroes_dice in heroes_dices:
+		if !heroes_dice.is_in_play:
+			heroes_dice.show()
 
 func _on_dice_shop_upgraded_dice(_upgraded_dice, cost):
 	_set_available_gold(available_gold - cost)
