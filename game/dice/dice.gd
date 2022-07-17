@@ -29,30 +29,40 @@ func _ready():
 	if (IsHeroDice):
 		add_to_group("heroes_dice")
 	if (dice_type == "D2"):
-		$Sprite.texture = load("res://game/assets/dice/dice_d2.png")
 		minimum = 1
 		maximum = 2
 	elif (dice_type == "D4"):
-		$Sprite.texture = load("res://game/assets/dice/dice_d4.png")
 		minimum = 1
 		maximum = 4
 	elif (dice_type == "D6"):
-		$Sprite.texture = load("res://game/assets/dice/dice_d6.png")
 		minimum = 1
 		maximum = 6
 	elif (dice_type == "D8"):
-		$Sprite.texture = load("res://game/assets/dice/dice_d8.png")
 		minimum = 1
 		maximum = 8
 	elif (dice_type == "D12"):
-		$Sprite.texture = load("res://game/assets/dice/dice_d12.png")
 		minimum = 1
 		maximum = 12
 	elif (dice_type == "D20"):
-		$Sprite.texture = load("res://game/assets/dice/dice_d20.png")
 		minimum = 1
 		maximum = 20
+	$Sprite.texture = get_dice_texture_resource()
 
+func get_dice_texture_resource():
+	if (dice_type == "D2"):
+		return load("res://game/assets/dice/dice_d2.png")
+	elif (dice_type == "D4"):
+		return load("res://game/assets/dice/dice_d4.png")
+	elif (dice_type == "D6"):
+		return load("res://game/assets/dice/dice_d6.png")
+	elif (dice_type == "D8"):
+		return load("res://game/assets/dice/dice_d8.png")
+	elif (dice_type == "D12"):
+		return load("res://game/assets/dice/dice_d12.png")
+	elif (dice_type == "D20"):
+		return load("res://game/assets/dice/dice_d20.png")
+	else:
+		return load("res://game/assets/dice/dice_d2.png")
 
 func _on_dice_mouse_entered():
 	is_mouse_over = true

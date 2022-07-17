@@ -15,6 +15,7 @@ texture = ExtResource( 1 )
 centered = false
 
 [node name="mouse_collision_shape" type="CollisionShape2D" parent="."]
+visible = false
 position = Vector2( 8, 8 )
 shape = SubResource( 1 )
 

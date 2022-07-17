@@ -8,7 +8,7 @@ func _ready():
 	add_to_group("dice_hero_drop_target")
 
 
-func _on_picked_up(dice):
+func _on_picked_up(_dice):
 	pass
 
 func _on_dice_drop_target_body_entered(body):

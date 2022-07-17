@@ -54,10 +54,10 @@ func _on_about_to_show():
 
 		var vbox_container = VBoxContainer.new()
 		var dice_label = Label.new()
-		dice_label.text = "1d6 + 44"
+		dice_label.text = dice_eligible_for_upgrade.dice_type + " m: " + str(dice_eligible_for_upgrade.minimum) + " m: " + str(dice_eligible_for_upgrade.maximum) + " c: " + str(dice_eligible_for_upgrade.can_crit)
 		var sprite_center_container = CenterContainer.new()
 		var dice_sprite = TextureRect.new()
-		dice_sprite.texture = dice_sprite_res
+		dice_sprite.texture = dice_eligible_for_upgrade.get_dice_texture_resource()
 
 		sprite_center_container.add_child(dice_sprite)
 		vbox_container.add_child(dice_label)
@@ -128,10 +128,10 @@ func get_dice_to_purchase():
 	var dice_eligible_for_purchase = []
 	dice_eligible_for_purchase.append({"dice_type": "D2", "sprite": "dice_d2.png", "cost": 3})
 	dice_eligible_for_purchase.append({"dice_type": "D4", "sprite": "dice_d4.png", "cost": 5})
-	# dice_eligible_for_purchase.append({"dice_type": "D6", "sprite": "dice_d6.png", "cost": 7})
-	# dice_eligible_for_purchase.append({"dice_type": "D8", "sprite": "dice_d8.png", "cost": 9})
-	# dice_eligible_for_purchase.append({"dice_type": "D12", "sprite": "dice_d12.png", "cost": 13})
-	# dice_eligible_for_purchase.append({"dice_type": "D20", "sprite": "dice_d20.png", "cost": 21})
+	dice_eligible_for_purchase.append({"dice_type": "D6", "sprite": "dice_d6.png", "cost": 7})
+	dice_eligible_for_purchase.append({"dice_type": "D8", "sprite": "dice_d8.png", "cost": 9})
+	dice_eligible_for_purchase.append({"dice_type": "D12", "sprite": "dice_d12.png", "cost": 13})
+	dice_eligible_for_purchase.append({"dice_type": "D20", "sprite": "dice_d20.png", "cost": 21})
 	return dice_eligible_for_purchase
 
 func get_available_gold():
