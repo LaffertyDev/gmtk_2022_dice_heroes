@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/place_dice.ogg-145b2281dc69d8b7fa1a1141f0995eeb.oggstr"
+
+[deps]
+
+source_file="res://game/assets/audio/place_dice.ogg"
+dest_files=[ "res://.import/place_dice.ogg-145b2281dc69d8b7fa1a1141f0995eeb.oggstr" ]
+
+[params]
+
+loop=false
+loop_offset=0

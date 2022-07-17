@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/battle_lose.ogg-35b71ab102eb55ce0e5e80fd15c53977.oggstr"
+
+[deps]
+
+source_file="res://game/assets/audio/battle_lose.ogg"
+dest_files=[ "res://.import/battle_lose.ogg-35b71ab102eb55ce0e5e80fd15c53977.oggstr" ]
+
+[params]
+
+loop=false
+loop_offset=0

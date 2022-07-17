@@ -20,6 +20,8 @@ var can_crit = false
 
 var is_in_play = false
 
+onready var global_audio = get_node("/root/global_audio")
+
 var minimum = 1
 var maximum = 6
 var rng = RandomNumberGenerator.new()
@@ -96,6 +98,7 @@ func _on_dice_input_event(_viewport, event, _shape_idx):
 	# this should only fire twice -- once on pick and once on release
 	if event is InputEventMouseButton:
 		if event.pressed && !is_grabbing:
+			global_audio.play_dice_pickup()
 			is_grabbing = event.pressed
 			grabbed_offset = position - get_global_mouse_position()
 			cancel_position = position
@@ -104,6 +107,7 @@ func _on_dice_input_event(_viewport, event, _shape_idx):
 		elif is_grabbing:
 			# verify that we are in bounds, otherwise reset
 			if (next_drop_target != null):
+				global_audio.play_dice_place()
 				self.is_in_play = false
 				next_drop_target.handle_dice_drop(self)
 				if current_slot != null:

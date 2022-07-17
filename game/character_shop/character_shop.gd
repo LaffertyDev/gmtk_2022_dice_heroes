@@ -4,6 +4,8 @@ signal purchased_hero(characterObj)
 signal purchased_dice(diceObj)
 signal purchased_health(cost)
 
+onready var global_audio = get_node("/root/global_audio")
+
 func _ready():
 	var _ig = connect("about_to_show", self, "_on_about_to_show")
 
@@ -68,9 +70,11 @@ func _on_about_to_show():
 		upgrade_dice_container.add_child(vbox_container)
 
 func _on_button_close_shop_pressed():
+	global_audio.play_ui()
 	hide()
 
 func _on_buy_button_pressed(character, char_buy_button):
+	global_audio.play_ui()
 	if (get_available_gold() >= character.cost):
 		character.is_purchased = true
 		emit_signal("purchased_hero", character)
@@ -83,6 +87,7 @@ func _on_upgrade_dice_button_pressed(dice):
 	get_parent().show_dice_shop(dice)
 
 func _on_buy_new_dice_pressed():
+	global_audio.play_ui()
 	var purchasable_dice = {"dice_type": "D2", "sprite": "dice_d2.png", "cost": 10}
 	var all_heroes_dice = get_tree().get_nodes_in_group("heroes_dice")
 	if (get_available_gold() >= purchasable_dice.cost && all_heroes_dice.size() < 6):
@@ -91,6 +96,7 @@ func _on_buy_new_dice_pressed():
 		_on_about_to_show()
 
 func _on_buy_health_button_pressed():
+	global_audio.play_ui()
 	if (get_available_gold() >= 5):
 		emit_signal("purchased_health", 5)
 		_set_available_gold(get_available_gold())

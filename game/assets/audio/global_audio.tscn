@@ -1,0 +1,46 @@
+[gd_scene load_steps=11 format=2]
+
+[ext_resource path="res://game/assets/audio/die_pickup.ogg" type="AudioStream" id=1]
+[ext_resource path="res://game/assets/audio/walking.ogg" type="AudioStream" id=2]
+[ext_resource path="res://game/assets/audio/click_sound.ogg" type="AudioStream" id=3]
+[ext_resource path="res://game/assets/audio/get_money.ogg" type="AudioStream" id=4]
+[ext_resource path="res://game/assets/audio/open_shop.ogg" type="AudioStream" id=5]
+[ext_resource path="res://game/assets/audio/global_audio.gd" type="Script" id=6]
+[ext_resource path="res://game/assets/audio/dice_place.ogg" type="AudioStream" id=7]
+[ext_resource path="res://game/assets/audio/die_roll.ogg" type="AudioStream" id=8]
+[ext_resource path="res://game/assets/audio/battle_lose.ogg" type="AudioStream" id=9]
+[ext_resource path="res://game/assets/audio/battle_win.ogg" type="AudioStream" id=10]
+
+[node name="global_audio" type="Node2D"]
+script = ExtResource( 6 )
+
+[node name="ui_click_sound" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 3 )
+
+[node name="get_money_sound" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 4 )
+
+[node name="open_shop_sound" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 5 )
+
+[node name="walking_sound" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 2 )
+volume_db = -10.0
+
+[node name="place_dice_sound" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 7 )
+
+[node name="roll_dice_sound" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 8 )
+
+[node name="pickup_dice_sound" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 1 )
+
+[node name="battle_win" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 10 )
+pitch_scale = 0.76
+
+[node name="battle_lose" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 9 )
+volume_db = -10.0
+pitch_scale = 0.59

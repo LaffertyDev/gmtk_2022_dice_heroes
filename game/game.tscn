@@ -110,7 +110,6 @@ texture_hover = ExtResource( 10 )
 [node name="timer_battle_tick" type="Timer" parent="."]
 
 [node name="character_shop" parent="." instance=ExtResource( 12 )]
-visible = false
 
 [node name="dice_shop" parent="." instance=ExtResource( 13 )]
 visible = false

@@ -12,6 +12,8 @@ var available_characters = []
 
 signal battle_finished(did_heroes_win)
 
+onready var global_audio = get_node("/root/global_audio")
+
 func _ready():
 	randomize()
 	available_characters.append({"name": "Leah", "hero_type": "leah", "hero_ability": "heal", "sprite_name": "hero_leah.png", "cost": 10, "is_purchased": false})
@@ -59,6 +61,7 @@ func _on_help_text_timer_scanner_timeout():
 
 
 func _on_button_start_adventure_pressed():
+	global_audio.play_ui()
 	is_adventure_started = true
 	_set_hero_life_current(hero_life_max)
 	_set_enemy_life_current(enemy_life_max)
@@ -67,19 +70,23 @@ func _on_button_start_adventure_pressed():
 	emit_signal("battle_finished", true)
 
 func _on_button_shop_pressed():
+	global_audio.play_open_shop()
 	$character_shop.popup_centered_ratio(1.0)
 	pass
 
 func show_dice_shop(dice):
+	global_audio.play_open_shop()
 	$dice_shop.reveal_with_dice(dice)
 
 func _on_button_ability_hurry_pressed():
+	global_audio.play_ui()
 	if ($button_ability_hurry.pressed):
 		$timer_battle_tick.wait_time = 0.25
 	else:
 		$timer_battle_tick.wait_time = 1
 
 func _on_timer_battle_tick_timeout():
+	global_audio.play_dice_roll()
 	var heroes = get_tree().get_nodes_in_group("heroes")
 	var enemies = get_tree().get_nodes_in_group("enemies")
 	var hero_damage_sum = 0
@@ -134,8 +141,10 @@ func _on_timer_battle_tick_timeout():
 
 	if hero_life_current == 0:
 		_handle_heroes_died()
+		global_audio.play_battle_lose()
 	elif enemy_life_current == 0:
 		_handle_enemies_died()
+		global_audio.play_battle_win()
 
 func _set_hero_life_current(health):
 	hero_life_current = health
@@ -160,6 +169,7 @@ func _set_enemy_life_max(health_max):
 func _set_available_gold(amount):
 	if (available_gold != amount):
 		available_gold = amount
+		global_audio.play_get_money()
 		$gold_amount.text = "Gold: " + str(amount)
 		var tween_anim = $gold_amount/gold_tween
 		tween_anim.remove_all()
@@ -272,6 +282,7 @@ func _on_board_entered_start_zone():
 	_on_button_ability_hurry_pressed() # reset timer because we disable hurry button -- does not fire automatically
 
 func _on_button_give_up_adventure_pressed():
+	global_audio.play_ui()
 	$button_give_up_adventure.hide()
 	_set_hero_life_current(0)
 	_handle_heroes_died()

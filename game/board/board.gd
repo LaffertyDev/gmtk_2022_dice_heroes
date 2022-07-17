@@ -6,8 +6,9 @@ signal final_zone_completed()
 var heroes_won_last_match = false
 var hero_current_position = 0
 
+onready var global_audio = get_node("/root/global_audio")
+
 func _on_battle_finished(did_heroes_win):
-	print("battle finished")
 	if did_heroes_win:
 		if hero_current_position == 21:
 			emit_signal("final_zone_completed")
@@ -39,17 +40,22 @@ func _move_heroes_to_position():
 	var speed = 0.5
 	if !heroes_won_last_match:
 		speed = 0.2
-	$hero_battle_tweener.interpolate_property($hero_on_the_board, "position", $hero_on_the_board.position, _get_next_board_position(), speed, Tween.TRANS_BACK, Tween.EASE_IN_OUT)
+	$sprite_tile_indicator.position = _get_next_board_position() - Vector2(8,8)
+	$hero_battle_tweener.interpolate_property($hero_on_the_board, "position", $hero_on_the_board.position, _get_next_board_position(), speed, Tween.TRANS_EXPO, Tween.EASE_OUT)
 	$hero_battle_tweener.start()
+	global_audio.call_deferred("play_walking")
+
 
 func _on_hero_battle_tweener_tween_all_completed():
-	$sprite_tile_indicator.position = _get_next_board_position() - Vector2(8,8)
 	if !heroes_won_last_match && hero_current_position > 0:
 		hero_current_position -= 1
+		# don't stop audio if we're just going to be moving again
 		_move_heroes_to_position()
 	elif heroes_won_last_match:
+		global_audio.stop_walking()
 		$zone_entered_delay.start()
 	else:
+		global_audio.stop_walking()
 		emit_signal("entered_start_zone")
 
 func _on_zone_entered_delay_timeout():

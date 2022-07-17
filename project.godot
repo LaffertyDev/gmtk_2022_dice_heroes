@@ -14,6 +14,10 @@ config/name="Dice Heroes"
 run/main_scene="res://game/game.tscn"
 config/icon="res://icon.png"
 
+[autoload]
+
+global_audio="*res://game/assets/audio/global_audio.tscn"
+
 [display]
 
 window/size/width=480

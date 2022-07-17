@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/select_high.ogg-ed5da7d8bc8af3e22bd074edb18a4c88.oggstr"
+
+[deps]
+
+source_file="res://game/assets/audio/select_high.ogg"
+dest_files=[ "res://.import/select_high.ogg-ed5da7d8bc8af3e22bd074edb18a4c88.oggstr" ]
+
+[params]
+
+loop=false
+loop_offset=0
