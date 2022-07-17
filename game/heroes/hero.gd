@@ -1,6 +1,7 @@
 extends Node2D
 
 var hero_type = "nameless_hero"
+var hero_ability = "damage"
 
 func _ready():
 	add_to_group("heroes")
@@ -13,7 +14,6 @@ func _ready():
 			$Sprite.texture = load("res://game/assets/heroes/hero_jackson.png")
 		"leah":
 			$Sprite.texture = load("res://game/assets/heroes/hero_leah.png")
-
 
 func roll_dice():
 	if $dice_hero_drop_target.has_dice:

@@ -34,10 +34,13 @@ func _on_about_to_show():
 		var sprite_center_container = CenterContainer.new()
 		var char_sprite = TextureRect.new()
 		char_sprite.texture = sprite_res
+		var ability_label = Label.new()
+		ability_label.text = _get_ability_description_from_type(character.hero_ability)
 
 		sprite_center_container.add_child(char_sprite)
 		vbox_container.add_child(char_label)
 		vbox_container.add_child(sprite_center_container)
+		vbox_container.add_child(ability_label)
 		if character.is_purchased:
 			vbox_container.add_child(_build_purchased_label())
 		else:
@@ -79,8 +82,8 @@ func _on_about_to_show():
 		var dice_sprite = TextureRect.new()
 		dice_sprite.texture = dice_sprite_res
 
-		sprite_center_container.add_child(dice_sprite)
 		vbox_container.add_child(dice_label)
+		sprite_center_container.add_child(dice_sprite)
 		vbox_container.add_child(sprite_center_container)
 		var dice_upgrade_button = Button.new()
 		dice_upgrade_button.connect("pressed", self, "_on_purchase_dice_button_pressed", [dice_to_purchase, vbox_container])
@@ -137,16 +140,25 @@ func get_available_gold():
 	return get_parent().available_gold
 
 func _get_character_ui_container():
-	return $MarginContainer/vbox_menu/hbox_char_container
+	return $MarginContainer/vscroll/vbox_menu/scroll_buy_character/hbox_char_container
 
 func _get_upgrade_dice_ui_container():
-	return $MarginContainer/vbox_menu/scroll_dice_upgrade/hbox_upgrade_dice_container
+	return $MarginContainer/vscroll/vbox_menu/scroll_dice_upgrade/hbox_upgrade_dice_container
 
 func _get_purchase_dice_ui_container():
-	return $MarginContainer/vbox_menu/scroll_dice_buy/hbox_buy_dice_container
+	return $MarginContainer/vscroll/vbox_menu/scroll_dice_buy/hbox_buy_dice_container
 
 func _set_available_gold(amount):
 	_get_gold_label_node().text = "Gold: " + str(amount)
 
 func _get_gold_label_node():
-	return $MarginContainer/vbox_menu/HBoxContainer/gold_label
+	return $MarginContainer/vscroll/vbox_menu/HBoxContainer/gold_label
+
+func _get_ability_description_from_type(ability_type):
+	match(ability_type):
+		"damage":
+			return "Hurts things by the amount rolled"
+		"heal":
+			return "Heals you by the amount rolled."
+		_:
+			return "This ability is mysterious!"

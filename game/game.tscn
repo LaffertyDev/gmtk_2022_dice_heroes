@@ -1,10 +1,13 @@
-[gd_scene load_steps=9 format=2]
+[gd_scene load_steps=12 format=2]
 
 [ext_resource path="res://game/board/board.tscn" type="PackedScene" id=1]
 [ext_resource path="res://game/heroes/hero.tscn" type="PackedScene" id=2]
 [ext_resource path="res://game/enemies/enemy_spawner.tscn" type="PackedScene" id=3]
+[ext_resource path="res://game/assets/user_interface/hero_health_bar.png" type="Texture" id=4]
 [ext_resource path="res://game/assets/damage_indicator..png" type="Texture" id=5]
 [ext_resource path="res://game/game.gd" type="Script" id=6]
+[ext_resource path="res://game/assets/user_interface/hero_health_bar_overlay.png" type="Texture" id=7]
+[ext_resource path="res://game/assets/user_interface/hero_health_bar_underlay.png" type="Texture" id=8]
 [ext_resource path="res://game/dice/dice_tray.tscn" type="PackedScene" id=11]
 [ext_resource path="res://game/character_shop/character_shop.tscn" type="PackedScene" id=12]
 [ext_resource path="res://game/dice_shop/dice_shop.tscn" type="PackedScene" id=13]
@@ -32,11 +35,12 @@ position = Vector2( 86, 112 )
 position = Vector2( 86, 161 )
 
 [node name="gold_amount" type="Label" parent="."]
-margin_left = 216.0
-margin_top = 8.0
-margin_right = 270.0
-margin_bottom = 22.0
+margin_left = 214.0
+margin_top = 15.0
+margin_right = 268.0
+margin_bottom = 29.0
 text = "Gold: 16"
+align = 1
 
 [node name="button_start_adventure" type="Button" parent="."]
 margin_left = 401.0
@@ -70,20 +74,6 @@ margin_top = 130.0
 margin_right = 241.0
 margin_bottom = 144.0
 text = "32	"
-
-[node name="hero_life_total" type="Label" parent="."]
-margin_left = 111.0
-margin_top = 130.0
-margin_right = 151.0
-margin_bottom = 144.0
-text = "3 HP"
-
-[node name="enemy_life_total" type="Label" parent="."]
-margin_left = 332.0
-margin_top = 130.0
-margin_right = 372.0
-margin_bottom = 144.0
-text = "1 HP"
 
 [node name="enemy_damage_sum" type="Label" parent="."]
 margin_left = 257.0
@@ -120,6 +110,48 @@ window_title = "You Won!"
 [node name="dice_tray" parent="." instance=ExtResource( 11 )]
 position = Vector2( 224, 97 )
 z_index = -1
+
+[node name="hero_health_bar" type="TextureProgress" parent="."]
+margin_left = 32.0
+margin_top = 14.0
+margin_right = 160.0
+margin_bottom = 30.0
+value = 100.0
+texture_under = ExtResource( 8 )
+texture_over = ExtResource( 7 )
+texture_progress = ExtResource( 4 )
+tint_over = Color( 0, 0, 0, 1 )
+tint_progress = Color( 1, 0, 0, 1 )
+
+[node name="hero_life_label" type="Label" parent="hero_health_bar"]
+margin_left = 39.0
+margin_top = 1.0
+margin_right = 89.0
+margin_bottom = 15.0
+text = "100 / 100"
+align = 1
+valign = 1
+
+[node name="enemy_health_bar" type="TextureProgress" parent="."]
+margin_left = 320.0
+margin_top = 14.0
+margin_right = 448.0
+margin_bottom = 30.0
+value = 100.0
+texture_under = ExtResource( 8 )
+texture_over = ExtResource( 7 )
+texture_progress = ExtResource( 4 )
+tint_over = Color( 0, 0, 0, 1 )
+tint_progress = Color( 0.133333, 0.443137, 0.211765, 1 )
+
+[node name="enemy_life_label" type="Label" parent="enemy_health_bar"]
+margin_left = 39.0
+margin_top = 1.0
+margin_right = 89.0
+margin_bottom = 15.0
+text = "100 / 100"
+align = 1
+valign = 1
 
 [connection signal="final_zone_completed" from="board" to="." method="_on_board_final_zone_completed"]
 [connection signal="new_zone_entered" from="board" to="." method="_on_board_new_zone_entered"]

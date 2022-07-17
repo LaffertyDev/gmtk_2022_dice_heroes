@@ -1,39 +1,40 @@
 extends Node2D
 
-var hero_life_total = 0
-var enemy_life_total = 0
+var hero_life_current = 0
+var hero_life_max = 10
+var enemy_life_current = 0
+var enemy_life_max = 10
 var available_gold = 15
 var is_adventure_started = false
 
 var available_characters = []
 
 signal battle_finished(did_heroes_win)
-signal heroes_health_change(health)
 
 func _ready():
 	randomize()
-	available_characters.append({"name": "Jackson", "hero_type": "jackson", "sprite_name": "hero_jackson.png", "cost": 10, "is_purchased": false})
-	available_characters.append({"name": "Lilly", "hero_type": "lilly","sprite_name": "hero_lilly.png", "cost": 10, "is_purchased": false})
-	available_characters.append({"name": "Leah", "hero_type": "leah","sprite_name": "hero_leah.png", "cost": 10, "is_purchased": false})
+	available_characters.append({"name": "Jackson", "hero_type": "jackson", "hero_ability": "damage", "sprite_name": "hero_jackson.png", "cost": 10, "is_purchased": false})
+	available_characters.append({"name": "Lilly", "hero_type": "lilly", "hero_ability": "damage", "sprite_name": "hero_lilly.png", "cost": 10, "is_purchased": false})
+	available_characters.append({"name": "Leah", "hero_type": "leah", "hero_ability": "heal", "sprite_name": "hero_leah.png", "cost": 10, "is_purchased": false})
 	var _ig = self.connect("battle_finished", $board, "_on_battle_finished")
-	var _ig2 = self.connect("heroes_health_change", $board, "_on_heroes_health_changed")
 	var _ig3 = $character_shop.connect("purchased_dice", $dice_tray, "_on_new_dice_purchased")
 	_hide_battle_state()
 	_set_available_gold(available_gold)
-	_set_hero_life_total(10)
-	_set_enemy_life_total(1)
+	_set_hero_life_current(hero_life_max)
+	_set_hero_life_max(hero_life_max)
+	_set_enemy_life_current(enemy_life_max)
+	_set_enemy_life_max(enemy_life_max)
 
 func _on_button_start_adventure_pressed():
 	$timer_battle_tick.start()
 	is_adventure_started = true
-	_set_hero_life_total(10)
-	_set_enemy_life_total(3)
+	_set_hero_life_current(hero_life_max)
+	_set_enemy_life_current(enemy_life_max)
 	_show_battle_state()
 	emit_signal("battle_finished", true)
 
 func _on_button_shop_pressed():
 	$character_shop.popup_centered_ratio(1.0)
-	print("Open up the shop to upgrade dice if the battle has not started yet")
 	pass
 
 func show_dice_shop(dice):
@@ -46,31 +47,52 @@ func _on_button_ability_hurry_pressed():
 		$timer_battle_tick.wait_time = 1
 
 func _on_timer_battle_tick_timeout():
-	print("Battle Tick - Roll Dice")
 	var heroes = get_tree().get_nodes_in_group("heroes")
 	var enemies = get_tree().get_nodes_in_group("enemies")
 	var hero_damage_sum = 0
+	var hero_heal_sum = 0
+	var hero_shield_sum = 0
+	var hero_gamble_sum = 0
 	for hero in heroes:
-		hero_damage_sum += hero.roll_dice()
+		if hero.hero_ability == "damage":
+			hero_damage_sum += hero.roll_dice()
+		elif hero.hero_ability == "heal":
+			hero_heal_sum += hero.roll_dice()
+		elif hero.hero_ability == "shield":
+			hero_shield_sum += hero.roll_dice()
+		elif hero.hero_ability == "gamble":
+			hero_gamble_sum += hero.roll_dice()
+
 	_set_hero_damage(hero_damage_sum)
 
 	var enemy_damage_sum = 0
+	var enemy_heal_sum = 0
 	for enemy in enemies:
 		enemy_damage_sum += enemy.roll_dice()
 	_set_enemy_damage(enemy_damage_sum)
 
 	if hero_damage_sum < enemy_damage_sum:
-		_set_hero_life_total(hero_life_total - 1)
 		_set_battle_indicator_direction('hero')
 	elif hero_damage_sum > enemy_damage_sum:
-		_set_enemy_life_total(enemy_life_total - 1)
 		_set_battle_indicator_direction('enemy')
 	else:
 		_set_battle_indicator_direction('draw')
 
-	if hero_life_total == 0:
+	hero_life_current = min(hero_life_max, hero_life_current + hero_heal_sum)
+	hero_life_current = max(0, hero_life_current - enemy_damage_sum)
+	_set_hero_life_current(hero_life_current)
+
+	enemy_life_current = min(enemy_life_max, enemy_life_current + enemy_heal_sum)
+	enemy_life_current = max(0, enemy_life_current - hero_damage_sum)
+	enemy_damage_sum = max(0, enemy_damage_sum - hero_shield_sum)
+	_set_enemy_life_current(enemy_life_current)
+
+	available_gold = available_gold + hero_gamble_sum
+	_set_available_gold(available_gold)
+
+	if hero_life_current == 0:
 		_handle_heroes_died()
-	elif enemy_life_total == 0:
+	elif enemy_life_current == 0:
 		_handle_enemies_died()
 
 func _set_hero_damage(damage):
@@ -79,14 +101,25 @@ func _set_hero_damage(damage):
 func _set_enemy_damage(damage):
 	$enemy_damage_sum.text = str(damage)
 
-func _set_hero_life_total(health):
-	hero_life_total = health
-	$hero_life_total.text = str(hero_life_total)
-	emit_signal("heroes_health_change", hero_life_total)
+func _set_hero_life_current(health):
+	hero_life_current = health
+	$hero_health_bar.value = health
+	$hero_health_bar/hero_life_label.text = str(hero_life_current) + " / " + str(hero_life_max)
 
-func _set_enemy_life_total(health):
-	enemy_life_total = health
-	$enemy_life_total.text = str(enemy_life_total)
+func _set_hero_life_max(health_max):
+	hero_life_max = health_max
+	$hero_health_bar.max_value = health_max
+	$hero_health_bar/hero_life_label.text = str(hero_life_current) + " / " + str(hero_life_max)
+
+func _set_enemy_life_current(health):
+	enemy_life_current = health
+	$enemy_health_bar.value = health
+	$enemy_health_bar/enemy_life_label.text = str(enemy_life_current) + " / " + str(enemy_life_max)
+
+func _set_enemy_life_max(health_max):
+	enemy_life_max = health_max
+	$enemy_health_bar.max_value = health_max
+	$enemy_health_bar/enemy_life_label.text = str(enemy_life_current) + " / " + str(enemy_life_max)
 
 func _set_battle_indicator_direction(direction):
 	if (direction == 'hero'):
@@ -116,11 +149,12 @@ func _handle_enemies_died():
 	emit_signal("battle_finished", true)
 
 func _show_battle_state():
-	$enemy_life_total.show()
+	$hero_health_bar.show()
 	$button_start_adventure.hide()
 	$damage_indicator.show()
 	$hero_damage_sum.show()
 	$enemy_damage_sum.show()
+	$enemy_health_bar.show()
 	$button_shop.hide()
 	$button_ability_hurry.show()
 	$dice_tray.hide()
@@ -134,7 +168,8 @@ func _hide_battle_state():
 	for enemy in enemies:
 		enemy.get_parent().remove_child(enemy)
 		enemy.queue_free()
-	$enemy_life_total.hide()
+	$hero_health_bar.hide()
+	$enemy_health_bar.hide()
 	$damage_indicator.hide()
 	$hero_damage_sum.hide()
 	$enemy_damage_sum.hide()
@@ -157,6 +192,7 @@ func _on_character_shop_purchased_hero(characterObj):
 	_set_available_gold(available_gold - characterObj.cost)
 	var hero = load("res://game/heroes/hero.tscn")
 	var hero_ins = hero.instance()
+	hero_ins.hero_ability = characterObj.hero_ability
 	hero_ins.hero_type = characterObj.hero_type
 	var next_spawn_location = _get_next_hero_spawn_location()
 	if (next_spawn_location != null):
@@ -182,10 +218,12 @@ func _on_board_new_zone_entered(battle):
 		if (index < battle.enemies.size()):
 			spawner.spawn_enemy(battle.enemies[index])
 			index += 1
-	_set_enemy_life_total(battle.enemy_group_health)
+	_set_enemy_life_max(battle.enemy_group_health)
+	_set_enemy_life_current(battle.enemy_group_health)
 	$timer_battle_tick.start()
 
 func _on_board_final_zone_completed():
-	print("Final Board Completed")
 	_hide_battle_state()
+	$timer_battle_tick.stop()
+	is_adventure_started = false
 	$victory_dialog.popup_centered_ratio(0.5)

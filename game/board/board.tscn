@@ -21,11 +21,4 @@ centered = false
 position = Vector2( 16, 16 )
 texture = ExtResource( 1 )
 
-[node name="hero_board_life" type="Label" parent="hero_on_the_board"]
-margin_left = -15.0
-margin_top = -25.0
-margin_right = 25.0
-margin_bottom = -11.0
-text = "3 HP"
-
 [connection signal="tween_all_completed" from="hero_battle_tweener" to="." method="_on_hero_battle_tweener_tween_all_completed"]
