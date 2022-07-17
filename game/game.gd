@@ -156,8 +156,15 @@ func _set_enemy_life_max(health_max):
 	$enemy_health_bar/enemy_life_label.text = str(enemy_life_current) + " / " + str(enemy_life_max)
 
 func _set_available_gold(amount):
-	available_gold = amount
-	$gold_amount.text = "Gold: " + str(amount)
+	if (available_gold != amount):
+		available_gold = amount
+		$gold_amount.text = "Gold: " + str(amount)
+		var tween_anim = $gold_amount/gold_tween
+		tween_anim.remove_all()
+		var gold_coin_anim = $gold_amount/gold_coin_anim
+		tween_anim.interpolate_property(gold_coin_anim, "position", Vector2(34,8), Vector2(34,8) + Vector2(0, -10), 1.0, Tween.TRANS_LINEAR, Tween.EASE_IN_OUT)
+		tween_anim.interpolate_property(gold_coin_anim, "modulate:a", 1.0, 0.0, 1.0, Tween.TRANS_LINEAR, Tween.EASE_IN_OUT)
+		tween_anim.start()
 
 func _handle_heroes_died():
 	emit_signal("battle_finished", false)
