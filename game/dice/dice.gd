@@ -51,7 +51,7 @@ func _ready():
 		minimum = 1
 		maximum = 20
 	$Sprite.texture = get_dice_texture_resource()
-	$range_label.text = str(minimum) + "-" + str(maximum)
+	_update_range_label()
 	if !is_in_play:
 		$range_label.show()
 	if (!IsHeroDice):
@@ -172,11 +172,11 @@ func roll_dice(ability_type):
 
 func raise_minimum():
 	minimum += 1
-	$range_label.text = str(minimum) + "-" + str(maximum)
+	_update_range_label()
 
 func raise_maximum():
 	maximum += 1
-	$range_label.text = str(minimum) + "-" + str(maximum)
+	_update_range_label()
 
 	var upgraded_dice_type = dice_type
 	if maximum < 4:
@@ -196,6 +196,12 @@ func raise_maximum():
 		dice_type = upgraded_dice_type
 		$Sprite.texture = get_dice_texture_resource()
 
+
+func _update_range_label():
+	if can_crit:
+		$range_label.text = str(minimum) + "-" + str(maximum) + "*"
+	else:
+		$range_label.text = str(minimum) + "-" + str(maximum)
 
 func give_critical():
 	can_crit = true
