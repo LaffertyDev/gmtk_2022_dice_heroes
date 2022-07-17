@@ -2,6 +2,7 @@ extends PopupDialog
 
 signal purchased_hero(characterObj)
 signal purchased_dice(diceObj)
+signal purchased_health(cost)
 
 func _ready():
 	var _ig = connect("about_to_show", self, "_on_about_to_show")
@@ -98,22 +99,28 @@ func _on_button_close_shop_pressed():
 
 func _on_buy_button_pressed(character, char_buy_button):
 	if (get_available_gold() >= character.cost):
-		_set_available_gold(get_available_gold() - character.cost)
 		character.is_purchased = true
 		emit_signal("purchased_hero", character)
 		char_buy_button.get_parent().add_child(_build_purchased_label())
 		char_buy_button.get_parent().remove_child(char_buy_button)
 		char_buy_button.queue_free()
+		_set_available_gold(get_available_gold())
 
 func _on_upgrade_dice_button_pressed(dice):
 	get_parent().show_dice_shop(dice)
 
 func _on_purchase_dice_button_pressed(dice, dice_container):
 	if (get_available_gold() >= dice.cost):
-		_set_available_gold(get_available_gold() - dice.cost)
 		emit_signal("purchased_dice", dice)
 		dice_container.get_parent().remove_child(dice_container)
 		dice_container.queue_free()
+		_set_available_gold(get_available_gold())
+
+func _on_buy_health_button_pressed():
+	if (get_available_gold() >= 5):
+		emit_signal("purchased_health", 5)
+		_set_available_gold(get_available_gold())
+
 
 func _build_purchased_label():
 	var purchased_label = Label.new()

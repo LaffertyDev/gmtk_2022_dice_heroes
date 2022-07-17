@@ -63,4 +63,4 @@ func _ready():
 
 
 func roll_dice():
-	return $dice.roll_dice()
+	return $dice.roll_dice(enemy_ability)

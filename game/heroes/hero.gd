@@ -21,7 +21,7 @@ func roll_dice():
 		return 0
 
 	if $dice_hero_drop_target.has_dice:
-		return $dice_hero_drop_target.slotted_dice.roll_dice()
+		return $dice_hero_drop_target.slotted_dice.roll_dice(hero_ability)
 	else:
 		return 0 # no dice, no attack
 

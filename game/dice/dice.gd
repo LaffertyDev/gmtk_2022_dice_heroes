@@ -139,7 +139,14 @@ func set_drop_target(target):
 func clear_drop_target(_target_to_forget):
 	next_drop_target = null
 
-func roll_dice():
+func roll_dice(ability_type):
+	match(ability_type):
+		"damage":
+			$dice_roll_amount_label.modulate = Color(1.0,0.0,0.0,1.0)
+		"heal":
+			$dice_roll_amount_label.modulate = Color(0.0,1.0,0.0,1.0)
+		_:
+			$dice_roll_amount_label.modulate = Color(0.0,0.0,1.0,1.0)
 	$dice_tween.remove_all()
 	$dice_roll_amount_label.rect_position = Vector2(5,0)
 	$dice_roll_amount_label.show()

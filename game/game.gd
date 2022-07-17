@@ -4,7 +4,7 @@ var hero_life_current = 0
 var hero_life_max = 10
 var enemy_life_current = 0
 var enemy_life_max = 10
-var available_gold = 1000
+var available_gold = 999999
 var is_adventure_started = false
 
 var available_characters = []
@@ -19,7 +19,7 @@ func _ready():
 	var _ig = self.connect("battle_finished", $board, "_on_battle_finished")
 	var _ig3 = $character_shop.connect("purchased_dice", $dice_tray, "_on_new_dice_purchased")
 	_hide_battle_state()
-	_set_available_gold(available_gold)
+	_set_available_gold(0)
 	_set_hero_life_current(hero_life_max)
 	_set_hero_life_max(hero_life_max)
 	_set_enemy_life_current(enemy_life_max)
@@ -221,6 +221,11 @@ func _on_character_shop_purchased_hero(characterObj):
 	var next_spawn_location = _get_next_hero_spawn_location()
 	if (next_spawn_location != null):
 		next_spawn_location.add_child(hero_ins)
+
+func _on_character_shop_purchased_health(cost):
+	_set_available_gold(available_gold - cost)
+	_set_hero_life_max(hero_life_max + 1)
+	_set_hero_life_current(hero_life_max)
 
 func _get_next_dice_spawn_location():
 	return Vector2(64, 24)

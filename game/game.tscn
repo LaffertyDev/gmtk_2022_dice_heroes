@@ -201,6 +201,7 @@ autostart = true
 [connection signal="pressed" from="button_shop" to="." method="_on_button_shop_pressed"]
 [connection signal="timeout" from="timer_battle_tick" to="." method="_on_timer_battle_tick_timeout"]
 [connection signal="purchased_dice" from="character_shop" to="." method="_on_character_shop_purchased_dice"]
+[connection signal="purchased_health" from="character_shop" to="." method="_on_character_shop_purchased_health"]
 [connection signal="purchased_hero" from="character_shop" to="." method="_on_character_shop_purchased_hero"]
 [connection signal="upgraded_dice" from="dice_shop" to="." method="_on_dice_shop_upgraded_dice"]
 [connection signal="timeout" from="help_text_timer_scanner" to="." method="_on_help_text_timer_scanner_timeout"]
