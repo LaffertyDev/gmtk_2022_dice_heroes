@@ -4,7 +4,7 @@ var hero_life_current = 0
 var hero_life_max = 10
 var enemy_life_current = 0
 var enemy_life_max = 10
-var available_gold = 0
+var available_gold = 1000
 var is_adventure_started = false
 
 var available_characters = []
@@ -26,7 +26,6 @@ func _ready():
 	_set_enemy_life_max(enemy_life_max)
 
 func _on_button_start_adventure_pressed():
-	$timer_battle_tick.start()
 	is_adventure_started = true
 	_set_hero_life_current(hero_life_max)
 	_set_enemy_life_current(enemy_life_max)
@@ -63,8 +62,6 @@ func _on_timer_battle_tick_timeout():
 		elif hero.hero_ability == "gamble":
 			hero_gamble_sum += hero.roll_dice()
 
-	_set_hero_damage(hero_damage_sum)
-
 	var enemy_damage_sum = 0
 	var enemy_shield_sum = 0
 	var enemy_heal_sum = 0
@@ -83,8 +80,6 @@ func _on_timer_battle_tick_timeout():
 					enemy_entangled_count += 1
 			_:
 				print("Critical Error -- no valid enemy ability type")
-
-	_set_enemy_damage(enemy_damage_sum)
 
 	for x in range(enemy_entangled_count):
 		heroes[randi()%heroes.size()].set_entangled()
@@ -107,12 +102,6 @@ func _on_timer_battle_tick_timeout():
 		_handle_heroes_died()
 	elif enemy_life_current == 0:
 		_handle_enemies_died()
-
-func _set_hero_damage(damage):
-	$hero_damage_sum.text = str(damage)
-
-func _set_enemy_damage(damage):
-	$enemy_damage_sum.text = str(damage)
 
 func _set_hero_life_current(health):
 	hero_life_current = health
@@ -141,8 +130,6 @@ func _set_available_gold(amount):
 func _handle_heroes_died():
 	emit_signal("battle_finished", false)
 	$timer_battle_tick.stop()
-	is_adventure_started = false
-	_hide_battle_state()
 
 func _handle_enemies_died():
 	var enemies = get_tree().get_nodes_in_group("enemies")
@@ -150,15 +137,13 @@ func _handle_enemies_died():
 		enemy.get_parent().remove_child(enemy)
 		enemy.queue_free()
 	_set_available_gold(available_gold + enemies.size())
+	$enemy_health_bar.hide()
 	$timer_battle_tick.stop()
 	emit_signal("battle_finished", true)
 
 func _show_battle_state():
 	$hero_health_bar.show()
 	$button_start_adventure.hide()
-	$hero_damage_sum.show()
-	$enemy_damage_sum.show()
-	$enemy_health_bar.show()
 	$button_shop.hide()
 	$button_ability_hurry.show()
 	$dice_tray.hide()
@@ -174,9 +159,6 @@ func _hide_battle_state():
 		enemy.queue_free()
 	$hero_health_bar.hide()
 	$enemy_health_bar.hide()
-	$hero_damage_sum.hide()
-	$enemy_damage_sum.hide()
-	$button_start_adventure.show()
 	$button_ability_hurry.hide()
 	$button_shop.show()
 	$dice_tray.show()
@@ -223,6 +205,7 @@ func _on_board_new_zone_entered(battle):
 			index += 1
 	_set_enemy_life_max(battle.enemy_group_health)
 	_set_enemy_life_current(battle.enemy_group_health)
+	$enemy_health_bar.show()
 	$timer_battle_tick.start()
 
 func _on_board_final_zone_completed():
@@ -230,3 +213,9 @@ func _on_board_final_zone_completed():
 	$timer_battle_tick.stop()
 	is_adventure_started = false
 	$victory_dialog.popup_centered_ratio(0.5)
+
+func _on_board_entered_start_zone():
+	$button_start_adventure.show()
+	_hide_battle_state()
+	is_adventure_started = false
+

@@ -1,5 +1,6 @@
 extends Node2D
 
+signal entered_start_zone()
 signal new_zone_entered(new_battle)
 signal final_zone_completed()
 var heroes_won_last_match = false
@@ -45,6 +46,12 @@ func _on_hero_battle_tweener_tween_all_completed():
 		hero_current_position -= 1
 		_move_heroes_to_position()
 	elif heroes_won_last_match:
+		$zone_entered_delay.start()
+	else:
+		emit_signal("entered_start_zone")
+
+func _on_zone_entered_delay_timeout():
+	if heroes_won_last_match:
 		emit_signal("new_zone_entered", _get_next_battle())
 
 func _get_next_battle():
