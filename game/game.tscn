@@ -1,4 +1,4 @@
-[gd_scene load_steps=21 format=2]
+[gd_scene load_steps=24 format=2]
 
 [ext_resource path="res://game/board/board.tscn" type="PackedScene" id=1]
 [ext_resource path="res://game/heroes/hero.tscn" type="PackedScene" id=2]
@@ -20,6 +20,9 @@
 [ext_resource path="res://game/assets/user_interface/hurry_button_normal.png" type="Texture" id=18]
 [ext_resource path="res://game/assets/user_interface/hurry_button_hover.png" type="Texture" id=19]
 [ext_resource path="res://game/assets/user_interface/gold_coin.png" type="Texture" id=20]
+[ext_resource path="res://game/assets/user_interface/empty_button_pressed.png" type="Texture" id=21]
+[ext_resource path="res://game/assets/user_interface/empty_button_normal.png" type="Texture" id=22]
+[ext_resource path="res://game/assets/user_interface/empty_button_hover.png" type="Texture" id=23]
 
 [node name="game" type="Node2D"]
 script = ExtResource( 6 )
@@ -107,6 +110,7 @@ texture_hover = ExtResource( 10 )
 [node name="timer_battle_tick" type="Timer" parent="."]
 
 [node name="character_shop" parent="." instance=ExtResource( 12 )]
+visible = false
 
 [node name="dice_shop" parent="." instance=ExtResource( 13 )]
 visible = false
@@ -193,6 +197,23 @@ wait_time = 10.0
 one_shot = true
 autostart = true
 
+[node name="button_give_up_adventure" type="TextureButton" parent="."]
+visible = false
+margin_left = 400.0
+margin_top = 226.0
+margin_right = 450.0
+margin_bottom = 250.0
+texture_normal = ExtResource( 22 )
+texture_pressed = ExtResource( 21 )
+texture_hover = ExtResource( 23 )
+
+[node name="give_up_label" type="Label" parent="button_give_up_adventure"]
+margin_left = 5.0
+margin_top = 4.0
+margin_right = 45.0
+margin_bottom = 17.0
+text = "Give Up"
+
 [connection signal="entered_start_zone" from="board" to="." method="_on_board_entered_start_zone"]
 [connection signal="final_zone_completed" from="board" to="." method="_on_board_final_zone_completed"]
 [connection signal="new_zone_entered" from="board" to="." method="_on_board_new_zone_entered"]
@@ -206,3 +227,4 @@ autostart = true
 [connection signal="upgraded_dice" from="dice_shop" to="." method="_on_dice_shop_upgraded_dice"]
 [connection signal="timeout" from="help_text_timer_scanner" to="." method="_on_help_text_timer_scanner_timeout"]
 [connection signal="timeout" from="help_text_timer_scanner/help_text_delay_timer" to="." method="_on_help_text_delay_timer_timeout"]
+[connection signal="pressed" from="button_give_up_adventure" to="." method="_on_button_give_up_adventure_pressed"]

@@ -3,9 +3,9 @@ extends PopupDialog
 var dice_being_upgraded = null
 signal upgraded_dice(diceObj, cost)
 
-var raise_minimum_cost = 10
+var raise_minimum_cost = 20
 var raise_maximum_cost = 10
-var empower_critical_cost = 10
+var empower_critical_cost = 50
 
 func _ready():
 	var _ig = connect("about_to_show", self, "_on_about_to_show")

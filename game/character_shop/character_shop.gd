@@ -18,11 +18,6 @@ func _on_about_to_show():
 		upgrade_dice_container.remove_child(child)
 		child.queue_free()
 
-	var purchase_dice_container = _get_purchase_dice_ui_container()
-	for child in purchase_dice_container.get_children():
-		purchase_dice_container.remove_child(child)
-		child.queue_free()
-
 	_set_available_gold(get_available_gold())
 
 	var charactersEligibleForPurchase = get_eligible_characters()
@@ -72,28 +67,6 @@ func _on_about_to_show():
 
 		upgrade_dice_container.add_child(vbox_container)
 
-	var dice_eligible_to_purchase = get_dice_to_purchase()
-	for dice_to_purchase in dice_eligible_to_purchase:
-		var dice_sprite_res = load("res://game/assets/dice/" + dice_to_purchase.sprite)
-
-		var vbox_container = VBoxContainer.new()
-		var dice_label = Label.new()
-		dice_label.text = dice_to_purchase.dice_type + " - " + str(dice_to_purchase.cost) + " Gold"
-		var sprite_center_container = CenterContainer.new()
-		var dice_sprite = TextureRect.new()
-		dice_sprite.texture = dice_sprite_res
-
-		vbox_container.add_child(dice_label)
-		sprite_center_container.add_child(dice_sprite)
-		vbox_container.add_child(sprite_center_container)
-		var dice_upgrade_button = Button.new()
-		dice_upgrade_button.connect("pressed", self, "_on_purchase_dice_button_pressed", [dice_to_purchase, vbox_container])
-		dice_upgrade_button.text = "Buy Now!"
-		vbox_container.add_child(dice_upgrade_button)
-
-		purchase_dice_container.add_child(vbox_container)
-
-
 func _on_button_close_shop_pressed():
 	hide()
 
@@ -109,12 +82,13 @@ func _on_buy_button_pressed(character, char_buy_button):
 func _on_upgrade_dice_button_pressed(dice):
 	get_parent().show_dice_shop(dice)
 
-func _on_purchase_dice_button_pressed(dice, dice_container):
-	if (get_available_gold() >= dice.cost):
-		emit_signal("purchased_dice", dice)
-		dice_container.get_parent().remove_child(dice_container)
-		dice_container.queue_free()
+func _on_buy_new_dice_pressed():
+	var purchasable_dice = {"dice_type": "D2", "sprite": "dice_d2.png", "cost": 10}
+	var all_heroes_dice = get_tree().get_nodes_in_group("heroes_dice")
+	if (get_available_gold() >= purchasable_dice.cost && all_heroes_dice.size() < 6):
+		emit_signal("purchased_dice", purchasable_dice)
 		_set_available_gold(get_available_gold())
+		_on_about_to_show()
 
 func _on_buy_health_button_pressed():
 	if (get_available_gold() >= 5):
@@ -132,16 +106,6 @@ func get_eligible_characters():
 
 func get_dice_to_upgrade():
 	return get_tree().get_nodes_in_group("heroes_dice")
-
-func get_dice_to_purchase():
-	var dice_eligible_for_purchase = []
-	dice_eligible_for_purchase.append({"dice_type": "D2", "sprite": "dice_d2.png", "cost": 3})
-	dice_eligible_for_purchase.append({"dice_type": "D4", "sprite": "dice_d4.png", "cost": 5})
-	dice_eligible_for_purchase.append({"dice_type": "D6", "sprite": "dice_d6.png", "cost": 7})
-	dice_eligible_for_purchase.append({"dice_type": "D8", "sprite": "dice_d8.png", "cost": 9})
-	dice_eligible_for_purchase.append({"dice_type": "D12", "sprite": "dice_d12.png", "cost": 13})
-	dice_eligible_for_purchase.append({"dice_type": "D20", "sprite": "dice_d20.png", "cost": 21})
-	return dice_eligible_for_purchase
 
 func get_available_gold():
 	return get_parent().available_gold

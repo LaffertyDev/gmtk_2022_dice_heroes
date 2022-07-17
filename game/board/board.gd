@@ -66,129 +66,129 @@ func _get_next_battle():
 			pass
 		1:
 			enemies.append({"enemy_type": "slime"}) # 1.5
-			gold_income = 1
+			gold_income = 5
 			enemy_group_health = 5
 		2:
-			enemies.append({"enemy_type": "bandit"}) # 2.5
-			gold_income = 1
+			enemies.append({"enemy_type": "slime"}) # 1.5
+			gold_income = 5
 			enemy_group_health = 6
 		3:
 			enemies.append({"enemy_type": "slime"}) # 3
 			enemies.append({"enemy_type": "slime"})
-			gold_income = 1
+			gold_income = 5
 			enemy_group_health = 7
 		4:
 			enemies.append({"enemy_type": "mimic"}) # 3.5
-			gold_income = 1
+			gold_income = 5
 			enemy_group_health = 8
 		5:
 			enemies.append({"enemy_type": "bandit"}) # 4
 			enemies.append({"enemy_type": "slime"})
-			gold_income = 1
+			gold_income = 5
 			enemy_group_health = 9
 		6:
 			enemies.append({"enemy_type": "slime"}) # 4.5
 			enemies.append({"enemy_type": "slime"})
 			enemies.append({"enemy_type": "slime"})
-			gold_income = 1
+			gold_income = 5
 			enemy_group_health = 10
 		7:
 			enemies.append({"enemy_type": "mimic"}) # 5
 			enemies.append({"enemy_type": "mimic"})
-			gold_income = 1
+			gold_income = 5
 			enemy_group_health = 11
 		8:
 			enemies.append({"enemy_type": "bandit"}) # 6
 			enemies.append({"enemy_type": "mimic"})
-			gold_income = 1
+			gold_income = 5
 			enemy_group_health = 12
 		9:
 			enemies.append({"enemy_type": "bandit"}) # 7
 			enemies.append({"enemy_type": "bandit"})
-			gold_income = 1
+			gold_income = 5
 			enemy_group_health = 13
 		10:
 			enemies.append({"enemy_type": "necromancer"}) # 10.5
 			enemies.append({"enemy_type": "bandit"})
 			enemies.append({"enemy_type": "bandit"})
-			gold_income = 1
+			gold_income = 10
 			enemy_group_health = 20
 		11:
 			enemies.append({"enemy_type": "bandit"}) # 10
 			enemies.append({"enemy_type": "bandit"})
 			enemies.append({"enemy_type": "bandit"})
 			enemies.append({"enemy_type": "bandit"})
-			gold_income = 1
+			gold_income = 10
 			enemy_group_health = 20
 		12:
 			enemies.append({"enemy_type": "mimic"}) # 12
 			enemies.append({"enemy_type": "mimic"})
 			enemies.append({"enemy_type": "mimic"})
 			enemies.append({"enemy_type": "slime"})
-			gold_income = 1
+			gold_income = 10
 			enemy_group_health = 25
 		13:
 			enemies.append({"enemy_type": "necromancer"}) # 14
 			enemies.append({"enemy_type": "necromancer"})
 			enemies.append({"enemy_type": "bandit"})
 			enemies.append({"enemy_type": "bandit"})
-			gold_income = 1
+			gold_income = 10
 			enemy_group_health = 30
 		14:
 			enemies.append({"enemy_type": "necromancer"}) # 16
 			enemies.append({"enemy_type": "necromancer"})
 			enemies.append({"enemy_type": "mimic"})
 			enemies.append({"enemy_type": "mimic"})
-			gold_income = 1
+			gold_income = 10
 			enemy_group_health = 40
 		15:
 			enemies.append({"enemy_type": "dragon"}) # 17
 			enemies.append({"enemy_type": "mimic"})
 			enemies.append({"enemy_type": "mimic"})
 			enemies.append({"enemy_type": "mimic"})
-			gold_income = 1
+			gold_income = 10
 			enemy_group_health = 50
 		16:
 			enemies.append({"enemy_type": "dragon"})  # 19
 			enemies.append({"enemy_type": "necromancer"})
 			enemies.append({"enemy_type": "necromancer"})
 			enemies.append({"enemy_type": "mimic"})
-			gold_income = 1
+			gold_income = 10
 			enemy_group_health = 50
 		17:
 			enemies.append({"enemy_type": "dragon"}) # 20
 			enemies.append({"enemy_type": "necromancer"})
 			enemies.append({"enemy_type": "necromancer"})
 			enemies.append({"enemy_type": "necromancer"})
-			gold_income = 1
+			gold_income = 10
 			enemy_group_health = 55
 		18:
 			enemies.append({"enemy_type": "dragon"}) # 21
 			enemies.append({"enemy_type": "dragon"})
 			enemies.append({"enemy_type": "necromancer"})
 			enemies.append({"enemy_type": "necromancer"})
-			gold_income = 1
+			gold_income = 10
 			enemy_group_health = 65
 		19:
 			enemies.append({"enemy_type": "dragon"}) # 23
 			enemies.append({"enemy_type": "dragon"})
 			enemies.append({"enemy_type": "dragon"})
 			enemies.append({"enemy_type": "mimic"})
-			gold_income = 1
+			gold_income = 10
 			enemy_group_health = 75
 		20:
 			enemies.append({"enemy_type": "dragon"}) # 26
 			enemies.append({"enemy_type": "dragon"})
 			enemies.append({"enemy_type": "dragon"})
 			enemies.append({"enemy_type": "dragon"})
-			gold_income = 1
+			gold_income = 10
 			enemy_group_health = 100
 		21:
 			enemies.append({"enemy_type": "boss"}) # 30
 			enemies.append({"enemy_type": "dragon"}) 
 			enemies.append({"enemy_type": "dragon"})
 			enemies.append({"enemy_type": "dragon"})
-			gold_income = 1
+			gold_income = 924678
 			enemy_group_health = 150
 		_:
 			pass

@@ -3,7 +3,7 @@
 [ext_resource path="res://game/assets/heroes/main_hero.png" type="Texture" id=1]
 [ext_resource path="res://game/heroes/hero.gd" type="Script" id=2]
 [ext_resource path="res://game/dice/dice_hero_drop_target.tscn" type="PackedScene" id=3]
-[ext_resource path="res://game/assets/effects/effect_entangle.png" type="Texture" id=4]
+[ext_resource path="res://game/assets/effects/effect_entangle_anim.tres" type="SpriteFrames" id=4]
 
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 8, 8 )
@@ -15,9 +15,10 @@ script = ExtResource( 2 )
 texture = ExtResource( 1 )
 centered = false
 
-[node name="entangled_sprite" type="Sprite" parent="."]
+[node name="entangled_sprite" type="AnimatedSprite" parent="."]
 visible = false
-texture = ExtResource( 4 )
+frames = ExtResource( 4 )
+playing = true
 centered = false
 
 [node name="dice_hero_drop_target" parent="." instance=ExtResource( 3 )]

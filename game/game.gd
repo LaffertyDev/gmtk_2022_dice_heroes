@@ -5,6 +5,7 @@ var hero_life_max = 10
 var enemy_life_current = 0
 var enemy_life_max = 10
 var available_gold = 999999
+var next_gold_reward = 0
 var is_adventure_started = false
 
 var available_characters = []
@@ -13,9 +14,9 @@ signal battle_finished(did_heroes_win)
 
 func _ready():
 	randomize()
+	available_characters.append({"name": "Leah", "hero_type": "leah", "hero_ability": "heal", "sprite_name": "hero_leah.png", "cost": 10, "is_purchased": false})
 	available_characters.append({"name": "Jackson", "hero_type": "jackson", "hero_ability": "damage", "sprite_name": "hero_jackson.png", "cost": 10, "is_purchased": false})
 	available_characters.append({"name": "Lilly", "hero_type": "lilly", "hero_ability": "damage", "sprite_name": "hero_lilly.png", "cost": 10, "is_purchased": false})
-	available_characters.append({"name": "Leah", "hero_type": "leah", "hero_ability": "heal", "sprite_name": "hero_leah.png", "cost": 10, "is_purchased": false})
 	var _ig = self.connect("battle_finished", $board, "_on_battle_finished")
 	var _ig3 = $character_shop.connect("purchased_dice", $dice_tray, "_on_new_dice_purchased")
 	_hide_battle_state()
@@ -62,6 +63,7 @@ func _on_button_start_adventure_pressed():
 	_set_hero_life_current(hero_life_max)
 	_set_enemy_life_current(enemy_life_max)
 	_show_battle_state()
+	next_gold_reward = 0
 	emit_signal("battle_finished", true)
 
 func _on_button_shop_pressed():
@@ -171,11 +173,12 @@ func _handle_heroes_died():
 	$timer_battle_tick.stop()
 
 func _handle_enemies_died():
+	$button_give_up_adventure.hide()
 	var enemies = get_tree().get_nodes_in_group("enemies")
 	for enemy in enemies:
 		enemy.get_parent().remove_child(enemy)
 		enemy.queue_free()
-	_set_available_gold(available_gold + enemies.size())
+	_set_available_gold(available_gold + next_gold_reward)
 	$enemy_health_bar.hide()
 	$timer_battle_tick.stop()
 	emit_signal("battle_finished", true)
@@ -200,6 +203,7 @@ func _hide_battle_state():
 	$enemy_health_bar.hide()
 	$button_ability_hurry.hide()
 	$button_shop.show()
+	$button_give_up_adventure.hide()
 	$dice_tray.show()
 	var heroes_dices = get_tree().get_nodes_in_group("heroes_dice")
 	for heroes_dice in heroes_dices:
@@ -241,6 +245,7 @@ func _get_next_hero_spawn_location():
 			return spawn_location.node
 
 func _on_board_new_zone_entered(battle):
+	$button_give_up_adventure.show()
 	var index = 0
 	var spawners = get_tree().get_nodes_in_group("enemy_spawners")
 	for spawner in spawners:
@@ -249,6 +254,7 @@ func _on_board_new_zone_entered(battle):
 			index += 1
 	_set_enemy_life_max(battle.enemy_group_health)
 	_set_enemy_life_current(battle.enemy_group_health)
+	next_gold_reward = battle.gold_income
 	$enemy_health_bar.show()
 	$timer_battle_tick.start()
 
@@ -264,4 +270,9 @@ func _on_board_entered_start_zone():
 	is_adventure_started = false
 	$button_ability_hurry.pressed = false
 	_on_button_ability_hurry_pressed() # reset timer because we disable hurry button -- does not fire automatically
+
+func _on_button_give_up_adventure_pressed():
+	$button_give_up_adventure.hide()
+	_set_hero_life_current(0)
+	_handle_heroes_died()
 

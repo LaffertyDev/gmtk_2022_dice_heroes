@@ -35,7 +35,12 @@ text = "1"
 
 [node name="dice_tween" type="Tween" parent="."]
 
+[node name="dice_reset_delay_timer" type="Timer" parent="."]
+wait_time = 0.05
+one_shot = true
+
 [connection signal="input_event" from="." to="." method="_on_dice_input_event"]
 [connection signal="mouse_entered" from="." to="." method="_on_dice_mouse_entered"]
 [connection signal="mouse_exited" from="." to="." method="_on_dice_mouse_exited"]
 [connection signal="tween_all_completed" from="dice_tween" to="." method="_on_dice_tween_tween_all_completed"]
+[connection signal="timeout" from="dice_reset_delay_timer" to="." method="_on_dice_reset_delay_timer_timeout"]

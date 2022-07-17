@@ -126,6 +126,12 @@ func _process(_delta):
 			cancel_drag()
 	elif is_grabbing:
 		# the code released without firing an event, probably because the mouse left the target
+		$dice_reset_delay_timer.start()
+
+func _on_dice_reset_delay_timer_timeout():
+	# on html builds, the event doesn't fire before we detect the input
+	# so delay it
+	if is_grabbing:
 		cancel_drag()
 
 func cancel_drag():
@@ -168,6 +174,27 @@ func raise_maximum():
 	maximum += 1
 	$range_label.text = str(minimum) + "-" + str(maximum)
 
+	var upgraded_dice_type = dice_type
+	if maximum < 4:
+		upgraded_dice_type = "D2"
+	elif maximum < 6:
+		upgraded_dice_type = "D4"
+	elif maximum < 8:
+		upgraded_dice_type = "D6"
+	elif maximum < 10:
+		upgraded_dice_type = "D8"
+	elif maximum < 12:
+		upgraded_dice_type = "D10"
+	elif maximum < 20:
+		upgraded_dice_type = "D12"
+	else:
+		upgraded_dice_type = "D20"
+
+	if upgraded_dice_type != dice_type:
+		dice_type = upgraded_dice_type
+		$Sprite.texture = get_dice_texture_resource()
+
+
 func give_critical():
 	can_crit = true
 
@@ -179,3 +206,4 @@ func get_dice_modulation():
 
 func _on_dice_tween_tween_all_completed():
 	$dice_roll_amount_label.hide()
+
