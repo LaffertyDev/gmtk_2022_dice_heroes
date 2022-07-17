@@ -39,9 +39,11 @@ func _on_button_shop_pressed():
 func show_dice_shop(dice):
 	$dice_shop.reveal_with_dice(dice)
 
-func _on_button_rig_dice_pressed():
-	print("Rig the next battle tick")
-	pass
+func _on_button_ability_hurry_pressed():
+	if ($button_ability_hurry.pressed):
+		$timer_battle_tick.wait_time = 0.25
+	else:
+		$timer_battle_tick.wait_time = 1
 
 func _on_timer_battle_tick_timeout():
 	print("Battle Tick - Roll Dice")
@@ -70,30 +72,6 @@ func _on_timer_battle_tick_timeout():
 		_handle_heroes_died()
 	elif enemy_life_total == 0:
 		_handle_enemies_died()
-
-
-func _on_battle_speed_pause_pressed():
-	print("Battle Speed - Paused")
-	$timer_battle_tick.paused = true
-	pass
-
-func _on_battle_speed_slow_pressed():
-	print("Battle Speed - Slow")
-	$timer_battle_tick.paused = false
-	$timer_battle_tick.wait_time = 4
-	pass
-
-func _on_battle_speed_normal_pressed():
-	print("Battle Speed - normal")
-	$timer_battle_tick.paused = false
-	$timer_battle_tick.wait_time = 1
-	pass
-
-func _on_battle_speed_fast_pressed():
-	print("Battle Speed - Fast")
-	$timer_battle_tick.paused = false
-	$timer_battle_tick.wait_time = 0.25
-	pass
 
 func _set_hero_damage(damage):
 	$hero_damage_sum.text = str(damage)
@@ -143,6 +121,8 @@ func _show_battle_state():
 	$damage_indicator.show()
 	$hero_damage_sum.show()
 	$enemy_damage_sum.show()
+	$button_shop.hide()
+	$button_ability_hurry.show()
 	$dice_tray.hide()
 	var heroes_dices = get_tree().get_nodes_in_group("heroes_dice")
 	for heroes_dice in heroes_dices:
@@ -159,6 +139,8 @@ func _hide_battle_state():
 	$hero_damage_sum.hide()
 	$enemy_damage_sum.hide()
 	$button_start_adventure.show()
+	$button_ability_hurry.hide()
+	$button_shop.show()
 	$dice_tray.show()
 	var heroes_dices = get_tree().get_nodes_in_group("heroes_dice")
 	for heroes_dice in heroes_dices:

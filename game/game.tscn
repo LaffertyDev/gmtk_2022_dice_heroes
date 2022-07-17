@@ -1,14 +1,10 @@
-[gd_scene load_steps=13 format=2]
+[gd_scene load_steps=9 format=2]
 
 [ext_resource path="res://game/board/board.tscn" type="PackedScene" id=1]
 [ext_resource path="res://game/heroes/hero.tscn" type="PackedScene" id=2]
 [ext_resource path="res://game/enemies/enemy_spawner.tscn" type="PackedScene" id=3]
 [ext_resource path="res://game/assets/damage_indicator..png" type="Texture" id=5]
 [ext_resource path="res://game/game.gd" type="Script" id=6]
-[ext_resource path="res://game/assets/user_interface/battle_speed_pause.png" type="Texture" id=7]
-[ext_resource path="res://game/assets/user_interface/battle_speed_1x.png" type="Texture" id=8]
-[ext_resource path="res://game/assets/user_interface/battle_speed_slow.png" type="Texture" id=9]
-[ext_resource path="res://game/assets/user_interface/battle_speed_2x.png" type="Texture" id=10]
 [ext_resource path="res://game/dice/dice_tray.tscn" type="PackedScene" id=11]
 [ext_resource path="res://game/character_shop/character_shop.tscn" type="PackedScene" id=12]
 [ext_resource path="res://game/dice_shop/dice_shop.tscn" type="PackedScene" id=13]
@@ -49,17 +45,18 @@ margin_right = 465.0
 margin_bottom = 259.0
 text = "Start"
 
-[node name="button_rig_dice" type="Button" parent="."]
-margin_left = 14.0
+[node name="button_ability_hurry" type="Button" parent="."]
+margin_left = 32.0
 margin_top = 236.0
-margin_right = 78.0
+margin_right = 140.0
 margin_bottom = 256.0
-text = "Rig Dice"
+toggle_mode = true
+text = "Hurry the Fuck Up!"
 
 [node name="button_shop" type="Button" parent="."]
-margin_left = 94.0
+margin_left = 32.0
 margin_top = 236.0
-margin_right = 158.0
+margin_right = 96.0
 margin_bottom = 256.0
 text = "Shop"
 
@@ -97,34 +94,6 @@ text = "32	"
 
 [node name="timer_battle_tick" type="Timer" parent="."]
 
-[node name="battle_speed_pause" type="TextureButton" parent="."]
-margin_left = 420.0
-margin_top = 8.0
-margin_right = 436.0
-margin_bottom = 24.0
-texture_normal = ExtResource( 7 )
-
-[node name="battle_speed_slow" type="TextureButton" parent="."]
-margin_left = 401.0
-margin_top = 8.0
-margin_right = 417.0
-margin_bottom = 24.0
-texture_normal = ExtResource( 9 )
-
-[node name="battle_speed_normal" type="TextureButton" parent="."]
-margin_left = 436.0
-margin_top = 8.0
-margin_right = 452.0
-margin_bottom = 24.0
-texture_normal = ExtResource( 8 )
-
-[node name="battle_speed_fast" type="TextureButton" parent="."]
-margin_left = 455.0
-margin_top = 8.0
-margin_right = 471.0
-margin_bottom = 24.0
-texture_normal = ExtResource( 10 )
-
 [node name="character_shop" parent="." instance=ExtResource( 12 )]
 visible = false
 
@@ -155,13 +124,9 @@ z_index = -1
 [connection signal="final_zone_completed" from="board" to="." method="_on_board_final_zone_completed"]
 [connection signal="new_zone_entered" from="board" to="." method="_on_board_new_zone_entered"]
 [connection signal="pressed" from="button_start_adventure" to="." method="_on_button_start_adventure_pressed"]
-[connection signal="pressed" from="button_rig_dice" to="." method="_on_button_rig_dice_pressed"]
+[connection signal="pressed" from="button_ability_hurry" to="." method="_on_button_ability_hurry_pressed"]
 [connection signal="pressed" from="button_shop" to="." method="_on_button_shop_pressed"]
 [connection signal="timeout" from="timer_battle_tick" to="." method="_on_timer_battle_tick_timeout"]
-[connection signal="pressed" from="battle_speed_pause" to="." method="_on_battle_speed_pause_pressed"]
-[connection signal="pressed" from="battle_speed_slow" to="." method="_on_battle_speed_slow_pressed"]
-[connection signal="pressed" from="battle_speed_normal" to="." method="_on_battle_speed_normal_pressed"]
-[connection signal="pressed" from="battle_speed_fast" to="." method="_on_battle_speed_fast_pressed"]
 [connection signal="purchased_dice" from="character_shop" to="." method="_on_character_shop_purchased_dice"]
 [connection signal="purchased_hero" from="character_shop" to="." method="_on_character_shop_purchased_hero"]
 [connection signal="upgraded_dice" from="dice_shop" to="." method="_on_dice_shop_upgraded_dice"]

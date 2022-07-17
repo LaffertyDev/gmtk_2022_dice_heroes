@@ -56,6 +56,7 @@ func _on_about_to_show():
 		var sprite_center_container = CenterContainer.new()
 		var dice_sprite = TextureRect.new()
 		dice_sprite.texture = dice_eligible_for_upgrade.get_dice_texture_resource()
+		dice_sprite.modulate = dice_eligible_for_upgrade.get_dice_modulation()
 
 		sprite_center_container.add_child(dice_sprite)
 		vbox_container.add_child(dice_label)
