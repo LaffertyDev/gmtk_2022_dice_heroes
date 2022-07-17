@@ -81,7 +81,7 @@ func _on_timer_battle_tick_timeout():
 			_:
 				print("Critical Error -- no valid enemy ability type")
 
-	for x in range(enemy_entangled_count):
+	for _x in range(enemy_entangled_count):
 		heroes[randi()%heroes.size()].set_entangled()
 
 	hero_damage_sum = max(0, hero_damage_sum - enemy_shield_sum)
@@ -218,4 +218,6 @@ func _on_board_entered_start_zone():
 	$button_start_adventure.show()
 	_hide_battle_state()
 	is_adventure_started = false
+	$button_ability_hurry.pressed = false
+	_on_button_ability_hurry_pressed() # reset timer because we disable hurry button -- does not fire automatically
 
