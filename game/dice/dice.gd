@@ -185,10 +185,8 @@ func raise_maximum():
 		upgraded_dice_type = "D4"
 	elif maximum < 8:
 		upgraded_dice_type = "D6"
-	elif maximum < 10:
-		upgraded_dice_type = "D8"
 	elif maximum < 12:
-		upgraded_dice_type = "D10"
+		upgraded_dice_type = "D8"
 	elif maximum < 20:
 		upgraded_dice_type = "D12"
 	else:
