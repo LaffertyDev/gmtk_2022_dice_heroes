@@ -30,3 +30,6 @@ func play_battle_win():
 
 func play_battle_lose():
 	$battle_lose.play()
+
+func play_victory_sound():
+	$victory_sound.play()

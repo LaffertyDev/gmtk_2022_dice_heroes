@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=2]
+[gd_scene load_steps=12 format=2]
 
 [ext_resource path="res://game/assets/audio/die_pickup.ogg" type="AudioStream" id=1]
 [ext_resource path="res://game/assets/audio/walking.ogg" type="AudioStream" id=2]
@@ -10,6 +10,7 @@
 [ext_resource path="res://game/assets/audio/die_roll.ogg" type="AudioStream" id=8]
 [ext_resource path="res://game/assets/audio/battle_lose.ogg" type="AudioStream" id=9]
 [ext_resource path="res://game/assets/audio/battle_win.ogg" type="AudioStream" id=10]
+[ext_resource path="res://game/assets/audio/victory.wav" type="AudioStream" id=11]
 
 [node name="global_audio" type="Node2D"]
 script = ExtResource( 6 )
@@ -44,3 +45,6 @@ pitch_scale = 0.76
 stream = ExtResource( 9 )
 volume_db = -10.0
 pitch_scale = 0.59
+
+[node name="victory_sound" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 11 )

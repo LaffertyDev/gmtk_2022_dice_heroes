@@ -275,6 +275,7 @@ func _on_board_final_zone_completed():
 	$timer_battle_tick.stop()
 	is_adventure_started = false
 	$victory_dialog.popup_centered_ratio(0.5)
+	global_audio.play_victory_sound()
 
 func _on_board_entered_start_zone():
 	$button_start_adventure.show()
