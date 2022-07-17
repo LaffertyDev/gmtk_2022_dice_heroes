@@ -81,6 +81,21 @@ func get_dice_texture_resource():
 	else:
 		return load("res://game/assets/dice/dice_d2.png")
 
+func get_friendly_dice_name_from_type():
+	if (dice_type == "D2"):
+		return "2-sided die"
+	elif (dice_type == "D4"):
+		return "4-sided die"
+	elif (dice_type == "D6"):
+		return "6-sided die"
+	elif (dice_type == "D8"):
+		return "8-sided die"
+	elif (dice_type == "D12"):
+		return "12-sided die"
+	elif (dice_type == "D20"):
+		return "20-sided die"
+	else:
+		return "???"
 func _on_dice_mouse_entered():
 	is_mouse_over = true
 	$range_label.show()
@@ -162,6 +177,7 @@ func roll_dice(ability_type):
 	$dice_roll_amount_label.show()
 	$dice_tween.interpolate_property($dice_roll_amount_label, "rect_position", $dice_roll_amount_label.rect_position, $dice_roll_amount_label.rect_position + Vector2(0, -10), 1.0, Tween.TRANS_LINEAR, Tween.EASE_IN_OUT)
 	$dice_tween.interpolate_property($dice_roll_amount_label, "modulate:a", 1.0, 0.0, 1.0, Tween.TRANS_LINEAR, Tween.EASE_IN_OUT)
+	$dice_tween.interpolate_property($Sprite, "rotation_degrees", 0, 360, 0.2, Tween.TRANS_LINEAR, Tween.EASE_IN_OUT)
 	$dice_tween.start()
 	var number_rolled = rng.randi_range(minimum, maximum)
 	if can_crit && number_rolled == maximum:

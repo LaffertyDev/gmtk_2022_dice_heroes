@@ -52,22 +52,29 @@ func _on_about_to_show():
 	var dice_eligible_to_upgrade = get_dice_to_upgrade()
 	for dice_eligible_for_upgrade in dice_eligible_to_upgrade:
 		var vbox_container = VBoxContainer.new()
+		vbox_container.alignment = 1
 		var dice_label = Label.new()
-		dice_label.text = dice_eligible_for_upgrade.dice_type + " m: " + str(dice_eligible_for_upgrade.minimum) + " m: " + str(dice_eligible_for_upgrade.maximum) + " c: " + str(dice_eligible_for_upgrade.can_crit)
+		dice_label.text = dice_eligible_for_upgrade.get_friendly_dice_name_from_type()
+		dice_label.align = 1
 		var sprite_center_container = CenterContainer.new()
 		var dice_sprite = TextureRect.new()
 		dice_sprite.texture = dice_eligible_for_upgrade.get_dice_texture_resource()
 		dice_sprite.modulate = dice_eligible_for_upgrade.get_dice_modulation()
+		var dice_description_label = Label.new()
+		dice_description_label.text = str(dice_eligible_for_upgrade.minimum) + " to " + str(dice_eligible_for_upgrade.maximum)
+		dice_description_label.align = 1
 
 		sprite_center_container.add_child(dice_sprite)
 		vbox_container.add_child(dice_label)
 		vbox_container.add_child(sprite_center_container)
+		vbox_container.add_child(dice_description_label)
 		var dice_upgrade_button = Button.new()
 		dice_upgrade_button.connect("pressed", self, "_on_upgrade_dice_button_pressed", [dice_eligible_for_upgrade])
-		dice_upgrade_button.text = "Upgrade Dice"
+		dice_upgrade_button.text = "Upgrade"
 		vbox_container.add_child(dice_upgrade_button)
 
 		upgrade_dice_container.add_child(vbox_container)
+
 
 func _on_button_close_shop_pressed():
 	global_audio.play_ui()
@@ -134,8 +141,8 @@ func _get_gold_label_node():
 func _get_ability_description_from_type(ability_type):
 	match(ability_type):
 		"damage":
-			return "Hurts things by the amount rolled"
+			return "Deals Damage"
 		"heal":
-			return "Heals you by the amount rolled."
+			return "Heals You"
 		_:
-			return "This ability is mysterious!"
+			return "Mysterious!"
