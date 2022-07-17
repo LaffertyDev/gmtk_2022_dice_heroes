@@ -97,7 +97,7 @@ func _on_button_close_shop_pressed():
 	hide()
 
 func _on_buy_button_pressed(character, char_buy_button):
-	if (get_available_gold() > character.cost):
+	if (get_available_gold() >= character.cost):
 		_set_available_gold(get_available_gold() - character.cost)
 		character.is_purchased = true
 		emit_signal("purchased_hero", character)
@@ -109,7 +109,7 @@ func _on_upgrade_dice_button_pressed(dice):
 	get_parent().show_dice_shop(dice)
 
 func _on_purchase_dice_button_pressed(dice, dice_container):
-	if (get_available_gold() > dice.cost):
+	if (get_available_gold() >= dice.cost):
 		_set_available_gold(get_available_gold() - dice.cost)
 		emit_signal("purchased_dice", dice)
 		dice_container.get_parent().remove_child(dice_container)
@@ -117,7 +117,7 @@ func _on_purchase_dice_button_pressed(dice, dice_container):
 
 func _build_purchased_label():
 	var purchased_label = Label.new()
-	purchased_label.text = "X"
+	purchased_label.text = "Purchased!"
 	return purchased_label
 
 func get_eligible_characters():
