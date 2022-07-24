@@ -19,7 +19,6 @@ func _on_picked_up(dice):
 
 func _on_dice_drop_target_body_entered(body):
 	if body.is_grabbing:
-		print("drop target body entered")
 		dice_being_dropped = body
 		body.set_drop_target(self)
 		_update_drop_position()
@@ -37,6 +36,9 @@ func handle_dice_drop(dice):
 	dice_being_dropped = null
 	dice_being_dropped_position = null
 	update()
+
+func can_drop(dice):
+	return !has_dice_at_position(dice_being_dropped_position)
 
 func handle_dice_pickup():
 	pass
@@ -77,6 +79,14 @@ func has_dice_in_tray():
 			for dice in heroes_dice:
 				if (dice.position == to_global(grid_position)):
 					return true
+	return false
+
+func has_dice_at_position(pos):
+	var heroes_dice = get_tree().get_nodes_in_group("heroes_dice")
+	var grid_position = _get_local_coordinates_from_grid_position(pos.x,pos.y)
+	for dice in heroes_dice:
+		if (dice.position == to_global(grid_position)):
+			return true
 	return false
 
 func _get_local_coordinates_from_grid_position(x, y):

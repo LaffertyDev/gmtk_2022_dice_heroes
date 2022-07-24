@@ -121,7 +121,7 @@ func _on_dice_input_event(_viewport, event, _shape_idx):
 				current_slot._on_picked_up(self)
 		elif is_grabbing:
 			# verify that we are in bounds, otherwise reset
-			if (next_drop_target != null):
+			if (next_drop_target != null && next_drop_target.can_drop(self)):
 				global_audio.play_dice_place()
 				self.is_in_play = false
 				next_drop_target.handle_dice_drop(self)

@@ -34,7 +34,5 @@ Most visual assets were created by myself during the Game Jam. Exceptions are be
 
 * Add tutorial // starter instructions
 * add sound effect to being entangled
-* Fix healer feeling bugged
 * Consider improving criticals
-* Fix being able to place dice on an occupied spot in the dice shop
 * Improve "Empower Critical" shop terminology

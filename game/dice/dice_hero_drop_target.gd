@@ -38,6 +38,9 @@ func handle_dice_drop(dice):
 	dice.is_in_play = true
 	update()
 
+func can_drop(dice):
+	return true
+
 func handle_dice_pickup():
 	slotted_dice = null
 	has_dice = false
