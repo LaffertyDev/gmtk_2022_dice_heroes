@@ -28,7 +28,7 @@ func _on_about_to_show():
 
 		var vbox_container = VBoxContainer.new()
 		var char_label = Label.new()
-		char_label.text = character.name
+		char_label.text = character.name + " (" + str(character.cost) + " Gold)"
 		var sprite_center_container = CenterContainer.new()
 		var char_sprite = TextureRect.new()
 		char_sprite.texture = sprite_res
@@ -44,7 +44,7 @@ func _on_about_to_show():
 		else:
 			var char_buy_button = Button.new()
 			char_buy_button.connect("pressed", self, "_on_buy_button_pressed", [character, char_buy_button])
-			char_buy_button.text = str(character.cost) + " Gold"
+			char_buy_button.text = "Hire"
 			vbox_container.add_child(char_buy_button)
 
 		character_container.add_child(vbox_container)

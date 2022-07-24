@@ -45,7 +45,7 @@ func _on_help_text_timer_scanner_timeout():
 				some_heroes_have_no_dice = true
 
 		if all_heroes_no_dice:
-			$help_label.text = "Assign dice to your Heroes by dragging them from your Dice Tray."
+			$help_label.text = "Assign dice to your Heroes by dragging them from your Dice Tray and then press Start to dive into the dungeon!"
 		elif !$dice_tray.has_dice_in_tray() && some_heroes_have_dice && some_heroes_have_no_dice:
 			$help_label.text = "Be sure to check your shop"
 		else:
