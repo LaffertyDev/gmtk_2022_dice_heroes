@@ -114,6 +114,10 @@ func _build_purchased_label():
 	purchased_label.text = "Purchased!"
 	return purchased_label
 
+func _on_dice_shop_upgraded_dice(_dice, _cost):
+	_on_about_to_show()
+	print("Fuck")
+
 func get_eligible_characters():
 	return get_parent().available_characters
 

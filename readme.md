@@ -8,10 +8,19 @@ Play in your browser on Itch, or download for most operating systems: https://la
 
 ## Tutorial
 
-You are a merchent delving deep into the depths of a dungeon in search of a monstrous Treasure Hoard.
+You are a merchant delving deep into the depths of a dungeon in search of a monstrous Treasure Hoard.
 
 * Hire adventurers to do your fighting!
 * Equip them with powerful weapons (Dice)!
+* Delve into the dungeon and get treasure!
+* Shop for powerful upgrades and new weapons!
+
+Playing the Game:
+
+* Assign dice to your adventurers
+* Go into the dungeon for Gold
+* Spend Gold to make your adventurers stronger
+* Try to reach the end
 
 ## Assets and Credits
 
