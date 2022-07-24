@@ -19,6 +19,9 @@ func _ready():
 	available_characters.append({"name": "Leah", "hero_type": "leah", "hero_ability": "heal", "sprite_name": "hero_leah.png", "cost": 10, "is_purchased": false})
 	available_characters.append({"name": "Jackson", "hero_type": "jackson", "hero_ability": "damage", "sprite_name": "hero_jackson.png", "cost": 10, "is_purchased": false})
 	available_characters.append({"name": "Lilly", "hero_type": "lilly", "hero_ability": "damage", "sprite_name": "hero_lilly.png", "cost": 10, "is_purchased": false})
+	available_characters.append({"name": "Thief", "hero_type": "thief", "hero_ability": "steal", "sprite_name": "hero_thief.png", "cost": 30, "is_purchased": false})
+	available_characters.append({"name": "Bob", "hero_type": "bob", "hero_ability": "shield", "sprite_name": "hero_bob.png", "cost": 10, "is_purchased": false})
+
 	var _ig = self.connect("battle_finished", $board, "_on_battle_finished")
 	var _ig3 = $character_shop.connect("purchased_dice", $dice_tray, "_on_new_dice_purchased")
 	_hide_battle_state()
@@ -101,8 +104,9 @@ func _on_timer_battle_tick_timeout():
 			hero_heal_sum += hero.roll_dice()
 		elif hero.hero_ability == "shield":
 			hero_shield_sum += hero.roll_dice()
-		elif hero.hero_ability == "gamble":
-			hero_gamble_sum += hero.roll_dice()
+		elif hero.hero_ability == "steal":
+			if hero.roll_dice() == 6:
+				hero_gamble_sum += 6 # only gamble on exactly a 6
 
 	var enemy_damage_sum = 0
 	var enemy_shield_sum = 0
@@ -135,8 +139,7 @@ func _on_timer_battle_tick_timeout():
 	hero_life_current = max(0, hero_life_current - enemy_damage_sum)
 	enemy_life_current = max(0, enemy_life_current - hero_damage_sum)
 
-	available_gold = available_gold + hero_gamble_sum
-	_set_available_gold(available_gold)
+	_set_available_gold(available_gold + hero_gamble_sum)
 
 	if hero_life_current == 0:
 		_handle_heroes_died()

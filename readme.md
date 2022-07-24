@@ -29,9 +29,4 @@ Most visual assets were created by myself during the Game Jam. Exceptions are be
 * Font: m5x7 from Managore (https://managore.itch.io/m5x7)
 * Sounds and Audio: Primarily from Kenney (https://www.kenney.nl)
 * Victory Sound: jfkite01 (https://opengameart.org/content/victory-2)
-
-## TODO:
-
-* Add tutorial // starter instructions
-* Consider changing crit behavior so min can't equal max
-* Add more heroes
+* Entanglement Sound: (https://opengameart.org/content/fantasy-sound-effects-library)

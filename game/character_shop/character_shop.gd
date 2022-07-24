@@ -10,6 +10,7 @@ func _ready():
 	var _ig = connect("about_to_show", self, "_on_about_to_show")
 
 func _on_about_to_show():
+	var current_heroes = get_tree().get_nodes_in_group("heroes")
 	var character_container = _get_character_ui_container()
 	for child in character_container.get_children():
 		character_container.remove_child(child)
@@ -41,6 +42,10 @@ func _on_about_to_show():
 		vbox_container.add_child(ability_label)
 		if character.is_purchased:
 			vbox_container.add_child(_build_purchased_label())
+		elif current_heroes.size() >= 4:
+			var no_room_label = Label.new()
+			no_room_label.text = "Party is Full!"
+			vbox_container.add_child(no_room_label)
 		else:
 			var char_buy_button = Button.new()
 			char_buy_button.connect("pressed", self, "_on_buy_button_pressed", [character, char_buy_button])
@@ -82,13 +87,14 @@ func _on_button_close_shop_pressed():
 
 func _on_buy_button_pressed(character, char_buy_button):
 	global_audio.play_ui()
-	if (get_available_gold() >= character.cost):
+	var current_heroes = get_tree().get_nodes_in_group("heroes")
+	if (get_available_gold() >= character.cost && current_heroes.size() < 4):
 		character.is_purchased = true
 		emit_signal("purchased_hero", character)
 		char_buy_button.get_parent().add_child(_build_purchased_label())
 		char_buy_button.get_parent().remove_child(char_buy_button)
 		char_buy_button.queue_free()
-		_set_available_gold(get_available_gold())
+		_on_about_to_show() # reload UI
 
 func _on_upgrade_dice_button_pressed(dice):
 	get_parent().show_dice_shop(dice)
@@ -97,7 +103,7 @@ func _on_buy_new_dice_pressed():
 	global_audio.play_ui()
 	var purchasable_dice = {"dice_type": "D2", "sprite": "dice_d2.png", "cost": 10}
 	var all_heroes_dice = get_tree().get_nodes_in_group("heroes_dice")
-	if (get_available_gold() >= purchasable_dice.cost && all_heroes_dice.size() < 6):
+	if (get_available_gold() >= purchasable_dice.cost && all_heroes_dice.size() < 4):
 		emit_signal("purchased_dice", purchasable_dice)
 		_set_available_gold(get_available_gold())
 		_on_about_to_show()
@@ -144,8 +150,12 @@ func _get_gold_label_node():
 func _get_ability_description_from_type(ability_type):
 	match(ability_type):
 		"damage":
-			return "Deals Damage"
+			return "Deals Damage by Dice"
 		"heal":
-			return "Heals You"
+			return "Heals You by Dice"
+		"steal":
+			return "Steals 6 Gold on a 6"
+		"shield":
+			return "Blocks Damage by Dice"
 		_:
 			return "Mysterious!"

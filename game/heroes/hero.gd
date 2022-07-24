@@ -15,6 +15,10 @@ func _ready():
 			$Sprite.texture = load("res://game/assets/heroes/hero_jackson.png")
 		"leah":
 			$Sprite.texture = load("res://game/assets/heroes/hero_leah.png")
+		"thief":
+			$Sprite.texture = load("res://game/assets/heroes/hero_thief.png")
+		"bob":
+			$Sprite.texture = load("res://game/assets/heroes/hero_bob.png")
 
 func roll_dice():
 	if is_entangled:
