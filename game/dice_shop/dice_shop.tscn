@@ -4,6 +4,7 @@
 [ext_resource path="res://game/assets/dice/dice_d6.png" type="Texture" id=2]
 
 [node name="dice_shop" type="PopupDialog"]
+visible = true
 anchor_right = 1.0
 anchor_bottom = 1.0
 script = ExtResource( 1 )
@@ -50,7 +51,14 @@ margin_right = 450.0
 margin_bottom = 102.0
 text = "Empower with Critical 100 Gold"
 
-[node name="Label2" type="Label" parent="MarginContainer/vbox_menu"]
+[node name="crit_purchased_label" type="Label" parent="MarginContainer/vbox_menu"]
+visible = false
+margin_top = 106.0
+margin_right = 450.0
+margin_bottom = 119.0
+text = "Critical is Empowered!"
+
+[node name="crit_description_label" type="Label" parent="MarginContainer/vbox_menu"]
 margin_top = 106.0
 margin_right = 450.0
 margin_bottom = 119.0

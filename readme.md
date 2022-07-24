@@ -34,5 +34,5 @@ Most visual assets were created by myself during the Game Jam. Exceptions are be
 
 * Add tutorial // starter instructions
 * add sound effect to being entangled
-* Consider improving criticals
-* Improve "Empower Critical" shop terminology
+* Consider changing crit behavior so min can't equal max
+* Add more heroes
