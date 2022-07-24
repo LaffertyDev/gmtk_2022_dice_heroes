@@ -12,6 +12,9 @@ func _on_battle_finished(did_heroes_win):
 	if did_heroes_win:
 		if hero_current_position == 21:
 			emit_signal("final_zone_completed")
+			hero_current_position = 0 # reset so you can loop
+			heroes_won_last_match = true
+			_move_heroes_to_position()
 		else:
 			hero_current_position += 1
 			heroes_won_last_match = true
@@ -45,13 +48,12 @@ func _move_heroes_to_position():
 	$hero_battle_tweener.start()
 	global_audio.call_deferred("play_walking")
 
-
 func _on_hero_battle_tweener_tween_all_completed():
 	if !heroes_won_last_match && hero_current_position > 0:
 		hero_current_position -= 1
 		# don't stop audio if we're just going to be moving again
 		_move_heroes_to_position()
-	elif heroes_won_last_match:
+	elif heroes_won_last_match && hero_current_position > 0:
 		global_audio.stop_walking()
 		$zone_entered_delay.start()
 	else:

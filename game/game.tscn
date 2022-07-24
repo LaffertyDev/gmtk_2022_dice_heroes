@@ -126,10 +126,15 @@ position = Vector2( 376, 136 )
 position = Vector2( 296, 136 )
 
 [node name="victory_dialog" type="AcceptDialog" parent="."]
-margin_right = 83.0
-margin_bottom = 58.0
+visible = true
+margin_left = 32.0
+margin_top = 98.0
+margin_right = 418.0
+margin_bottom = 202.0
 window_title = "You Won!"
-dialog_text = "You Won! Thank you for playing Dice Heroes. This was my submission for GMTK Game Jam 2022 themed \"Roll of the Dice\"."
+dialog_text = "You Won! Thank you for playing Dice Heroes. This was my submission for GMTK Game Jam 2022 themed \"Roll of the Dice\".
+
+Please enjoy your riches in INFINITE MODE."
 dialog_autowrap = true
 
 [node name="dice_tray" parent="." instance=ExtResource( 11 )]
