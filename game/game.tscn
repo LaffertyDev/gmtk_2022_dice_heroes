@@ -126,7 +126,6 @@ position = Vector2( 376, 136 )
 position = Vector2( 296, 136 )
 
 [node name="victory_dialog" type="AcceptDialog" parent="."]
-visible = true
 margin_left = 32.0
 margin_top = 98.0
 margin_right = 418.0

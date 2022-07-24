@@ -29,3 +29,12 @@ Most visual assets were created by myself during the Game Jam. Exceptions are be
 * Font: m5x7 from Managore (https://managore.itch.io/m5x7)
 * Sounds and Audio: Primarily from Kenney (https://www.kenney.nl)
 * Victory Sound: jfkite01 (https://opengameart.org/content/victory-2)
+
+## TODO:
+
+* Add tutorial // starter instructions
+* add sound effect to being entangled
+* Fix healer feeling bugged
+* Consider improving criticals
+* Fix being able to place dice on an occupied spot in the dice shop
+* Improve "Empower Critical" shop terminology

@@ -130,13 +130,8 @@ func _on_timer_battle_tick_timeout():
 	hero_damage_sum = max(0, hero_damage_sum - enemy_shield_sum)
 	enemy_damage_sum = max(0, enemy_damage_sum - hero_shield_sum)
 
-	hero_life_current = min(hero_life_max, hero_life_current + hero_heal_sum)
 	hero_life_current = max(0, hero_life_current - enemy_damage_sum)
-	_set_hero_life_current(hero_life_current)
-
-	enemy_life_current = min(enemy_life_max, enemy_life_current + enemy_heal_sum)
 	enemy_life_current = max(0, enemy_life_current - hero_damage_sum)
-	_set_enemy_life_current(enemy_life_current)
 
 	available_gold = available_gold + hero_gamble_sum
 	_set_available_gold(available_gold)
@@ -144,9 +139,17 @@ func _on_timer_battle_tick_timeout():
 	if hero_life_current == 0:
 		_handle_heroes_died()
 		global_audio.play_battle_lose()
+		_set_hero_life_current(hero_life_current)
 	elif enemy_life_current == 0:
 		_handle_enemies_died()
 		global_audio.play_battle_win()
+
+	# heroes can only heal if they have HP, otherwise the health looks weird
+	if hero_life_current > 0:
+		hero_life_current = min(hero_life_max, hero_life_current + hero_heal_sum)
+		_set_hero_life_current(hero_life_current)
+		enemy_life_current = min(enemy_life_max, enemy_life_current + enemy_heal_sum)
+		_set_enemy_life_current(enemy_life_current)
 
 func _set_hero_life_current(health):
 	hero_life_current = health
