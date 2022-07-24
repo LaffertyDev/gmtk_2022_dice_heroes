@@ -33,3 +33,6 @@ func play_battle_lose():
 
 func play_victory_sound():
 	$victory_sound.play()
+
+func play_entanglement():
+	$entanglement_sound.play()

@@ -22,7 +22,7 @@ func _ready():
 	var _ig = self.connect("battle_finished", $board, "_on_battle_finished")
 	var _ig3 = $character_shop.connect("purchased_dice", $dice_tray, "_on_new_dice_purchased")
 	_hide_battle_state()
-	_set_available_gold(3000)
+	_set_available_gold(0)
 	_set_hero_life_current(hero_life_max)
 	_set_hero_life_max(hero_life_max)
 	_set_enemy_life_current(enemy_life_max)
@@ -123,9 +123,11 @@ func _on_timer_battle_tick_timeout():
 			_:
 				print("Critical Error -- no valid enemy ability type")
 
-	for _x in range(enemy_entangled_count):
-		$entangle_warning.show()
-		heroes[randi()%heroes.size()].set_entangled()
+	if enemy_entangled_count > 0:
+		global_audio.play_entanglement()
+		for _x in range(enemy_entangled_count):
+			$entangle_warning.show()
+			heroes[randi()%heroes.size()].set_entangled()
 
 	hero_damage_sum = max(0, hero_damage_sum - enemy_shield_sum)
 	enemy_damage_sum = max(0, enemy_damage_sum - hero_shield_sum)

@@ -33,6 +33,5 @@ Most visual assets were created by myself during the Game Jam. Exceptions are be
 ## TODO:
 
 * Add tutorial // starter instructions
-* add sound effect to being entangled
 * Consider changing crit behavior so min can't equal max
 * Add more heroes
