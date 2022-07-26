@@ -18,7 +18,7 @@ func _ready():
 	randomize()
 	available_characters.append({"name": "Leah", "hero_type": "leah", "hero_ability": "heal", "sprite_name": "hero_leah.png", "cost": 10, "is_purchased": false})
 	available_characters.append({"name": "Jackson", "hero_type": "jackson", "hero_ability": "damage", "sprite_name": "hero_jackson.png", "cost": 10, "is_purchased": false})
-	available_characters.append({"name": "Lilly", "hero_type": "lilly", "hero_ability": "damage", "sprite_name": "hero_lilly.png", "cost": 10, "is_purchased": false})
+	available_characters.append({"name": "Lilly", "hero_type": "lilly", "hero_ability": "clear", "sprite_name": "hero_lilly.png", "cost": 10, "is_purchased": false})
 	available_characters.append({"name": "Thief", "hero_type": "thief", "hero_ability": "steal", "sprite_name": "hero_thief.png", "cost": 30, "is_purchased": false})
 	available_characters.append({"name": "Bob", "hero_type": "bob", "hero_ability": "shield", "sprite_name": "hero_bob.png", "cost": 10, "is_purchased": false})
 
@@ -97,9 +97,13 @@ func _on_timer_battle_tick_timeout():
 	var hero_heal_sum = 0
 	var hero_shield_sum = 0
 	var hero_gamble_sum = 0
+	var hero_clear_sum = 0
 	for hero in heroes:
-		if hero.hero_ability == "damage":
-			hero_damage_sum += hero.roll_dice()
+		if hero.hero_ability == "damage" || hero.hero_ability == "clear":
+			var hero_damage_die_rolled = hero.roll_dice()
+			hero_damage_sum += hero_damage_die_rolled
+			if hero.hero_ability == "clear" && hero.did_crit():
+				hero_clear_sum += 1
 		elif hero.hero_ability == "heal":
 			hero_heal_sum += hero.roll_dice()
 		elif hero.hero_ability == "shield":
@@ -126,6 +130,9 @@ func _on_timer_battle_tick_timeout():
 					enemy_entangled_count += 1
 			_:
 				print("Critical Error -- no valid enemy ability type")
+
+	if hero_clear_sum > 0:
+		_clear_entangle_by_amount(hero_clear_sum)
 
 	if enemy_entangled_count > 0:
 		global_audio.play_entanglement()
@@ -155,6 +162,15 @@ func _on_timer_battle_tick_timeout():
 		_set_hero_life_current(hero_life_current)
 		enemy_life_current = min(enemy_life_max, enemy_life_current + enemy_heal_sum)
 		_set_enemy_life_current(enemy_life_current)
+
+func _clear_entangle_by_amount(amount):
+	var heroes = get_tree().get_nodes_in_group("heroes")
+	while (amount > 0):
+		amount -= 1
+		for hero in heroes:
+			if hero.is_hero_entangled():
+				hero.clear_entangle()
+				break
 
 func _set_hero_life_current(health):
 	hero_life_current = health

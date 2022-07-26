@@ -33,5 +33,4 @@ Most visual assets were created by myself during the Game Jam. Exceptions are be
 
 ## Todo
 
-* rework damage heroes so they aren't all the same
 * consider reworking how much dice cost so they increase in cost if the amount is the same

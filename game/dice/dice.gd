@@ -20,6 +20,8 @@ var can_crit = false
 
 var is_in_play = false
 
+var last_roll_did_crit = false
+
 onready var global_audio = get_node("/root/global_audio")
 
 var minimum = 1
@@ -164,10 +166,16 @@ func set_drop_target(target):
 func clear_drop_target(_target_to_forget):
 	next_drop_target = null
 
+func did_crit():
+	return last_roll_did_crit
+
 func roll_dice(ability_type):
+	last_roll_did_crit = false
 	match(ability_type):
 		"damage":
 			$dice_roll_amount_label.modulate = Color(1.0,0.0,0.0,1.0)
+		"clear":
+			$dice_roll_amount_label.modulate = Color(0.65,0.16,0.16,1.0)
 		"heal":
 			$dice_roll_amount_label.modulate = Color(0.0,1.0,0.0,1.0)
 		"shield":
@@ -185,6 +193,7 @@ func roll_dice(ability_type):
 	$dice_tween.start()
 	var number_rolled = rng.randi_range(minimum, maximum)
 	if can_crit && number_rolled == maximum:
+		last_roll_did_crit = true
 		$dice_roll_amount_label.text = str(number_rolled * 2)
 		return number_rolled * 2 # crit
 	$dice_roll_amount_label.text = str(number_rolled)

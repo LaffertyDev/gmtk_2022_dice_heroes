@@ -5,7 +5,7 @@ signal new_zone_entered(new_battle)
 signal final_zone_completed()
 var heroes_won_last_match = false
 var hero_current_position = 0
-var board_round = 1
+var board_round = 0
 var rng = RandomNumberGenerator.new()
 
 onready var global_audio = get_node("/root/global_audio")
@@ -80,9 +80,13 @@ func _get_next_battle():
 		0:
 			pass
 		1:
-			enemies.append({"enemy_type": "slime", "dice_min": 1, "dice_max": 2, "ability": "damage"}) # 1.5
+			enemies.append({"enemy_type": "mimic", "dice_min": 4, "dice_max": 4, "ability": "entangle"}) # 5
+			enemies.append({"enemy_type": "mimic", "dice_min": 4, "dice_max": 4, "ability": "entangle"}) # 5
+			enemies.append({"enemy_type": "mimic", "dice_min": 4, "dice_max": 4, "ability": "entangle"}) # 5
+			enemies.append({"enemy_type": "mimic", "dice_min": 4, "dice_max": 4, "ability": "entangle"}) # 5
+			#enemies.append({"enemy_type": "slime", "dice_min": 1, "dice_max": 2, "ability": "damage"}) # 1.5
 			gold_income = 5
-			enemy_group_health = 5
+			enemy_group_health = 5000
 		2:
 			enemies.append({"enemy_type": "slime", "dice_min": 1, "dice_max": 2, "ability": "damage"}) # 1.5
 			gold_income = 5

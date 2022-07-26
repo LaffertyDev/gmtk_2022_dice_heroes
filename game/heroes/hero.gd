@@ -29,8 +29,24 @@ func roll_dice():
 	else:
 		return 0 # no dice, no attack
 
+func did_crit():
+	if is_entangled:
+		return false # dirty hack -- otherwise ranger can clear things
+
+	if $dice_hero_drop_target.has_dice:
+		return $dice_hero_drop_target.slotted_dice.did_crit()
+
+	return false
+
 func has_dice():
 	return $dice_hero_drop_target.has_dice
+
+func is_hero_entangled():
+	return is_entangled
+
+func clear_entangle():
+	is_entangled = false
+	$entangled_sprite.hide()
 
 func set_entangled():
 	is_entangled = true
@@ -39,5 +55,4 @@ func set_entangled():
 func _on_entangle_clicker_area_input_event(_viewport, event, _shape_idx):
 	if event is InputEventMouseButton && event.pressed:
 		if event.pressed:
-			is_entangled = false
-			$entangled_sprite.hide()
+			clear_entangle()

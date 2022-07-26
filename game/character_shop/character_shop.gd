@@ -151,6 +151,8 @@ func _get_ability_description_from_type(ability_type):
 	match(ability_type):
 		"damage":
 			return "Deals Damage by Dice"
+		"clear":
+			return "Deals Damage, and on crit clears Entangle"
 		"heal":
 			return "Heals You by Dice"
 		"steal":
