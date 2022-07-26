@@ -197,7 +197,16 @@ func raise_minimum():
 func raise_maximum():
 	maximum += 1
 	_update_range_label()
+	_recompute_dice_type()
 
+
+func set_dice_stats(dice_min, dice_max):
+	minimum = dice_min
+	maximum = dice_max
+	_update_range_label()
+	_recompute_dice_type()
+
+func _recompute_dice_type():
 	var upgraded_dice_type = dice_type
 	if maximum < 4:
 		upgraded_dice_type = "D2"
@@ -215,7 +224,6 @@ func raise_maximum():
 	if upgraded_dice_type != dice_type:
 		dice_type = upgraded_dice_type
 		$Sprite.texture = get_dice_texture_resource()
-
 
 func _update_range_label():
 	if can_crit:

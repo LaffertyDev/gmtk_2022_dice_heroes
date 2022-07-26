@@ -23,7 +23,9 @@ func _on_about_to_show():
 	_get_raise_minimum_button().text = "Increase Minimum (" + str(raise_minimum_cost) + " Gold) (Currently: " + str(dice_being_upgraded.minimum) + ")"
 	_get_raise_maximum_button().text = "Increase Maximum (" + str(raise_maximum_cost) + " Gold) (Currently: " + str(dice_being_upgraded.maximum) + ")"
 	if !dice_being_upgraded.can_crit:
+		print('can crit')
 		_get_can_crit_button().text = "Empower Critical (" + str(empower_critical_cost) + " Gold)"
+		_get_can_crit_button().show()
 		_get_crit_label().hide()
 	else:
 		_get_can_crit_button().hide()

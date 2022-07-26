@@ -30,3 +30,8 @@ Most visual assets were created by myself during the Game Jam. Exceptions are be
 * Sounds and Audio: Primarily from Kenney (https://www.kenney.nl)
 * Victory Sound: jfkite01 (https://opengameart.org/content/victory-2)
 * Entanglement Sound: (https://opengameart.org/content/fantasy-sound-effects-library)
+
+## Todo
+
+* rework damage heroes so they aren't all the same
+* consider reworking how much dice cost so they increase in cost if the amount is the same

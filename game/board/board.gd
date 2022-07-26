@@ -5,9 +5,13 @@ signal new_zone_entered(new_battle)
 signal final_zone_completed()
 var heroes_won_last_match = false
 var hero_current_position = 0
-var board_round = 0
+var board_round = 1
+var rng = RandomNumberGenerator.new()
 
 onready var global_audio = get_node("/root/global_audio")
+
+func _ready():
+	rng.randomize()
 
 func _on_battle_finished(did_heroes_win):
 	if did_heroes_win:
@@ -76,138 +80,144 @@ func _get_next_battle():
 		0:
 			pass
 		1:
-			enemies.append({"enemy_type": "slime"}) # 1.5
+			enemies.append({"enemy_type": "slime", "dice_min": 1, "dice_max": 2, "ability": "damage"}) # 1.5
 			gold_income = 5
 			enemy_group_health = 5
 		2:
-			enemies.append({"enemy_type": "slime"}) # 1.5
+			enemies.append({"enemy_type": "slime", "dice_min": 1, "dice_max": 2, "ability": "damage"}) # 1.5
 			gold_income = 5
 			enemy_group_health = 6
 		3:
-			enemies.append({"enemy_type": "slime"}) # 3
-			enemies.append({"enemy_type": "slime"})
+			enemies.append({"enemy_type": "slime", "dice_min": 1, "dice_max": 2, "ability": "damage"}) # 3
+			enemies.append({"enemy_type": "slime", "dice_min": 1, "dice_max": 2, "ability": "damage"})
 			gold_income = 5
 			enemy_group_health = 7
 		4:
-			enemies.append({"enemy_type": "mimic"}) # 3.5
+			enemies.append({"enemy_type": "mimic", "dice_min": 1, "dice_max": 6, "ability": "entangle"}) # 3.5
 			gold_income = 5
 			enemy_group_health = 8
 		5:
-			enemies.append({"enemy_type": "bandit"}) # 4
-			enemies.append({"enemy_type": "slime"})
+			enemies.append({"enemy_type": "bandit", "dice_min": 1, "dice_max": 4, "ability": "damage"}) # 4
+			enemies.append({"enemy_type": "slime", "dice_min": 1, "dice_max": 2, "ability": "damage"})
 			gold_income = 5
 			enemy_group_health = 9
 		6:
-			enemies.append({"enemy_type": "slime"}) # 4.5
-			enemies.append({"enemy_type": "slime"})
-			enemies.append({"enemy_type": "slime"})
+			enemies.append({"enemy_type": "slime", "dice_min": 1, "dice_max": 2, "ability": "damage"}) # 4.5
+			enemies.append({"enemy_type": "slime", "dice_min": 1, "dice_max": 2, "ability": "damage"})
+			enemies.append({"enemy_type": "slime", "dice_min": 1, "dice_max": 2, "ability": "damage"})
 			gold_income = 5
 			enemy_group_health = 10
 		7:
-			enemies.append({"enemy_type": "mimic"}) # 5
-			enemies.append({"enemy_type": "mimic"})
+			enemies.append({"enemy_type": "mimic", "dice_min": 1, "dice_max": 6, "ability": "entangle"}) # 5
+			enemies.append({"enemy_type": "mimic", "dice_min": 1, "dice_max": 6, "ability": "entangle"})
 			gold_income = 5
 			enemy_group_health = 11
 		8:
-			enemies.append({"enemy_type": "bandit"}) # 6
-			enemies.append({"enemy_type": "mimic"})
+			enemies.append({"enemy_type": "bandit", "dice_min": 1, "dice_max": 4, "ability": "damage"}) # 6
+			enemies.append({"enemy_type": "mimic", "dice_min": 1, "dice_max": 6, "ability": "entangle"})
 			gold_income = 5
 			enemy_group_health = 12
 		9:
-			enemies.append({"enemy_type": "bandit"}) # 7
-			enemies.append({"enemy_type": "bandit"})
+			enemies.append({"enemy_type": "bandit", "dice_min": 1, "dice_max": 4, "ability": "damage"}) # 7
+			enemies.append({"enemy_type": "bandit", "dice_min": 1, "dice_max": 4, "ability": "damage"})
 			gold_income = 5
 			enemy_group_health = 13
 		10:
-			enemies.append({"enemy_type": "necromancer"}) # 10.5
-			enemies.append({"enemy_type": "bandit"})
-			enemies.append({"enemy_type": "bandit"})
+			enemies.append({"enemy_type": "necromancer", "dice_min": 1, "dice_max": 8, "ability": "heal"}) # 10.5
+			enemies.append({"enemy_type": "bandit", "dice_min": 1, "dice_max": 4, "ability": "damage"})
+			enemies.append({"enemy_type": "bandit", "dice_min": 1, "dice_max": 4, "ability": "damage"})
 			gold_income = 10
 			enemy_group_health = 20
 		11:
-			enemies.append({"enemy_type": "bandit"}) # 10
-			enemies.append({"enemy_type": "bandit"})
-			enemies.append({"enemy_type": "bandit"})
-			enemies.append({"enemy_type": "bandit"})
+			enemies.append({"enemy_type": "bandit", "dice_min": 1, "dice_max": 4, "ability": "damage"}) # 10
+			enemies.append({"enemy_type": "bandit", "dice_min": 1, "dice_max": 4, "ability": "damage"})
+			enemies.append({"enemy_type": "bandit", "dice_min": 1, "dice_max": 4, "ability": "damage"})
+			enemies.append({"enemy_type": "bandit", "dice_min": 1, "dice_max": 4, "ability": "damage"})
 			gold_income = 10
 			enemy_group_health = 20
 		12:
-			enemies.append({"enemy_type": "mimic"}) # 12
-			enemies.append({"enemy_type": "mimic"})
-			enemies.append({"enemy_type": "mimic"})
-			enemies.append({"enemy_type": "slime"})
+			enemies.append({"enemy_type": "mimic", "dice_min": 1, "dice_max": 6, "ability": "entangle"}) # 12
+			enemies.append({"enemy_type": "mimic", "dice_min": 1, "dice_max": 6, "ability": "entangle"})
+			enemies.append({"enemy_type": "mimic", "dice_min": 1, "dice_max": 6, "ability": "entangle"})
+			enemies.append({"enemy_type": "slime", "dice_min": 1, "dice_max": 2, "ability": "damage"})
 			gold_income = 10
 			enemy_group_health = 25
 		13:
-			enemies.append({"enemy_type": "necromancer"}) # 14
-			enemies.append({"enemy_type": "necromancer"})
-			enemies.append({"enemy_type": "bandit"})
-			enemies.append({"enemy_type": "bandit"})
+			enemies.append({"enemy_type": "necromancer", "dice_min": 1, "dice_max": 8, "ability": "heal"}) # 14
+			enemies.append({"enemy_type": "necromancer", "dice_min": 1, "dice_max": 8, "ability": "heal"})
+			enemies.append({"enemy_type": "bandit", "dice_min": 1, "dice_max": 4, "ability": "damage"})
+			enemies.append({"enemy_type": "bandit", "dice_min": 1, "dice_max": 4, "ability": "damage"})
 			gold_income = 10
 			enemy_group_health = 30
 		14:
-			enemies.append({"enemy_type": "necromancer"}) # 16 - heal meme
-			enemies.append({"enemy_type": "necromancer"})
-			enemies.append({"enemy_type": "mimic"})
-			enemies.append({"enemy_type": "mimic"})
+			enemies.append({"enemy_type": "necromancer", "dice_min": 1, "dice_max": 8, "ability": "heal"}) # 16 - heal meme
+			enemies.append({"enemy_type": "necromancer", "dice_min": 1, "dice_max": 8, "ability": "heal"})
+			enemies.append({"enemy_type": "mimic", "dice_min": 1, "dice_max": 6, "ability": "entangle"})
+			enemies.append({"enemy_type": "mimic", "dice_min": 1, "dice_max": 6, "ability": "entangle"})
 			gold_income = 10
 			enemy_group_health = 40
 		15:
-			enemies.append({"enemy_type": "dragon"}) # 17
-			enemies.append({"enemy_type": "mimic"})
-			enemies.append({"enemy_type": "mimic"})
-			enemies.append({"enemy_type": "mimic"})
+			enemies.append({"enemy_type": "dragon", "dice_min": 1, "dice_max": 12, "ability": "damage"}) # 17
+			enemies.append({"enemy_type": "mimic", "dice_min": 1, "dice_max": 6, "ability": "entangle"})
+			enemies.append({"enemy_type": "mimic", "dice_min": 1, "dice_max": 6, "ability": "entangle"})
+			enemies.append({"enemy_type": "mimic", "dice_min": 1, "dice_max": 6, "ability": "entangle"})
 			gold_income = 10
 			enemy_group_health = 50
 		16:
-			enemies.append({"enemy_type": "dragon"})  # 19
-			enemies.append({"enemy_type": "necromancer"})
-			enemies.append({"enemy_type": "necromancer"})
-			enemies.append({"enemy_type": "mimic"})
+			enemies.append({"enemy_type": "dragon", "dice_min": 1, "dice_max": 12, "ability": "damage"})  # 19
+			enemies.append({"enemy_type": "necromancer", "dice_min": 1, "dice_max": 8, "ability": "heal"})
+			enemies.append({"enemy_type": "necromancer", "dice_min": 1, "dice_max": 8, "ability": "heal"})
+			enemies.append({"enemy_type": "mimic", "dice_min": 1, "dice_max": 6, "ability": "entangle"})
 			gold_income = 10
 			enemy_group_health = 50
 		17:
-			enemies.append({"enemy_type": "dragon"}) # 20
-			enemies.append({"enemy_type": "necromancer"})
-			enemies.append({"enemy_type": "necromancer"})
-			enemies.append({"enemy_type": "necromancer"})
+			enemies.append({"enemy_type": "dragon", "dice_min": 1, "dice_max": 12, "ability": "damage"}) # 20
+			enemies.append({"enemy_type": "necromancer", "dice_min": 1, "dice_max": 8, "ability": "heal"})
+			enemies.append({"enemy_type": "necromancer", "dice_min": 1, "dice_max": 8, "ability": "heal"})
+			enemies.append({"enemy_type": "necromancer", "dice_min": 1, "dice_max": 8, "ability": "heal"})
 			gold_income = 10
 			enemy_group_health = 55
 		18:
-			enemies.append({"enemy_type": "dragon"}) # 21
-			enemies.append({"enemy_type": "dragon"})
-			enemies.append({"enemy_type": "necromancer"})
-			enemies.append({"enemy_type": "necromancer"})
+			enemies.append({"enemy_type": "dragon", "dice_min": 1, "dice_max": 12, "ability": "damage"}) # 21
+			enemies.append({"enemy_type": "dragon", "dice_min": 1, "dice_max": 12, "ability": "damage"})
+			enemies.append({"enemy_type": "necromancer", "dice_min": 1, "dice_max": 8, "ability": "heal"})
+			enemies.append({"enemy_type": "necromancer", "dice_min": 1, "dice_max": 8, "ability": "heal"})
 			gold_income = 10
 			enemy_group_health = 90
 		19:
-			enemies.append({"enemy_type": "dragon"}) # 23
-			enemies.append({"enemy_type": "dragon"})
-			enemies.append({"enemy_type": "dragon"})
-			enemies.append({"enemy_type": "mimic"})
+			enemies.append({"enemy_type": "dragon", "dice_min": 1, "dice_max": 12, "ability": "damage"}) # 23
+			enemies.append({"enemy_type": "dragon", "dice_min": 1, "dice_max": 12, "ability": "damage"})
+			enemies.append({"enemy_type": "dragon", "dice_min": 1, "dice_max": 12, "ability": "damage"})
+			enemies.append({"enemy_type": "mimic", "dice_min": 1, "dice_max": 6, "ability": "entangle"})
 			gold_income = 10
 			enemy_group_health = 115
 		20:
-			enemies.append({"enemy_type": "dragon"}) # 26
-			enemies.append({"enemy_type": "dragon"})
-			enemies.append({"enemy_type": "dragon"})
-			enemies.append({"enemy_type": "dragon"})
+			enemies.append({"enemy_type": "dragon", "dice_min": 1, "dice_max": 12, "ability": "damage"}) # 26
+			enemies.append({"enemy_type": "dragon", "dice_min": 1, "dice_max": 12, "ability": "damage"})
+			enemies.append({"enemy_type": "dragon", "dice_min": 1, "dice_max": 12, "ability": "damage"})
+			enemies.append({"enemy_type": "dragon", "dice_min": 1, "dice_max": 12, "ability": "damage"})
 			gold_income = 10
 			enemy_group_health = 150
 		21:
-			enemies.append({"enemy_type": "boss"}) # 30
-			enemies.append({"enemy_type": "dragon"}) 
-			enemies.append({"enemy_type": "dragon"})
-			enemies.append({"enemy_type": "dragon"})
-			gold_income = 10000
+			enemies.append({"enemy_type": "boss", "dice_min": 1, "dice_max": 20, "ability": "damage"}) # 30
+			enemies.append({"enemy_type": "dragon", "dice_min": 1, "dice_max": 12, "ability": "damage"}) 
+			enemies.append({"enemy_type": "dragon", "dice_min": 1, "dice_max": 12, "ability": "damage"})
+			enemies.append({"enemy_type": "dragon", "dice_min": 1, "dice_max": 12, "ability": "damage"})
+			gold_income = 96374
 			enemy_group_health = 250
 		_:
-			enemies.append({"enemy_type": "boss"}) # 30
-			enemies.append({"enemy_type": "dragon"}) 
-			enemies.append({"enemy_type": "dragon"})
-			enemies.append({"enemy_type": "dragon"})
-			gold_income = board_index
-			enemy_group_health = board_index * 11
+			var dice_min = rng.randi_range(board_index, board_index * 2)
+			var dice_max = rng.randi_range(board_round * board_index, board_round * board_index + (20 * board_round))
+			while (enemies.size() < 4):
+				if (rng.randi_range(0,10) == 0):
+					enemies.append({"enemy_type": "mimic", "dice_min": min(board_round, rng.randi_range(board_round, 6)), "dice_max": 6, "ability": "entangle"})
+				elif (rng.randi_range(0,5) == 0):
+					enemies.append({"enemy_type": "dragon", "dice_min": dice_min, "dice_max": dice_max, "ability": "damage"}) # 30
+				elif (rng.randi_range(0,10) == 0):
+					enemies.append({"enemy_type": "necromancer", "dice_min": dice_min * 2, "dice_max": dice_max * 2, "ability": "heal"}) # 30
+
+			gold_income = board_index * 2
+			enemy_group_health = board_index * 13
 
 	var battle = {"enemies": enemies, "rewards": rewards, "gold_income": gold_income, "enemy_group_health": enemy_group_health}
 	return battle
