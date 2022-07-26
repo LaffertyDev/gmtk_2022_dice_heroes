@@ -51,18 +51,26 @@ margin_right = 450.0
 margin_bottom = 102.0
 text = "Empower with Critical 100 Gold"
 
+[node name="crit_empower_description" type="Label" parent="MarginContainer/vbox_menu"]
+margin_top = 106.0
+margin_right = 450.0
+margin_bottom = 119.0
+autowrap = true
+
 [node name="crit_purchased_label" type="Label" parent="MarginContainer/vbox_menu"]
 visible = false
-margin_top = 106.0
+margin_top = 123.0
 margin_right = 450.0
-margin_bottom = 119.0
-text = "Critical is Empowered!"
+margin_bottom = 136.0
+text = "Critical is fully empowered!"
+autowrap = true
 
 [node name="crit_description_label" type="Label" parent="MarginContainer/vbox_menu"]
-margin_top = 106.0
+margin_top = 123.0
 margin_right = 450.0
-margin_bottom = 119.0
-text = "Criticals double the value rolled, and happen when the dice rolls its highest value."
+margin_bottom = 136.0
+text = "Criticals do double damage and can activate your various Hero Abilities."
+autowrap = true
 
 [node name="button_row" type="HSplitContainer" parent="MarginContainer/vbox_menu"]
 margin_top = 221.0

@@ -16,11 +16,11 @@ var screen_boundary_drag_drop = 16
 var next_drop_target = null
 var current_slot = null
 
-var can_crit = false
-
 var is_in_play = false
 
 var last_roll_did_crit = false
+
+var crit_level = "none"
 
 onready var global_audio = get_node("/root/global_audio")
 
@@ -192,8 +192,20 @@ func roll_dice(ability_type):
 	$dice_tween.interpolate_property($Sprite, "rotation_degrees", 0, 360, 0.2, Tween.TRANS_LINEAR, Tween.EASE_IN_OUT)
 	$dice_tween.start()
 	var number_rolled = rng.randi_range(minimum, maximum)
-	if can_crit && number_rolled == maximum:
-		last_roll_did_crit = true
+	match crit_level:
+		"highest":
+			last_roll_did_crit = number_rolled == maximum
+		"ten":
+			last_roll_did_crit = number_rolled % 10 == 0
+		"five":
+			last_roll_did_crit = number_rolled % 5 == 0
+		"even":
+			last_roll_did_crit = number_rolled % 2 == 0
+		"all":
+			last_roll_did_crit = true
+		_:
+			last_roll_did_crit = false
+	if last_roll_did_crit:
 		$dice_roll_amount_label.text = str(number_rolled * 2)
 		return number_rolled * 2 # crit
 	$dice_roll_amount_label.text = str(number_rolled)
@@ -207,7 +219,6 @@ func raise_maximum():
 	maximum += 1
 	_update_range_label()
 	_recompute_dice_type()
-
 
 func set_dice_stats(dice_min, dice_max):
 	minimum = dice_min
@@ -235,13 +246,26 @@ func _recompute_dice_type():
 		$Sprite.texture = get_dice_texture_resource()
 
 func _update_range_label():
-	if can_crit:
-		$range_label.text = str(minimum) + "-" + str(maximum) + "*"
-	else:
+	if crit_level == "none":
 		$range_label.text = str(minimum) + "-" + str(maximum)
+	else:
+		$range_label.text = str(minimum) + "-" + str(maximum) + "*"
 
 func give_critical():
-	can_crit = true
+	match(crit_level):
+		"none":
+			crit_level = "highest"
+		"highest":
+			crit_level = "ten"
+		"ten":
+			crit_level = "five"
+		"five":
+			crit_level = "even"
+		"even":
+			crit_level = "all"
+		_:
+			crit_level = "none"
+	_update_range_label()
 
 func set_collision_disabled(is_disabled):
 	$mouse_collision_shape.disabled = is_disabled

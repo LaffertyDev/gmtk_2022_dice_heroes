@@ -22,14 +22,64 @@ func _on_about_to_show():
 	_get_dice_sprite().modulate = dice_being_upgraded.get_dice_modulation()
 	_get_raise_minimum_button().text = "Increase Minimum (" + str(raise_minimum_cost) + " Gold) (Currently: " + str(dice_being_upgraded.minimum) + ")"
 	_get_raise_maximum_button().text = "Increase Maximum (" + str(raise_maximum_cost) + " Gold) (Currently: " + str(dice_being_upgraded.maximum) + ")"
-	if !dice_being_upgraded.can_crit:
-		_get_can_crit_button().text = "Empower Critical (" + str(empower_critical_cost) + " Gold)"
+	_get_crit_empower_description().text = get_crit_description(dice_being_upgraded.crit_level)
+	if dice_being_upgraded.crit_level != "all":
+		var next_crit_level = get_next_crit_level(dice_being_upgraded.crit_level)
+		_get_can_crit_button().text = get_crit_empower_text(next_crit_level)
 		_get_can_crit_button().show()
 		_get_crit_label().hide()
 	else:
 		_get_can_crit_button().hide()
 		_get_crit_label().show()
 
+func get_next_crit_level(current_crit_level):
+	match(current_crit_level):
+		"none":
+			return "highest"
+		"highest":
+			return "ten"
+		"ten":
+			return "five"
+		"five":
+			return "even"
+		"even":
+			return "all"
+
+func get_crit_empower_cost(crit_level):
+	match(crit_level):
+		"highest":
+			return 50
+		"ten":
+			return 100
+		"five":
+			return 250
+		"even":
+			return 500
+		"all":
+			return 1000
+		_:
+			return 0
+
+func get_crit_description(crit_level):
+	match(crit_level):
+		"none":
+			return "This dice can't crit yet. Empower its critical to when you roll its highest value."
+		"highest":
+			return "This dice crits when it rolls its highest value. Empower it again to crit when you roll a multiple of 10."
+		"ten":
+			return "This dice crits are on any multiple of 10. Next level is any multiple of 5. Twice as good?"
+		"five":
+			return "This dice crits are on any multiple of 5. Next one is on all even numbers. Woh."
+		"even":
+			return "This dice is amazing. It crits on every even number. Next one is every time."
+		"all":
+			return "100% of the time it crits every time. Amazing."
+		_:
+			return "Please report this bug to the developer"
+
+func get_crit_empower_text(crit_level):
+	var cost = get_crit_empower_cost(crit_level)
+	return "Empower Critical (" + str(cost) + " Gold)"
 
 func reveal_with_dice(dice):
 	dice_being_upgraded = dice
@@ -51,9 +101,11 @@ func _on_button_raise_maximum_pressed():
 
 func _on_button_give_critical_pressed():
 	global_audio.play_ui()
-	if (get_available_gold() >= empower_critical_cost && !dice_being_upgraded.can_crit):
+	var next_crit_level = get_next_crit_level(dice_being_upgraded.crit_level)
+	var crit_cost = get_crit_empower_cost(next_crit_level)
+	if (get_available_gold() >= crit_cost):
 		dice_being_upgraded.give_critical()
-		emit_signal("upgraded_dice", dice_being_upgraded, empower_critical_cost)
+		emit_signal("upgraded_dice", dice_being_upgraded, crit_cost)
 		_on_about_to_show()
 
 func get_available_gold():
@@ -79,3 +131,6 @@ func _get_can_crit_button():
 
 func _get_crit_label():
 	return $MarginContainer/vbox_menu/crit_purchased_label
+
+func _get_crit_empower_description():
+	return $MarginContainer/vbox_menu/crit_empower_description
