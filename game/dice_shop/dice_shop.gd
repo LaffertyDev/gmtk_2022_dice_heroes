@@ -3,10 +3,6 @@ extends PopupDialog
 var dice_being_upgraded = null
 signal upgraded_dice(diceObj, cost)
 
-var raise_minimum_cost = 25
-var raise_maximum_cost = 10
-var empower_critical_cost = 100
-
 onready var global_audio = get_node("/root/global_audio")
 
 func _ready():
@@ -20,8 +16,8 @@ func _on_about_to_show():
 	_set_available_gold(get_available_gold())
 	_get_dice_sprite().texture = dice_being_upgraded.get_dice_texture_resource()
 	_get_dice_sprite().modulate = dice_being_upgraded.get_dice_modulation()
-	_get_raise_minimum_button().text = "Increase Minimum (" + str(raise_minimum_cost) + " Gold) (Currently: " + str(dice_being_upgraded.minimum) + ")"
-	_get_raise_maximum_button().text = "Increase Maximum (" + str(raise_maximum_cost) + " Gold) (Currently: " + str(dice_being_upgraded.maximum) + ")"
+	_get_raise_minimum_button().text = "Increase Minimum (" + str(get_minimum_cost()) + " Gold) (Currently: " + str(dice_being_upgraded.minimum) + ")"
+	_get_raise_maximum_button().text = "Increase Maximum (" + str(get_maximum_cost()) + " Gold) (Currently: " + str(dice_being_upgraded.maximum) + ")"
 	_get_crit_empower_description().text = get_crit_description(dice_being_upgraded.crit_level)
 	if dice_being_upgraded.crit_level != "all":
 		var next_crit_level = get_next_crit_level(dice_being_upgraded.crit_level)
@@ -50,15 +46,21 @@ func get_crit_empower_cost(crit_level):
 		"highest":
 			return 50
 		"ten":
-			return 100
-		"five":
 			return 250
-		"even":
+		"five":
 			return 500
-		"all":
+		"even":
 			return 1000
+		"all":
+			return 2500
 		_:
 			return 0
+
+func get_minimum_cost():
+	return 50
+
+func get_maximum_cost():
+	return 10
 
 func get_crit_description(crit_level):
 	match(crit_level):
@@ -87,16 +89,18 @@ func reveal_with_dice(dice):
 
 func _on_button_raise_minimum_pressed():
 	global_audio.play_ui()
-	if (get_available_gold() >= raise_minimum_cost && dice_being_upgraded.minimum < dice_being_upgraded.maximum):
+	var cost = get_minimum_cost()
+	if (get_available_gold() >= cost && dice_being_upgraded.minimum < dice_being_upgraded.maximum / 2):
 		dice_being_upgraded.raise_minimum()
-		emit_signal("upgraded_dice", dice_being_upgraded, raise_minimum_cost)
+		emit_signal("upgraded_dice", dice_being_upgraded, cost)
 		_on_about_to_show()
 
 func _on_button_raise_maximum_pressed():
 	global_audio.play_ui()
-	if (get_available_gold() >= raise_maximum_cost):
+	var cost = get_maximum_cost()
+	if (get_available_gold() >= cost):
 		dice_being_upgraded.raise_maximum()
-		emit_signal("upgraded_dice", dice_being_upgraded, raise_maximum_cost)
+		emit_signal("upgraded_dice", dice_being_upgraded, cost)
 		_on_about_to_show()
 
 func _on_button_give_critical_pressed():
