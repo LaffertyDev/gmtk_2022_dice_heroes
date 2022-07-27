@@ -186,11 +186,6 @@ func roll_dice(ability_type):
 			$dice_roll_amount_label.modulate = Color(0.0,0.0,1.0,1.0)
 	$dice_tween.remove_all()
 	$dice_roll_amount_label.rect_position = Vector2(5,0)
-	$dice_roll_amount_label.show()
-	$dice_tween.interpolate_property($dice_roll_amount_label, "rect_position", $dice_roll_amount_label.rect_position, $dice_roll_amount_label.rect_position + Vector2(0, -10), 1.0, Tween.TRANS_LINEAR, Tween.EASE_IN_OUT)
-	$dice_tween.interpolate_property($dice_roll_amount_label, "modulate:a", 1.0, 0.0, 1.0, Tween.TRANS_LINEAR, Tween.EASE_IN_OUT)
-	$dice_tween.interpolate_property($Sprite, "rotation_degrees", 0, 360, 0.2, Tween.TRANS_LINEAR, Tween.EASE_IN_OUT)
-	$dice_tween.start()
 	var number_rolled = rng.randi_range(minimum, maximum)
 	match crit_level:
 		"highest":
@@ -205,10 +200,17 @@ func roll_dice(ability_type):
 			last_roll_did_crit = true
 		_:
 			last_roll_did_crit = false
-	if last_roll_did_crit:
-		$dice_roll_amount_label.text = str(number_rolled * 2)
-		return number_rolled * 2 # crit
+
 	$dice_roll_amount_label.text = str(number_rolled)
+
+	$dice_roll_amount_label.show()
+	$dice_tween.interpolate_property($dice_roll_amount_label, "rect_position", $dice_roll_amount_label.rect_position, $dice_roll_amount_label.rect_position + Vector2(0, -10), 1.0, Tween.TRANS_LINEAR, Tween.EASE_IN_OUT)
+	$dice_tween.interpolate_property($dice_roll_amount_label, "modulate:a", 1.0, 0.0, 1.0, Tween.TRANS_LINEAR, Tween.EASE_IN_OUT)
+	$dice_tween.interpolate_property($Sprite, "rotation_degrees", 0, 360, 0.2, Tween.TRANS_LINEAR, Tween.EASE_IN_OUT)
+	if last_roll_did_crit:
+		$dice_tween.interpolate_property($Sprite, "modulate", $dice_roll_amount_label.modulate, $Sprite.modulate, 0.1, Tween.TRANS_LINEAR, Tween.EASE_IN_OUT)
+	$dice_tween.start()
+
 	return number_rolled
 
 func raise_minimum():

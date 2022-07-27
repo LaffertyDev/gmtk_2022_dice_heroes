@@ -18,6 +18,7 @@ centered = false
 [node name="entangled_sprite" type="AnimatedSprite" parent="."]
 visible = false
 frames = ExtResource( 4 )
+frame = 1
 playing = true
 centered = false
 

@@ -35,6 +35,8 @@ func _on_about_to_show():
 		char_sprite.texture = sprite_res
 		var ability_label = Label.new()
 		ability_label.text = _get_ability_description_from_type(character.hero_ability)
+		ability_label.autowrap = true
+		ability_label.rect_min_size.x = 100
 
 		sprite_center_container.add_child(char_sprite)
 		vbox_container.add_child(char_label)
@@ -117,7 +119,7 @@ func _on_buy_health_button_pressed():
 
 func _build_purchased_label():
 	var purchased_label = Label.new()
-	purchased_label.text = "Purchased!"
+	purchased_label.text = "Hired!"
 	return purchased_label
 
 func _on_dice_shop_upgraded_dice(_dice, _cost):
@@ -150,13 +152,15 @@ func _get_gold_label_node():
 func _get_ability_description_from_type(ability_type):
 	match(ability_type):
 		"damage":
-			return "Deals Damage by Dice"
+			return "Deals Damage, crits are extra strong"
+		"bleed":
+			return "Deals Damge, on crit adds a stacking bleed that does your Dice's Range every roll"
 		"clear":
-			return "Deals Damage, and on crit clears Entangle"
+			return "Deals Damage, on crit clears a Mimic's Entangle"
 		"heal":
 			return "Heals You by Dice"
 		"steal":
-			return "Steals 6 Gold on a 6"
+			return "Deals Damage, on crit steals the value from the enemy in Gold"
 		"shield":
 			return "Blocks Damage by Dice"
 		_:

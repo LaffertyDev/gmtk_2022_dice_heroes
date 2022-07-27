@@ -41,6 +41,9 @@ func did_crit():
 func has_dice():
 	return $dice_hero_drop_target.has_dice
 
+func get_hero_dice():
+	return $dice_hero_drop_target.slotted_dice
+
 func is_hero_entangled():
 	return is_entangled
 

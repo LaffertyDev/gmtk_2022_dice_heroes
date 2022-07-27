@@ -7,6 +7,8 @@ var enemy_life_max = 10
 var available_gold = 999999
 var next_gold_reward = 0
 var is_adventure_started = false
+var current_battle_bleed_stacks = 0
+var current_battle_bleed_damage_sum = 0
 
 var available_characters = []
 
@@ -16,8 +18,9 @@ onready var global_audio = get_node("/root/global_audio")
 
 func _ready():
 	randomize()
+	available_characters.append({"name": "Max", "hero_type": "nameless_hero", "hero_ability": "damage", "sprite_name": "main_hero.png", "cost": 0, "is_purchased": true})
 	available_characters.append({"name": "Leah", "hero_type": "leah", "hero_ability": "heal", "sprite_name": "hero_leah.png", "cost": 10, "is_purchased": false})
-	available_characters.append({"name": "Jackson", "hero_type": "jackson", "hero_ability": "damage", "sprite_name": "hero_jackson.png", "cost": 10, "is_purchased": false})
+	available_characters.append({"name": "Jackson", "hero_type": "jackson", "hero_ability": "bleed", "sprite_name": "hero_jackson.png", "cost": 10, "is_purchased": false})
 	available_characters.append({"name": "Lilly", "hero_type": "lilly", "hero_ability": "clear", "sprite_name": "hero_lilly.png", "cost": 10, "is_purchased": false})
 	available_characters.append({"name": "Thief", "hero_type": "thief", "hero_ability": "steal", "sprite_name": "hero_thief.png", "cost": 30, "is_purchased": false})
 	available_characters.append({"name": "Bob", "hero_type": "bob", "hero_ability": "shield", "sprite_name": "hero_bob.png", "cost": 10, "is_purchased": false})
@@ -30,6 +33,8 @@ func _ready():
 	_set_hero_life_max(hero_life_max)
 	_set_enemy_life_current(enemy_life_max)
 	_set_enemy_life_max(enemy_life_max)
+	current_battle_bleed_stacks = 0
+	current_battle_bleed_damage_sum = 0
 
 func _on_help_text_delay_timer_timeout():
 	$help_text_timer_scanner.start()
@@ -99,22 +104,35 @@ func _on_timer_battle_tick_timeout():
 	var hero_gamble_sum = 0
 	var hero_clear_sum = 0
 	for hero in heroes:
-		if hero.hero_ability == "damage":
-			hero_damage_sum += hero.roll_dice()
-		elif hero.hero_ability == "clear":
-			hero_damage_sum += hero.roll_dice()
-			if hero.did_crit():
-				hero_clear_sum += 1
-		elif hero.hero_ability == "heal":
-			hero_heal_sum += hero.roll_dice()
-		elif hero.hero_ability == "shield":
-			hero_shield_sum += hero.roll_dice()
-		elif hero.hero_ability == "steal":
-			var gamble_roll = hero.roll_dice()
-			hero_damage_sum += gamble_roll
-			if hero.did_crit():
-				hero_gamble_sum += gamble_roll
+		var current_hero_roll = hero.roll_dice()
+		match hero.hero_ability:
+			"damage":
+				hero_damage_sum += current_hero_roll
+				if hero.did_crit():
+					hero_damage_sum += current_hero_roll * 3
+			"bleed":
+				hero_damage_sum += current_hero_roll
+				if hero.did_crit():
+					current_battle_bleed_stacks += 1
+					current_battle_bleed_damage_sum = hero.get_hero_dice().maximum - hero.get_hero_dice().minimum
+			"clear":
+				hero_damage_sum += current_hero_roll
+				if hero.did_crit():
+					hero_clear_sum += 1
+			"heal":
+				hero_heal_sum += current_hero_roll
+				if hero.did_crit():
+					hero_heal_sum += current_hero_roll
+			"shield":
+				hero_shield_sum += current_hero_roll
+				if hero.did_crit():
+					hero_shield_sum += current_hero_roll
+			"steal":
+				hero_damage_sum += current_hero_roll
+				if hero.did_crit():
+					hero_gamble_sum += current_hero_roll
 
+	hero_damage_sum += current_battle_bleed_stacks * current_battle_bleed_damage_sum
 	var enemy_damage_sum = 0
 	var enemy_shield_sum = 0
 	var enemy_heal_sum = 0
@@ -294,6 +312,8 @@ func _on_board_new_zone_entered(battle):
 	_set_enemy_life_max(battle.enemy_group_health)
 	_set_enemy_life_current(battle.enemy_group_health)
 	next_gold_reward = battle.gold_income
+	current_battle_bleed_stacks = 0
+	current_battle_bleed_damage_sum = 0
 	$enemy_health_bar.show()
 	$timer_battle_tick.start()
 
