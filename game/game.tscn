@@ -1,4 +1,4 @@
-[gd_scene load_steps=24 format=2]
+[gd_scene load_steps=25 format=2]
 
 [ext_resource path="res://game/board/board.tscn" type="PackedScene" id=1]
 [ext_resource path="res://game/heroes/hero.tscn" type="PackedScene" id=2]
@@ -23,6 +23,7 @@
 [ext_resource path="res://game/assets/user_interface/empty_button_pressed.png" type="Texture" id=21]
 [ext_resource path="res://game/assets/user_interface/empty_button_normal.png" type="Texture" id=22]
 [ext_resource path="res://game/assets/user_interface/empty_button_hover.png" type="Texture" id=23]
+[ext_resource path="res://game/assets/user_interface/icon_bleed.png" type="Texture" id=24]
 
 [node name="game" type="Node2D"]
 script = ExtResource( 6 )
@@ -193,6 +194,21 @@ margin_left = 44.0
 margin_top = -13.0
 margin_right = 129.0
 text = "Monsters Health"
+
+[node name="bleed_stack_counter" type="Label" parent="enemy_health_bar"]
+margin_left = -29.0
+margin_top = 2.0
+margin_right = -10.0
+margin_bottom = 15.0
+text = "14"
+align = 2
+valign = 1
+
+[node name="bleed_icon" type="TextureRect" parent="enemy_health_bar"]
+margin_left = -10.0
+margin_top = 3.0
+margin_bottom = 13.0
+texture = ExtResource( 24 )
 
 [node name="help_text_timer_scanner" type="Timer" parent="."]
 wait_time = 0.5

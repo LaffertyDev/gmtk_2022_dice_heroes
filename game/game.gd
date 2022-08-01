@@ -20,10 +20,10 @@ func _ready():
 	randomize()
 	available_characters.append({"name": "Max", "hero_type": "nameless_hero", "hero_ability": "damage", "sprite_name": "main_hero.png", "cost": 0, "is_purchased": true})
 	available_characters.append({"name": "Leah", "hero_type": "leah", "hero_ability": "heal", "sprite_name": "hero_leah.png", "cost": 10, "is_purchased": false})
-	available_characters.append({"name": "Jackson", "hero_type": "jackson", "hero_ability": "bleed", "sprite_name": "hero_jackson.png", "cost": 10, "is_purchased": false})
 	available_characters.append({"name": "Lilly", "hero_type": "lilly", "hero_ability": "clear", "sprite_name": "hero_lilly.png", "cost": 10, "is_purchased": false})
-	available_characters.append({"name": "Thief", "hero_type": "thief", "hero_ability": "steal", "sprite_name": "hero_thief.png", "cost": 30, "is_purchased": false})
 	available_characters.append({"name": "Bob", "hero_type": "bob", "hero_ability": "shield", "sprite_name": "hero_bob.png", "cost": 10, "is_purchased": false})
+	available_characters.append({"name": "Jackson", "hero_type": "jackson", "hero_ability": "bleed", "sprite_name": "hero_jackson.png", "cost": 10, "is_purchased": false})
+	available_characters.append({"name": "Thief", "hero_type": "thief", "hero_ability": "steal", "sprite_name": "hero_thief.png", "cost": 30, "is_purchased": false})
 
 	var _ig = self.connect("battle_finished", $board, "_on_battle_finished")
 	var _ig3 = $character_shop.connect("purchased_dice", $dice_tray, "_on_new_dice_purchased")
@@ -71,6 +71,9 @@ func _on_help_text_timer_scanner_timeout():
 
 func _on_button_start_adventure_pressed():
 	global_audio.play_ui()
+	current_battle_bleed_stacks = 0
+	current_battle_bleed_damage_sum = 0
+	_update_bleed()
 	is_adventure_started = true
 	_set_hero_life_current(hero_life_max)
 	_set_enemy_life_current(enemy_life_max)
@@ -115,6 +118,7 @@ func _on_timer_battle_tick_timeout():
 				if hero.did_crit():
 					current_battle_bleed_stacks += 1
 					current_battle_bleed_damage_sum = hero.get_hero_dice().maximum - hero.get_hero_dice().minimum
+					_update_bleed()
 			"clear":
 				hero_damage_sum += current_hero_roll
 				if hero.did_crit():
@@ -246,6 +250,7 @@ func _show_battle_state():
 	$button_shop.hide()
 	$button_ability_hurry.show()
 	$dice_tray.hide()
+	_update_bleed()
 	var heroes_dices = get_tree().get_nodes_in_group("heroes_dice")
 	for heroes_dice in heroes_dices:
 		if !heroes_dice.is_in_play:
@@ -314,8 +319,19 @@ func _on_board_new_zone_entered(battle):
 	next_gold_reward = battle.gold_income
 	current_battle_bleed_stacks = 0
 	current_battle_bleed_damage_sum = 0
+	_update_bleed()
 	$enemy_health_bar.show()
 	$timer_battle_tick.start()
+
+func _update_bleed():
+	$enemy_health_bar/bleed_stack_counter.text = str(current_battle_bleed_stacks)
+	if current_battle_bleed_stacks > 0:
+		$enemy_health_bar/bleed_stack_counter.show()
+		$enemy_health_bar/bleed_icon.show()
+	else:
+		$enemy_health_bar/bleed_stack_counter.hide()
+		$enemy_health_bar/bleed_icon.hide()
+
 
 func _on_board_final_zone_completed():
 	_hide_battle_state()

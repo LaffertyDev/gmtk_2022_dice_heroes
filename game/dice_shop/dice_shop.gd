@@ -44,23 +44,23 @@ func get_next_crit_level(current_crit_level):
 func get_crit_empower_cost(crit_level):
 	match(crit_level):
 		"highest":
-			return 50
+			return 30
 		"ten":
-			return 250
+			return 50
 		"five":
-			return 500
+			return 100
 		"even":
-			return 1000
+			return 500
 		"all":
-			return 2500
+			return 5000
 		_:
 			return 0
 
 func get_minimum_cost():
-	return 50
+	return 18 + (dice_being_upgraded.minimum * 2) # default to 20, raise by 1 for every upgrade
 
 func get_maximum_cost():
-	return 10
+	return 3 + dice_being_upgraded.maximum # default to 5, raise by 1 for every upgrade
 
 func get_crit_description(crit_level):
 	match(crit_level):

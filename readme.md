@@ -33,4 +33,18 @@ Most visual assets were created by myself during the Game Jam. Exceptions are be
 
 ## Todo
 
-* consider reworking how much dice cost so they increase in cost if the amount is the same
+* improve shield mechanic to differentiate it from heal, significantly
+* consider adding ability to swap heroes in + out
+* add introduction
+* tune endless mode
+* continue to re-tune main game
+
+### Art To-Do
+
+* Add animations for literally everything
+* Add a background
+* Add music
+* Add battle scenes
+* Add board tile maps
+* Improve enemy sprites
+* Improve buy menus
