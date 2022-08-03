@@ -33,7 +33,6 @@ Most visual assets were created by myself during the Game Jam. Exceptions are be
 
 ## Todo
 
-* improve shield mechanic to differentiate it from heal, significantly
 * consider adding ability to swap heroes in + out
 * add introduction
 * tune endless mode
@@ -48,3 +47,9 @@ Most visual assets were created by myself during the Game Jam. Exceptions are be
 * Add board tile maps
 * Improve enemy sprites
 * Improve buy menus
+
+
+
+
+
+

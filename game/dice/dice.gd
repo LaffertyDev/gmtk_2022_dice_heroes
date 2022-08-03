@@ -178,7 +178,7 @@ func roll_dice(ability_type):
 			$dice_roll_amount_label.modulate = Color(0.65,0.16,0.16,1.0)
 		"heal":
 			$dice_roll_amount_label.modulate = Color(0.0,1.0,0.0,1.0)
-		"shield":
+		"grapple":
 			$dice_roll_amount_label.modulate = Color(0.0,0.0,1.0,1.0)
 		"steal":
 			$dice_roll_amount_label.modulate = Color(1.0,1.0,0.0,1.0)

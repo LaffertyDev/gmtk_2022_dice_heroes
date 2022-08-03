@@ -152,16 +152,16 @@ func _get_gold_label_node():
 func _get_ability_description_from_type(ability_type):
 	match(ability_type):
 		"damage":
-			return "Deals Damage, crits are extra strong"
+			return "Crits are extra strong"
 		"bleed":
-			return "Deals Damge, on crit adds a stacking bleed that does your Dice's Range every roll"
+			return "Crits add a stacking bleed that does your Dice's Range every roll"
 		"clear":
-			return "Deals Damage, on crit clears a Mimic's Entangle"
+			return "Crits clear an Entangle"
 		"heal":
-			return "Heals You by Dice"
+			return "Heals you instead of dealing damage"
 		"steal":
-			return "Deals Damage, on crit steals the value from the enemy in Gold"
-		"shield":
-			return "Blocks Damage by Dice"
+			return "Crits steal the value from the enemy in Gold"
+		"grapple":
+			return "Crits will grapple an enemy for two rolls"
 		_:
 			return "Mysterious!"

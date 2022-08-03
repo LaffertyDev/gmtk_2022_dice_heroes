@@ -148,10 +148,10 @@ margin_top = 80.0
 margin_right = 208.0
 margin_bottom = 96.0
 value = 100.0
+allow_greater = true
 texture_under = ExtResource( 8 )
 texture_over = ExtResource( 7 )
 texture_progress = ExtResource( 4 )
-tint_over = Color( 0, 0, 0, 1 )
 tint_progress = Color( 1, 0, 0, 1 )
 
 [node name="hero_life_label" type="Label" parent="hero_health_bar"]

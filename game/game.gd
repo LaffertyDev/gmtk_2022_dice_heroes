@@ -21,14 +21,14 @@ func _ready():
 	available_characters.append({"name": "Max", "hero_type": "nameless_hero", "hero_ability": "damage", "sprite_name": "main_hero.png", "cost": 0, "is_purchased": true})
 	available_characters.append({"name": "Leah", "hero_type": "leah", "hero_ability": "heal", "sprite_name": "hero_leah.png", "cost": 10, "is_purchased": false})
 	available_characters.append({"name": "Lilly", "hero_type": "lilly", "hero_ability": "clear", "sprite_name": "hero_lilly.png", "cost": 10, "is_purchased": false})
-	available_characters.append({"name": "Bob", "hero_type": "bob", "hero_ability": "shield", "sprite_name": "hero_bob.png", "cost": 10, "is_purchased": false})
+	available_characters.append({"name": "Bob", "hero_type": "bob", "hero_ability": "grapple", "sprite_name": "hero_bob.png", "cost": 10, "is_purchased": false})
 	available_characters.append({"name": "Jackson", "hero_type": "jackson", "hero_ability": "bleed", "sprite_name": "hero_jackson.png", "cost": 10, "is_purchased": false})
 	available_characters.append({"name": "Thief", "hero_type": "thief", "hero_ability": "steal", "sprite_name": "hero_thief.png", "cost": 30, "is_purchased": false})
 
 	var _ig = self.connect("battle_finished", $board, "_on_battle_finished")
 	var _ig3 = $character_shop.connect("purchased_dice", $dice_tray, "_on_new_dice_purchased")
 	_hide_battle_state()
-	_set_available_gold(0)
+	_set_available_gold(10000)
 	_set_hero_life_current(hero_life_max)
 	_set_hero_life_max(hero_life_max)
 	_set_enemy_life_current(enemy_life_max)
@@ -103,8 +103,8 @@ func _on_timer_battle_tick_timeout():
 	var enemies = get_tree().get_nodes_in_group("enemies")
 	var hero_damage_sum = 0
 	var hero_heal_sum = 0
-	var hero_shield_sum = 0
 	var hero_gamble_sum = 0
+	var hero_enemies_grappled = 0
 	var hero_clear_sum = 0
 	for hero in heroes:
 		var current_hero_roll = hero.roll_dice()
@@ -127,10 +127,10 @@ func _on_timer_battle_tick_timeout():
 				hero_heal_sum += current_hero_roll
 				if hero.did_crit():
 					hero_heal_sum += current_hero_roll
-			"shield":
-				hero_shield_sum += current_hero_roll
+			"grapple":
+				hero_damage_sum += current_hero_roll
 				if hero.did_crit():
-					hero_shield_sum += current_hero_roll
+					hero_enemies_grappled += 1
 			"steal":
 				hero_damage_sum += current_hero_roll
 				if hero.did_crit():
@@ -138,7 +138,6 @@ func _on_timer_battle_tick_timeout():
 
 	hero_damage_sum += current_battle_bleed_stacks * current_battle_bleed_damage_sum
 	var enemy_damage_sum = 0
-	var enemy_shield_sum = 0
 	var enemy_heal_sum = 0
 	var enemy_entangled_count = 0
 	for enemy in enemies:
@@ -147,8 +146,6 @@ func _on_timer_battle_tick_timeout():
 				enemy_damage_sum += enemy.roll_dice()
 			"heal":
 				enemy_heal_sum += enemy.roll_dice()
-			"shield":
-				enemy_shield_sum += enemy.roll_dice()
 			"entangle":
 				if enemy.roll_dice() == 4:
 					# if enemy rolls a 4, then entangle (25% chance)
@@ -159,14 +156,15 @@ func _on_timer_battle_tick_timeout():
 	if hero_clear_sum > 0:
 		_clear_entangle_by_amount(hero_clear_sum)
 
+	if hero_enemies_grappled > 0:
+		for _x in range(hero_enemies_grappled):
+			enemies[randi()%enemies.size()].set_grappled()
+
 	if enemy_entangled_count > 0:
 		global_audio.play_entanglement()
 		for _x in range(enemy_entangled_count):
 			$entangle_warning.show()
 			heroes[randi()%heroes.size()].set_entangled()
-
-	hero_damage_sum = max(0, hero_damage_sum - enemy_shield_sum)
-	enemy_damage_sum = max(0, enemy_damage_sum - hero_shield_sum)
 
 	hero_life_current = max(0, hero_life_current - enemy_damage_sum)
 	enemy_life_current = max(0, enemy_life_current - hero_damage_sum)
