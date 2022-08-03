@@ -54,15 +54,6 @@ func _ready():
 		maximum = 20
 	$Sprite.texture = get_dice_texture_resource()
 	_update_range_label()
-	if !is_in_play:
-		$range_label.show()
-	if (!IsHeroDice):
-		$range_label.hide()
-		# for enemy dice, they need to be on the left
-		if (minimum < 10 && maximum < 10):
-			$range_label.rect_position.x = -19
-		else:
-			$range_label.rect_position.x = -32
 
 	$Sprite.modulate = Color(randf(), randf(), randf())
 
@@ -252,6 +243,16 @@ func _update_range_label():
 		$range_label.text = str(minimum) + "-" + str(maximum)
 	else:
 		$range_label.text = str(minimum) + "-" + str(maximum) + "*"
+	
+	if !is_in_play:
+		$range_label.show()
+	if (!IsHeroDice):
+		$range_label.hide()
+		# for enemy dice, they need to be on the left
+		if (minimum < 10 && maximum < 10):
+			$range_label.rect_position.x = -19
+		else:
+			$range_label.rect_position.x = -32
 
 func give_critical():
 	match(crit_level):

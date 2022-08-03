@@ -11,6 +11,7 @@ var grid_border_spacing_height = 4
 
 func _ready():
 	# start with two coins
+	add_to_group("dice_tray")
 	call_deferred("_on_new_dice_purchased", {"dice_type": "D2"})
 	call_deferred("_on_new_dice_purchased", {"dice_type": "D2"})
 
@@ -46,6 +47,13 @@ func handle_dice_pickup():
 func _process(_delta):
 	if (dice_being_dropped != null):
 		_update_drop_position()
+
+func _on_hero_despawned(dice):
+	dice.current_slot = self
+	dice.is_in_play = false
+	dice._update_range_label()
+	var next_open_slot = _get_open_slot()
+	dice.position = to_global(_get_local_coordinates_from_grid_position(next_open_slot.x, next_open_slot.y))
 
 func _on_new_dice_purchased(purchased_dice):
 	var dice = load("res://game/dice/dice.tscn").instance()

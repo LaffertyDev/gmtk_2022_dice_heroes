@@ -44,6 +44,11 @@ func has_dice():
 func get_hero_dice():
 	return $dice_hero_drop_target.slotted_dice
 
+func clear_dice():
+	if has_dice():
+		get_tree().get_nodes_in_group("dice_tray")[0]._on_hero_despawned(self.get_hero_dice()) # move dice to tray
+		$dice_hero_drop_target.handle_dice_pickup()
+
 func is_hero_entangled():
 	return is_entangled
 

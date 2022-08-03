@@ -254,6 +254,8 @@ text = "Entangled! Click to roll!"
 [connection signal="purchased_dice" from="character_shop" to="." method="_on_character_shop_purchased_dice"]
 [connection signal="purchased_health" from="character_shop" to="." method="_on_character_shop_purchased_health"]
 [connection signal="purchased_hero" from="character_shop" to="." method="_on_character_shop_purchased_hero"]
+[connection signal="retracted_hero" from="character_shop" to="." method="_on_character_shop_retracted_hero"]
+[connection signal="sent_hero" from="character_shop" to="." method="_on_character_shop_sent_hero"]
 [connection signal="upgraded_dice" from="dice_shop" to="." method="_on_dice_shop_upgraded_dice"]
 [connection signal="upgraded_dice" from="dice_shop" to="character_shop" method="_on_dice_shop_upgraded_dice"]
 [connection signal="timeout" from="help_text_timer_scanner" to="." method="_on_help_text_timer_scanner_timeout"]

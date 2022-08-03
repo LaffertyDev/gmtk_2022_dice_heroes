@@ -33,7 +33,6 @@ Most visual assets were created by myself during the Game Jam. Exceptions are be
 
 ## Todo
 
-* consider adding ability to swap heroes in + out
 * add introduction
 * tune endless mode
 * continue to re-tune main game

@@ -18,12 +18,12 @@ onready var global_audio = get_node("/root/global_audio")
 
 func _ready():
 	randomize()
-	available_characters.append({"name": "Max", "hero_type": "nameless_hero", "hero_ability": "damage", "sprite_name": "main_hero.png", "cost": 0, "is_purchased": true})
-	available_characters.append({"name": "Leah", "hero_type": "leah", "hero_ability": "heal", "sprite_name": "hero_leah.png", "cost": 10, "is_purchased": false})
-	available_characters.append({"name": "Lilly", "hero_type": "lilly", "hero_ability": "clear", "sprite_name": "hero_lilly.png", "cost": 10, "is_purchased": false})
-	available_characters.append({"name": "Bob", "hero_type": "bob", "hero_ability": "grapple", "sprite_name": "hero_bob.png", "cost": 10, "is_purchased": false})
-	available_characters.append({"name": "Jackson", "hero_type": "jackson", "hero_ability": "bleed", "sprite_name": "hero_jackson.png", "cost": 10, "is_purchased": false})
-	available_characters.append({"name": "Thief", "hero_type": "thief", "hero_ability": "steal", "sprite_name": "hero_thief.png", "cost": 30, "is_purchased": false})
+	available_characters.append({"name": "Max", "hero_type": "nameless_hero", "hero_ability": "damage", "sprite_name": "main_hero.png", "cost": 0, "is_purchased": true, "is_in_play": true})
+	available_characters.append({"name": "Leah", "hero_type": "leah", "hero_ability": "heal", "sprite_name": "hero_leah.png", "cost": 10, "is_purchased": false, "is_in_play": false})
+	available_characters.append({"name": "Lilly", "hero_type": "lilly", "hero_ability": "clear", "sprite_name": "hero_lilly.png", "cost": 10, "is_purchased": false, "is_in_play": false})
+	available_characters.append({"name": "Bob", "hero_type": "bob", "hero_ability": "grapple", "sprite_name": "hero_bob.png", "cost": 10, "is_purchased": false, "is_in_play": false})
+	available_characters.append({"name": "Jackson", "hero_type": "jackson", "hero_ability": "bleed", "sprite_name": "hero_jackson.png", "cost": 10, "is_purchased": false, "is_in_play": false})
+	available_characters.append({"name": "Thief", "hero_type": "thief", "hero_ability": "steal", "sprite_name": "hero_thief.png", "cost": 30, "is_purchased": false, "is_in_play": false})
 
 	var _ig = self.connect("battle_finished", $board, "_on_battle_finished")
 	var _ig3 = $character_shop.connect("purchased_dice", $dice_tray, "_on_new_dice_purchased")
@@ -284,6 +284,22 @@ func _on_character_shop_purchased_hero(characterObj):
 			spawner.spawn_hero(characterObj)
 			return
 
+func _on_character_shop_retracted_hero(characterObj):
+	characterObj.is_in_play = false
+	var spawners = get_tree().get_nodes_in_group("hero_spawners")
+	for spawner in spawners:
+		if spawner.has_hero() && spawner.get_hero().hero_type == characterObj.hero_type:
+			spawner.remove_hero()
+			return
+
+func _on_character_shop_sent_hero(characterObj):
+	characterObj.is_in_play = true
+	var spawners = get_tree().get_nodes_in_group("hero_spawners")
+	for spawner in spawners:
+		if !spawner.has_hero():
+			spawner.spawn_hero(characterObj)
+			return
+
 func _on_character_shop_purchased_health(cost):
 	_set_available_gold(available_gold - cost)
 	_set_hero_life_max(hero_life_max + 1)
@@ -317,7 +333,6 @@ func _update_bleed():
 	else:
 		$enemy_health_bar/bleed_stack_counter.hide()
 		$enemy_health_bar/bleed_icon.hide()
-
 
 func _on_board_final_zone_completed():
 	_hide_battle_state()

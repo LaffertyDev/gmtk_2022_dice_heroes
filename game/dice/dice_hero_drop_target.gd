@@ -7,7 +7,6 @@ var slotted_dice = null
 func _ready():
 	add_to_group("dice_hero_drop_target")
 
-
 func _on_picked_up(_dice):
 	pass
 

@@ -2,6 +2,8 @@ extends PopupDialog
 
 signal purchased_hero(characterObj)
 signal purchased_dice(diceObj)
+signal sent_hero(characterObj)
+signal retracted_hero(characterObj)
 signal purchased_health(cost)
 
 onready var global_audio = get_node("/root/global_audio")
@@ -44,13 +46,26 @@ func _on_about_to_show():
 		vbox_container.add_child(ability_label)
 		if character.is_purchased:
 			vbox_container.add_child(_build_purchased_label())
+			if character.is_in_play:
+				#show button to bring out of play
+				var char_bring_out_button = Button.new()
+				char_bring_out_button.connect("pressed", self, "on_unsend_button_pressed", [character])
+				char_bring_out_button.text = "Bring Back"
+				vbox_container.add_child(char_bring_out_button)
+			elif current_heroes.size() < 4:
+				# show button to put in play
+				var char_play_button = Button.new()
+				char_play_button.connect("pressed", self, "_on_send_button_pressed", [character])
+				char_play_button.text = "Send"
+				vbox_container.add_child(char_play_button)
 		elif current_heroes.size() >= 4:
+			# can't hire new heroes
 			var no_room_label = Label.new()
 			no_room_label.text = "Party is Full!"
 			vbox_container.add_child(no_room_label)
 		else:
 			var char_buy_button = Button.new()
-			char_buy_button.connect("pressed", self, "_on_buy_button_pressed", [character, char_buy_button])
+			char_buy_button.connect("pressed", self, "_on_buy_button_pressed", [character])
 			char_buy_button.text = "Hire"
 			vbox_container.add_child(char_buy_button)
 
@@ -82,20 +97,26 @@ func _on_about_to_show():
 
 		upgrade_dice_container.add_child(vbox_container)
 
+func on_unsend_button_pressed(character):
+	global_audio.play_ui()
+	emit_signal("retracted_hero", character)
+	_on_about_to_show() # reload UI
+
+func _on_send_button_pressed(character):
+	global_audio.play_ui()
+	emit_signal("sent_hero", character)
+	_on_about_to_show() # reload UI
 
 func _on_button_close_shop_pressed():
 	global_audio.play_ui()
 	hide()
 
-func _on_buy_button_pressed(character, char_buy_button):
+func _on_buy_button_pressed(character):
 	global_audio.play_ui()
 	var current_heroes = get_tree().get_nodes_in_group("heroes")
 	if (get_available_gold() >= character.cost && current_heroes.size() < 4):
 		character.is_purchased = true
 		emit_signal("purchased_hero", character)
-		char_buy_button.get_parent().add_child(_build_purchased_label())
-		char_buy_button.get_parent().remove_child(char_buy_button)
-		char_buy_button.queue_free()
 		_on_about_to_show() # reload UI
 
 func _on_upgrade_dice_button_pressed(dice):
