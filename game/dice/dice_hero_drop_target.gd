@@ -38,7 +38,7 @@ func handle_dice_drop(dice):
 	dice.is_in_play = true
 	update()
 
-func can_drop(dice):
+func can_drop(_dice):
 	return true
 
 func handle_dice_pickup():

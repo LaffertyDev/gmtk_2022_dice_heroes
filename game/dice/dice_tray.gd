@@ -37,7 +37,7 @@ func handle_dice_drop(dice):
 	dice_being_dropped_position = null
 	update()
 
-func can_drop(dice):
+func can_drop(_dice):
 	return !has_dice_at_position(dice_being_dropped_position)
 
 func handle_dice_pickup():
