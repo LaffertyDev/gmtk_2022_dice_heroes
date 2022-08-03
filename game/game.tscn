@@ -1,4 +1,4 @@
-[gd_scene load_steps=25 format=2]
+[gd_scene load_steps=26 format=2]
 
 [ext_resource path="res://game/board/board.tscn" type="PackedScene" id=1]
 [ext_resource path="res://game/heroes/hero.tscn" type="PackedScene" id=2]
@@ -24,6 +24,7 @@
 [ext_resource path="res://game/assets/user_interface/empty_button_normal.png" type="Texture" id=22]
 [ext_resource path="res://game/assets/user_interface/empty_button_hover.png" type="Texture" id=23]
 [ext_resource path="res://game/assets/user_interface/icon_bleed.png" type="Texture" id=24]
+[ext_resource path="res://game/heroes/hero_spawner.tscn" type="PackedScene" id=25]
 
 [node name="game" type="Node2D"]
 script = ExtResource( 6 )
@@ -36,18 +37,18 @@ __meta__ = {
 [node name="board" parent="." instance=ExtResource( 1 )]
 position = Vector2( 32, 32 )
 
-[node name="hero_spawn_1" type="Node2D" parent="."]
+[node name="hero_spawner" parent="." instance=ExtResource( 25 )]
 position = Vector2( 168, 112 )
 
-[node name="hero1" parent="hero_spawn_1" instance=ExtResource( 2 )]
+[node name="hero1" parent="hero_spawner" instance=ExtResource( 2 )]
 
-[node name="hero_spawn_2" type="Node2D" parent="."]
+[node name="hero_spawner2" parent="." instance=ExtResource( 25 )]
 position = Vector2( 168, 136 )
 
-[node name="hero_spawn_3" type="Node2D" parent="."]
+[node name="hero_spawner3" parent="." instance=ExtResource( 25 )]
 position = Vector2( 88, 112 )
 
-[node name="hero_spawn_4" type="Node2D" parent="."]
+[node name="hero_spawner4" parent="." instance=ExtResource( 25 )]
 position = Vector2( 88, 136 )
 
 [node name="help_label" type="Label" parent="."]

@@ -278,13 +278,11 @@ func _on_character_shop_purchased_dice(purchased_dice):
 
 func _on_character_shop_purchased_hero(characterObj):
 	_set_available_gold(available_gold - characterObj.cost)
-	var hero = load("res://game/heroes/hero.tscn")
-	var hero_ins = hero.instance()
-	hero_ins.hero_ability = characterObj.hero_ability
-	hero_ins.hero_type = characterObj.hero_type
-	var next_spawn_location = _get_next_hero_spawn_location()
-	if (next_spawn_location != null):
-		next_spawn_location.add_child(hero_ins)
+	var spawners = get_tree().get_nodes_in_group("hero_spawners")
+	for spawner in spawners:
+		if !spawner.has_hero():
+			spawner.spawn_hero(characterObj)
+			return
 
 func _on_character_shop_purchased_health(cost):
 	_set_available_gold(available_gold - cost)
@@ -293,16 +291,6 @@ func _on_character_shop_purchased_health(cost):
 
 func _get_next_dice_spawn_location():
 	return Vector2(64, 24)
-
-func _get_next_hero_spawn_location():
-	var spawn_locations = []
-	for child in self.get_children():
-		if child.name.begins_with("hero_spawn_"):
-			spawn_locations.append({"index": child.name.substr(child.name.length() - 1), "has_hero": child.get_children().size() > 0, "node": child})
-
-	for spawn_location in spawn_locations:
-		if (!spawn_location.has_hero):
-			return spawn_location.node
 
 func _on_board_new_zone_entered(battle):
 	$button_give_up_adventure.show()
