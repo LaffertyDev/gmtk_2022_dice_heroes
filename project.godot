@@ -11,7 +11,8 @@ config_version=4
 [application]
 
 config/name="Dice Heroes"
-run/main_scene="res://game/game.tscn"
+run/main_scene="res://game/menu_main/menu_main.tscn"
+boot_splash/image="res://game/assets/user_interface/background_main_menu.png"
 config/icon="res://icon.png"
 
 [autoload]
