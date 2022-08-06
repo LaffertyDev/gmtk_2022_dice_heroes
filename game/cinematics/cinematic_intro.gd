@@ -37,4 +37,5 @@ func _on_button_enter_pressed():
 	var _ig = get_tree().change_scene("res://game/game.tscn")
 
 func _on_button_skip_pressed():
+	global_audio.play_ui()
 	_on_tutorial_timer_timeout()

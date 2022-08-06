@@ -13,6 +13,7 @@ config_version=4
 config/name="Dice Heroes"
 run/main_scene="res://game/menu_main/menu_main.tscn"
 boot_splash/image="res://game/assets/user_interface/background_main_menu.png"
+boot_splash/use_filter=false
 config/icon="res://icon.png"
 
 [autoload]
