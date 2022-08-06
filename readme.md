@@ -37,18 +37,5 @@ Most visual assets were created by myself during the Game Jam. Exceptions are be
 * tune endless mode
 * continue to re-tune main game
 
-### Art To-Do
-
-* Add animations for literally everything
-* Add a background
-* Add music
-* Add battle scenes
-* Add board tile maps
-* Improve enemy sprites
-* Improve buy menus
-
-
-
-
 
 
