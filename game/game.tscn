@@ -1,28 +1,17 @@
-[gd_scene load_steps=26 format=2]
+[gd_scene load_steps=15 format=2]
 
 [ext_resource path="res://game/board/board.tscn" type="PackedScene" id=1]
 [ext_resource path="res://game/heroes/hero.tscn" type="PackedScene" id=2]
 [ext_resource path="res://game/enemies/enemy_spawner.tscn" type="PackedScene" id=3]
 [ext_resource path="res://game/assets/user_interface/hero_health_bar.png" type="Texture" id=4]
-[ext_resource path="res://game/assets/user_interface/shop_button_normal.png" type="Texture" id=5]
+[ext_resource path="res://game/assets/dice/dice_d20.png" type="Texture" id=5]
 [ext_resource path="res://game/game.gd" type="Script" id=6]
 [ext_resource path="res://game/assets/user_interface/hero_health_bar_overlay.png" type="Texture" id=7]
 [ext_resource path="res://game/assets/user_interface/hero_health_bar_underlay.png" type="Texture" id=8]
-[ext_resource path="res://game/assets/user_interface/shop_button_pressed.png" type="Texture" id=9]
-[ext_resource path="res://game/assets/user_interface/shop_button_hover.png" type="Texture" id=10]
 [ext_resource path="res://game/dice/dice_tray.tscn" type="PackedScene" id=11]
 [ext_resource path="res://game/character_shop/character_shop.tscn" type="PackedScene" id=12]
 [ext_resource path="res://game/dice_shop/dice_shop.tscn" type="PackedScene" id=13]
-[ext_resource path="res://game/assets/user_interface/start_button_normal.png" type="Texture" id=14]
-[ext_resource path="res://game/assets/user_interface/start_button_hover.png" type="Texture" id=15]
-[ext_resource path="res://game/assets/user_interface/start_button_pressed.png" type="Texture" id=16]
-[ext_resource path="res://game/assets/user_interface/hurry_button_pressed.png" type="Texture" id=17]
-[ext_resource path="res://game/assets/user_interface/hurry_button_normal.png" type="Texture" id=18]
-[ext_resource path="res://game/assets/user_interface/hurry_button_hover.png" type="Texture" id=19]
 [ext_resource path="res://game/assets/user_interface/gold_coin.png" type="Texture" id=20]
-[ext_resource path="res://game/assets/user_interface/empty_button_pressed.png" type="Texture" id=21]
-[ext_resource path="res://game/assets/user_interface/empty_button_normal.png" type="Texture" id=22]
-[ext_resource path="res://game/assets/user_interface/empty_button_hover.png" type="Texture" id=23]
 [ext_resource path="res://game/assets/user_interface/icon_bleed.png" type="Texture" id=24]
 [ext_resource path="res://game/heroes/hero_spawner.tscn" type="PackedScene" id=25]
 
@@ -80,34 +69,31 @@ texture = ExtResource( 20 )
 
 [node name="gold_tween" type="Tween" parent="gold_amount"]
 
-[node name="button_start_adventure" type="TextureButton" parent="."]
-margin_left = 400.0
+[node name="button_start_adventure" type="Button" parent="."]
+margin_left = 393.0
 margin_top = 226.0
 margin_right = 448.0
 margin_bottom = 250.0
-texture_normal = ExtResource( 14 )
-texture_pressed = ExtResource( 16 )
-texture_hover = ExtResource( 15 )
+text = "Start"
+icon = ExtResource( 5 )
 
-[node name="button_ability_hurry" type="TextureButton" parent="."]
+[node name="button_ability_hurry" type="Button" parent="."]
 visible = false
 margin_left = 400.0
 margin_top = 226.0
 margin_right = 448.0
 margin_bottom = 250.0
+custom_colors/font_color_pressed = Color( 1, 0, 0, 1 )
 toggle_mode = true
-texture_normal = ExtResource( 18 )
-texture_pressed = ExtResource( 17 )
-texture_hover = ExtResource( 19 )
+text = "Hurry"
 
-[node name="button_shop" type="TextureButton" parent="."]
+[node name="button_shop" type="Button" parent="."]
 margin_left = 32.0
 margin_top = 226.0
 margin_right = 80.0
 margin_bottom = 250.0
-texture_normal = ExtResource( 5 )
-texture_pressed = ExtResource( 9 )
-texture_hover = ExtResource( 10 )
+text = "Shop"
+icon = ExtResource( 20 )
 
 [node name="timer_battle_tick" type="Timer" parent="."]
 
@@ -219,21 +205,12 @@ wait_time = 5.0
 one_shot = true
 autostart = true
 
-[node name="button_give_up_adventure" type="TextureButton" parent="."]
+[node name="button_give_up_adventure" type="Button" parent="."]
 visible = false
 margin_left = 32.0
 margin_top = 226.0
 margin_right = 82.0
 margin_bottom = 250.0
-texture_normal = ExtResource( 22 )
-texture_pressed = ExtResource( 21 )
-texture_hover = ExtResource( 23 )
-
-[node name="give_up_label" type="Label" parent="button_give_up_adventure"]
-margin_left = 5.0
-margin_top = 4.0
-margin_right = 45.0
-margin_bottom = 17.0
 text = "Give Up"
 
 [node name="entangle_warning" type="Label" parent="."]
