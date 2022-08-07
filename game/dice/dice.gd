@@ -22,6 +22,8 @@ var last_roll_did_crit = false
 
 var crit_level = "none"
 
+var base_color = Color(1.0, 1.0, 1.0, 1.0)
+
 onready var global_audio = get_node("/root/global_audio")
 
 var minimum = 1
@@ -55,7 +57,8 @@ func _ready():
 	$Sprite.texture = get_dice_texture_resource()
 	_update_range_label()
 
-	$Sprite.modulate = Color(randf(), randf(), randf())
+	base_color = Color(randf(), randf(), randf(), 1.0)
+	$Sprite.modulate = base_color
 
 
 func get_dice_texture_resource():
@@ -161,23 +164,24 @@ func did_crit():
 	return last_roll_did_crit
 
 func roll_dice(ability_type):
+	var number_rolled = rng.randi_range(minimum, maximum)
 	last_roll_did_crit = false
+	var roll_label = Label.new()
+	roll_label.text = str(number_rolled)
+	roll_label.rect_position = Vector2(5, 0)
 	match(ability_type):
 		"damage":
-			$dice_roll_amount_label.modulate = Color(1.0,0.0,0.0,1.0)
+			roll_label.modulate = Color(1.0,0.0,0.0,1.0)
 		"clear":
-			$dice_roll_amount_label.modulate = Color(0.65,0.16,0.16,1.0)
+			roll_label.modulate = Color(0.65,0.16,0.16,1.0)
 		"heal":
-			$dice_roll_amount_label.modulate = Color(0.0,1.0,0.0,1.0)
+			roll_label.modulate = Color(0.0,1.0,0.0,1.0)
 		"grapple":
-			$dice_roll_amount_label.modulate = Color(0.0,0.0,1.0,1.0)
+			roll_label.modulate = Color(0.0,0.0,1.0,1.0)
 		"steal":
-			$dice_roll_amount_label.modulate = Color(1.0,1.0,0.0,1.0)
+			roll_label.modulate = Color(1.0,1.0,0.0,1.0)
 		_:
-			$dice_roll_amount_label.modulate = Color(0.0,0.0,1.0,1.0)
-	$dice_tween.remove_all()
-	$dice_roll_amount_label.rect_position = Vector2(5,0)
-	var number_rolled = rng.randi_range(minimum, maximum)
+			roll_label.modulate = Color(0.0,0.0,1.0,1.0)
 	match crit_level:
 		"highest":
 			last_roll_did_crit = number_rolled == maximum
@@ -192,16 +196,19 @@ func roll_dice(ability_type):
 		_:
 			last_roll_did_crit = false
 
-	$dice_roll_amount_label.text = str(number_rolled)
+	var tween = create_tween().set_trans(Tween.TRANS_LINEAR).set_ease(Tween.EASE_IN_OUT).set_parallel(true)
+	add_child(roll_label)
+	tween.tween_property(roll_label, "rect_position", roll_label.rect_position + Vector2(0, -10), 0.5)
+	tween.tween_property(roll_label, "modulate:a", 0.0, 0.5)
 
-	$dice_roll_amount_label.show()
-	$dice_tween.interpolate_property($dice_roll_amount_label, "rect_position", $dice_roll_amount_label.rect_position, $dice_roll_amount_label.rect_position + Vector2(0, -10), 1.0, Tween.TRANS_LINEAR, Tween.EASE_IN_OUT)
-	$dice_tween.interpolate_property($dice_roll_amount_label, "modulate:a", 1.0, 0.0, 1.0, Tween.TRANS_LINEAR, Tween.EASE_IN_OUT)
-	$dice_tween.interpolate_property($Sprite, "rotation_degrees", 0, 360, 0.2, Tween.TRANS_LINEAR, Tween.EASE_IN_OUT)
+	$Sprite.rotation_degrees = 0
+	tween.tween_property($Sprite, "rotation_degrees", 360.0, 0.2)
+	$Sprite.modulate = base_color
 	if last_roll_did_crit:
-		$dice_tween.interpolate_property($Sprite, "modulate", $dice_roll_amount_label.modulate, $Sprite.modulate, 0.1, Tween.TRANS_LINEAR, Tween.EASE_IN_OUT)
-	$dice_tween.start()
+		tween.tween_property(roll_label, "rect_scale", Vector2(2.0, 2.0), 0.5)
+		tween.tween_property($Sprite, "modulate", $Sprite.modulate, 0.1)
 
+	tween.chain().tween_callback(roll_label, "queue_free")
 	return number_rolled
 
 func raise_minimum():
@@ -243,7 +250,7 @@ func _update_range_label():
 		$range_label.text = str(minimum) + "-" + str(maximum)
 	else:
 		$range_label.text = str(minimum) + "-" + str(maximum) + "*"
-	
+
 	if !is_in_play:
 		$range_label.show()
 	if (!IsHeroDice):
@@ -275,7 +282,4 @@ func set_collision_disabled(is_disabled):
 
 func get_dice_modulation():
 	return $Sprite.modulate
-
-func _on_dice_tween_tween_all_completed():
-	$dice_roll_amount_label.hide()
 

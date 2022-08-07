@@ -32,7 +32,7 @@ window/stretch/aspect="keep"
 
 [gui]
 
-theme/custom="res://game/assets/custom_theme.tres"
+theme/custom="res://game/assets/main_theme.tres"
 theme/custom_font="res://game/assets/pixel_font.tres"
 
 [importer_defaults]

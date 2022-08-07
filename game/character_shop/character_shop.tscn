@@ -81,31 +81,31 @@ margin_bottom = 132.0
 scroll_vertical_enabled = false
 
 [node name="hbox_upgrade_dice_container" type="HBoxContainer" parent="MarginContainer/vscroll/vbox_menu/scroll_dice_upgrade"]
-margin_right = 78.0
+margin_right = 76.0
 margin_bottom = 56.0
 size_flags_vertical = 3
 custom_constants/separation = 20
 
 [node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/vscroll/vbox_menu/scroll_dice_upgrade/hbox_upgrade_dice_container"]
-margin_right = 78.0
+margin_right = 76.0
 margin_bottom = 56.0
 alignment = 1
 
 [node name="Label" type="Label" parent="MarginContainer/vscroll/vbox_menu/scroll_dice_upgrade/hbox_upgrade_dice_container/VBoxContainer"]
-margin_right = 78.0
+margin_right = 76.0
 margin_bottom = 13.0
 text = "1D6"
 align = 1
 
 [node name="TextureRect" type="TextureRect" parent="MarginContainer/vscroll/vbox_menu/scroll_dice_upgrade/hbox_upgrade_dice_container/VBoxContainer"]
 margin_top = 17.0
-margin_right = 78.0
+margin_right = 76.0
 margin_bottom = 33.0
 texture = ExtResource( 3 )
 
 [node name="Button" type="Button" parent="MarginContainer/vscroll/vbox_menu/scroll_dice_upgrade/hbox_upgrade_dice_container/VBoxContainer"]
 margin_top = 37.0
-margin_right = 78.0
+margin_right = 76.0
 margin_bottom = 56.0
 text = "Upgrade Dice"
 
@@ -178,7 +178,7 @@ margin_bottom = 16.0
 text = "Your Gold: 50"
 
 [node name="button_close_shop" type="Button" parent="MarginContainer/vscroll/vbox_menu/HBoxContainer"]
-margin_left = 402.0
+margin_left = 404.0
 margin_right = 470.0
 margin_bottom = 19.0
 size_flags_horizontal = 8
