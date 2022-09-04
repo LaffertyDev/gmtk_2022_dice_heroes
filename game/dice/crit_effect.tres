@@ -1,0 +1,65 @@
+[gd_resource type="Shader" format=2]
+
+[resource]
+code = "shader_type canvas_item;
+render_mode blend_premul_alpha;
+
+uniform float radius = 0.75;
+uniform float amount = 0.5;
+
+uniform float outline_width = 2.0;
+uniform vec4 outline_color: hint_color;
+
+
+void fragment() {
+	float r = radius;
+	vec2 ps = TEXTURE_PIXEL_SIZE;
+	vec4 col = texture(TEXTURE, UV);
+	vec4 col_og = texture(TEXTURE, UV);
+	vec4 glow = col;
+
+	glow += texture(TEXTURE, UV + vec2(-r, -r) * ps);
+	glow += texture(TEXTURE, UV + vec2(-r, 0.0) * ps);
+	glow += texture(TEXTURE, UV + vec2(-r, r) * ps);
+	glow += texture(TEXTURE, UV + vec2(0.0, -r) * ps);
+	glow += texture(TEXTURE, UV + vec2(0.0, r) * ps);
+	glow += texture(TEXTURE, UV + vec2(r, -r) * ps);
+	glow += texture(TEXTURE, UV + vec2(r, 0.0) * ps);
+	glow += texture(TEXTURE, UV + vec2(r, r) * ps);
+
+	r *= 2.0;
+	glow += texture(TEXTURE, UV + vec2(-r, -r) * ps);
+	glow += texture(TEXTURE, UV + vec2(-r, 0.0) * ps);
+	glow += texture(TEXTURE, UV + vec2(-r, r) * ps);
+	glow += texture(TEXTURE, UV + vec2(0.0, -r) * ps);
+	glow += texture(TEXTURE, UV + vec2(0.0, r) * ps);
+	glow += texture(TEXTURE, UV + vec2(r, -r) * ps);
+	glow += texture(TEXTURE, UV + vec2(r, 0.0) * ps);
+	glow += texture(TEXTURE, UV + vec2(r, r) * ps);
+
+	glow /= 17.0;
+	glow *= amount;
+	col.rgb *= col.a;
+	
+	float a;
+	float maxa = col.a;
+	float mina = col.a;
+
+	a = texture(TEXTURE, UV + vec2(0.0, -outline_width) * ps).a;
+	maxa = max(a, maxa);
+	mina = min(a, mina);
+
+	a = texture(TEXTURE, UV + vec2(0.0, outline_width) * ps).a;
+	maxa = max(a, maxa);
+	mina = min(a, mina);
+
+	a = texture(TEXTURE, UV + vec2(-outline_width, 0.0) * ps).a;
+	maxa = max(a, maxa);
+	mina = min(a, mina);
+
+	a = texture(TEXTURE, UV + vec2(outline_width, 0.0) * ps).a;
+	maxa = max(a, maxa);
+	mina = min(a, mina);
+
+	COLOR = mix(glow + col, outline_color, maxa - mina);
+}"

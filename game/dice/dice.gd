@@ -31,6 +31,7 @@ var maximum = 6
 var rng = RandomNumberGenerator.new()
 export var dice_type = "D6"
 
+
 func _ready():
 	rng.randomize()
 	self.input_pickable = IsHeroDice
@@ -207,6 +208,12 @@ func roll_dice(ability_type):
 	if last_roll_did_crit:
 		tween.tween_property(roll_label, "rect_scale", Vector2(2.0, 2.0), 0.5)
 		tween.tween_property($Sprite, "modulate", $Sprite.modulate, 0.1)
+		$Sprite.get_material().set_shader_param("radius", 0.75)
+		$Sprite.get_material().set_shader_param("amount", 0.75)
+		$Sprite.get_material().set_shader_param("outline_width", 1.5)
+		tween.tween_property($Sprite.get_material(), "shader_param/radius", 0.0, 0.5)
+		tween.tween_property($Sprite.get_material(), "shader_param/amount", 0.0, 0.5)
+		tween.tween_property($Sprite.get_material(), "shader_param/outline_width", 0.0, 0.5)
 
 	tween.chain().tween_callback(roll_label, "queue_free")
 	return number_rolled
