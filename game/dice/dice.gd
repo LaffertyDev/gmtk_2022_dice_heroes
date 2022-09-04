@@ -1,4 +1,4 @@
-extends Node2D
+extends KinematicBody2D
 
 export var IsHeroDice = false
 
@@ -57,7 +57,7 @@ func _ready():
 	$Sprite.texture = get_dice_texture_resource()
 	_update_range_label()
 
-	base_color = Color(randf(), randf(), randf(), 1.0)
+	base_color = dice_generator.get_dice_color()
 	$Sprite.modulate = base_color
 
 

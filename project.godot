@@ -8,6 +8,16 @@
 
 config_version=4
 
+_global_script_classes=[ {
+"base": "Node2D",
+"class": "dice_generator",
+"language": "GDScript",
+"path": "res://game/dice/dice_generator.gd"
+} ]
+_global_script_class_icons={
+"dice_generator": ""
+}
+
 [application]
 
 config/name="Dice Heroes"
