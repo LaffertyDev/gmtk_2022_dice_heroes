@@ -300,9 +300,9 @@ func _on_character_shop_sent_hero(characterObj):
 			spawner.spawn_hero(characterObj)
 			return
 
-func _on_character_shop_purchased_health(cost):
+func _on_character_shop_purchased_health(cost, amount):
 	_set_available_gold(available_gold - cost)
-	_set_hero_life_max(hero_life_max + 1)
+	_set_hero_life_max(hero_life_max + amount)
 	_set_hero_life_current(hero_life_max)
 
 func _get_next_dice_spawn_location():

@@ -23,6 +23,8 @@ __meta__ = {
 "_edit_vertical_guides_": [ 32.0, 448.0 ]
 }
 
+[node name="Sprite" type="Sprite" parent="."]
+
 [node name="board" parent="." instance=ExtResource( 1 )]
 position = Vector2( 32, 32 )
 

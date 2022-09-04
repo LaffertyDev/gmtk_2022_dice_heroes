@@ -72,6 +72,13 @@ margin_bottom = 136.0
 text = "Criticals do double damage and can activate your various Hero Abilities."
 autowrap = true
 
+[node name="minimum_ugprade_label" type="Label" parent="MarginContainer/vbox_menu"]
+margin_top = 140.0
+margin_right = 450.0
+margin_bottom = 153.0
+text = "You cannot raise the dice minimum higher than half of the maximum."
+autowrap = true
+
 [node name="button_row" type="HSplitContainer" parent="MarginContainer/vbox_menu"]
 margin_top = 221.0
 margin_right = 450.0
@@ -85,7 +92,7 @@ margin_bottom = 16.0
 text = "Gold: 99999"
 
 [node name="close_button" type="Button" parent="MarginContainer/vbox_menu/button_row"]
-margin_left = 411.0
+margin_left = 413.0
 margin_right = 450.0
 margin_bottom = 19.0
 size_flags_horizontal = 8

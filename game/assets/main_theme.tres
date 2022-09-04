@@ -62,7 +62,7 @@ content_margin_left = 5.0
 content_margin_right = 5.0
 content_margin_top = 3.0
 content_margin_bottom = 3.0
-bg_color = Color( 0.0823529, 0.113725, 0.156863, 1 )
+bg_color = Color( 0.173329, 0.390215, 0.621094, 1 )
 border_width_left = 1
 border_width_top = 1
 border_width_right = 1
@@ -96,10 +96,10 @@ corner_detail = 3
 anti_aliasing = false
 
 [sub_resource type="StyleBoxFlat" id=6]
-bg_color = Color( 0.235294, 0.368627, 0.545098, 1 )
+bg_color = Color( 0.0901961, 0.12549, 0.219608, 1 )
 
 [sub_resource type="StyleBoxFlat" id=7]
-bg_color = Color( 0.235294, 0.368627, 0.545098, 1 )
+bg_color = Color( 0.145098, 0.227451, 0.368627, 1 )
 border_color = Color( 0, 0, 0, 1 )
 corner_detail = 1
 anti_aliasing = false

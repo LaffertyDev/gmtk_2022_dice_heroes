@@ -4,7 +4,7 @@ signal purchased_hero(characterObj)
 signal purchased_dice(diceObj)
 signal sent_hero(characterObj)
 signal retracted_hero(characterObj)
-signal purchased_health(cost)
+signal purchased_health(cost, amount)
 
 onready var global_audio = get_node("/root/global_audio")
 
@@ -134,7 +134,13 @@ func _on_buy_new_dice_pressed():
 func _on_buy_health_button_pressed():
 	global_audio.play_ui()
 	if (get_available_gold() >= 5):
-		emit_signal("purchased_health", 5)
+		emit_signal("purchased_health", 5, 1)
+		_set_available_gold(get_available_gold())
+
+func _on_buy_health_5x_button_pressed():
+	global_audio.play_ui()
+	if (get_available_gold() >= 25):
+		emit_signal("purchased_health", 25, 5)
 		_set_available_gold(get_available_gold())
 
 
