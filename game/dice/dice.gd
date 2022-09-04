@@ -57,7 +57,7 @@ func _ready():
 	$Sprite.texture = get_dice_texture_resource()
 	_update_range_label()
 
-	base_color = dice_generator.get_dice_color()
+	base_color = Color(randf(), randf(), randf(), 1.0)
 	$Sprite.modulate = base_color
 
 
